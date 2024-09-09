@@ -794,7 +794,9 @@ footer {
 #sidebar:not(.active) ~ #main {
   margin-left: 0;
 }
-
+.sidebar-wrapper::-webkit-scrollbar {
+  width: 20px;
+}
 .sidebar-wrapper {
   width: 260px;
   height: 100vh;

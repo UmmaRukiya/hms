@@ -110,7 +110,7 @@ body {
   margin: 0;
   font-family: var(--bs-font-sans-serif);
   font-size: 0.9rem;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.5;
   color: #727E8C;
   background-color: #fff;
@@ -1990,7 +1990,7 @@ progress {
   --bs-table-hover-bg: rgba(0, 0, 0, 0.075);
   width: 100%;
   margin-bottom: 1rem;
-  color: #727E8C;
+  color: #000;
   vertical-align: top;
   border-color: #DFE3E7;
 }

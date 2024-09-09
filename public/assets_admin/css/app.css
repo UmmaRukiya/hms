@@ -794,8 +794,11 @@ footer {
 #sidebar:not(.active) ~ #main {
   margin-left: 0;
 }
-
+.sidebar-wrapper::-webkit-scrollbar {
+  width: 20px;
+}
 .sidebar-wrapper {
+  overflow-y: auto;
   width: 260px;
   height: 100vh;
   position: fixed;
