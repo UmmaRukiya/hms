@@ -8,7 +8,7 @@ function Fahim() {
                 <div className="row">
                     <div className="col-12 col-md-6 order-md-1 order-last">
                         <h3>Table</h3>
-                        <p className="text-subtitle text-muted">Examples for opt-in styling of tables (given their prevalent use in JavaScript plugins) with Bootstrap.</p>
+                       
                     </div>
                     <div className="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" className='breadcrumb-header'>

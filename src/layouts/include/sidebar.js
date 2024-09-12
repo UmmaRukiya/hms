@@ -26,22 +26,22 @@ function Sidebar() {
 			</div>
 			<div className="sidebar-menu">
 				<ul className="menu">
-					<li className='sidebar-title'>Main Menu</li>
+					<li className='sidebar-title'>HMS Menu</li>
 					<li onClick={activeMenu} className={`sidebar-item ${isLinkActive("/")}`}>
 						<Link to={"/"} className={`sidebar-link`}>
-							<i data-feather="home" width="20"></i> 
+							<i className="fa fa-hospital-o" width="20"></i> 
 							<span>Dashboard</span>
 						</Link>
 					</li>
-					<li onClick={activeMenu}s className={`sidebar-item ${isLinkActive("/fahim")}`}>
+					{/* <li onClick={activeMenu}s className={`sidebar-item ${isLinkActive("/fahim")}`}>
 						<Link to={"/fahim"} className={`sidebar-link`}>
 							<i data-feather="home" width="20"></i> 
 							<span>Table</span>
 						</Link>
-					</li>
+					</li> */}
 					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
 						<a href="#" className='sidebar-link'>
-							<i data-feather="triangle" width="20"></i> 
+							<i className="fa fa-stethoscope" width="20"></i> 
 							<span>Doctor</span>
 						</a>
 						
@@ -53,8 +53,149 @@ function Sidebar() {
 						</ul>
 						
 					</li>
+					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
+						<a href="#" className='sidebar-link'>
+							<i className="fa fa-users" width="20"></i> 
+							<span>Patient</span>
+						</a>
+						
+						<ul className={`submenu ${isLinkActive("/ramjan")}`}>
+							<li><Link to={"/fahim"}>Alert</Link></li>
+							<li><Link to={"/ramjan"}>Ramjan</Link></li>
+							
+							
+						</ul>
+						
+					</li>
+					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
+						<a href="#" className='sidebar-link'>
+							<i className="fa fa-medkit" width="20"></i> 
+							<span>Nurse</span>
+						</a>
+						
+						<ul className={`submenu ${isLinkActive("/ramjan")}`}>
+							<li><Link to={"/fahim"}>Alert</Link></li>
+							<li><Link to={"/ramjan"}>Ramjan</Link></li>
+							
+							
+						</ul>
+						
+					</li>
+					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
+						<a href="#" className='sidebar-link'>
+							<i className="fa fa-street-view" width="20"></i> 
+							<span>Stuff</span>
+						</a>
+						
+						<ul className={`submenu ${isLinkActive("/ramjan")}`}>
+							<li><Link to={"/fahim"}>Alert</Link></li>
+							<li><Link to={"/ramjan"}>Ramjan</Link></li>
+							
+							
+						</ul>
+						
+					</li>
+					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
+						<a href="#" className='sidebar-link'>
+							<i className="fa fa-calendar-plus-o" width="20"></i> 
+							<span>Schedule</span>
+						</a>
+						
+						<ul className={`submenu ${isLinkActive("/ramjan")}`}>
+							<li><Link to={"/fahim"}>Alert</Link></li>
+							<li><Link to={"/ramjan"}>Ramjan</Link></li>
+							
+							
+						</ul>
+						
+					</li>
+					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
+						<a href="#" className='sidebar-link'>
+							<i className="fa fa-file-archive-o" width="20"></i> 
+							<span>Appointment</span>
+						</a>
+						
+						<ul className={`submenu ${isLinkActive("/ramjan")}`}>
+							<li><Link to={"/fahim"}>Alert</Link></li>
+							<li><Link to={"/ramjan"}>Ramjan</Link></li>
+							
+							
+						</ul>
+						
+					</li>
+					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
+						<a href="#" className='sidebar-link'>
+							<i className="fa fa-files-o" width="20"></i> 
+							<span>Prescripttion</span>
+						</a>
+						
+						<ul className={`submenu ${isLinkActive("/ramjan")}`}>
+							<li><Link to={"/fahim"}>Alert</Link></li>
+							<li><Link to={"/ramjan"}>Ramjan</Link></li>
+							
+							
+						</ul>
+						
+					</li>
+					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
+						<a href="#" className='sidebar-link'>
+							<i className="fa fa-user-plus" width="20"></i> 
+							<span>Account Manager</span>
+						</a>
+						
+						<ul className={`submenu ${isLinkActive("/ramjan")}`}>
+							<li><Link to={"/fahim"}>Alert</Link></li>
+							<li><Link to={"/ramjan"}>Ramjan</Link></li>
+							
+							
+						</ul>
+						
+					</li>
+					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
+						<a href="#" className='sidebar-link'>
+							<i className="fa fa-female" width="20"></i> 
+							<span>Human Resources</span>
+						</a>
+						
+						<ul className={`submenu ${isLinkActive("/ramjan")}`}>
+							<li><Link to={"/fahim"}>Alert</Link></li>
+							<li><Link to={"/ramjan"}>Ramjan</Link></li>
+							
+							
+						</ul>
+						
+					</li>
+					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
+						<a href="#" className='sidebar-link'>
+							<i className="fa fa-stethoscope" width="20"></i> 
+							<span>Room Manager</span>
+						</a>
+						
+						<ul className={`submenu ${isLinkActive("/ramjan")}`}>
+							<li><Link to={"/fahim"}>Alert</Link></li>
+							<li><Link to={"/ramjan"}>Ramjan</Link></li>
+							
+							
+						</ul>
+						
+					</li>
+					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
+						<a href="#" className='sidebar-link'>
+							<i className="fa fa-hospital-o" width="20"></i> 
+							<span>Hospital Activities</span>
+						</a>
+						
+						<ul className={`submenu ${isLinkActive("/ramjan")}`}>
+							<li><Link to={"/fahim"}>Alert</Link></li>
+							<li><Link to={"/ramjan"}>Ramjan</Link></li>
+							
+							
+						</ul>
+						
+					</li>
+					
 
-					<li className="sidebar-item  has-sub">
+					{/* <li className="sidebar-item  has-sub">
 						<a href="#" className='sidebar-link'>
 							<i className="fa fa-users" width="20"></i> 
 							<span>Extra Components</span>
@@ -168,7 +309,7 @@ function Sidebar() {
 							
 						</ul>
 						
-					</li>
+					</li> */}
 				</ul>
 			</div>
 			<button className="sidebar-toggler btn x"><i data-feather="x"></i></button>

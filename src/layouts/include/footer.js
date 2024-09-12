@@ -5,10 +5,10 @@ function Footer() {
     <footer>
         <div className="footer clearfix mb-0 text-muted">
             <div className="float-left">
-                <p>2020 &copy; Voler</p>
+                <p>2024 &copy; HMS</p>
             </div>
             <div className="float-right">
-                <p>Crafted with <span className='text-danger'><i data-feather="heart"></i></span> by <a href="http://ahmadsaugi.com">Ahmad Saugi</a></p>
+                <p>Crafted with <span className='text-danger'><i data-feather="heart"></i></span> by <a href="https://github.com/UmmaRukiya">Umma Rukiya</a></p>
             </div>
         </div>
     </footer>
