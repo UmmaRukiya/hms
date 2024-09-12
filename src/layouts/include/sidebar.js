@@ -42,59 +42,13 @@ function Sidebar() {
 					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
 						<a href="#" className='sidebar-link'>
 							<i data-feather="triangle" width="20"></i> 
-							<span>Components</span>
+							<span>Doctor</span>
 						</a>
 						
 						<ul className={`submenu ${isLinkActive("/ramjan")}`}>
 							<li><Link to={"/fahim"}>Alert</Link></li>
 							<li><Link to={"/ramjan"}>Ramjan</Link></li>
-							<li>
-								<a href="component-breadcrumb.html">Breadcrumb</a>
-							</li>
 							
-							<li>
-								<a href="component-buttons.html">Buttons</a>
-							</li>
-							
-							<li>
-								<a href="component-card.html">Card</a>
-							</li>
-							
-							<li>
-								<a href="component-carousel.html">Carousel</a>
-							</li>
-							
-							<li>
-								<a href="component-dropdowns.html">Dropdowns</a>
-							</li>
-							
-							<li>
-								<a href="component-list-group.html">List Group</a>
-							</li>
-							
-							<li>
-								<a href="component-modal.html">Modal</a>
-							</li>
-							
-							<li>
-								<a href="component-navs.html">Navs</a>
-							</li>
-							
-							<li>
-								<a href="component-pagination.html">Pagination</a>
-							</li>
-							
-							<li>
-								<a href="component-progress.html">Progress</a>
-							</li>
-							
-							<li>
-								<a href="component-spinners.html">Spinners</a>
-							</li>
-							
-							<li>
-								<a href="component-tooltips.html">Tooltips</a>
-							</li>
 							
 						</ul>
 						
@@ -102,7 +56,7 @@ function Sidebar() {
 
 					<li className="sidebar-item  has-sub">
 						<a href="#" className='sidebar-link'>
-							<i data-feather="briefcase" width="20"></i> 
+							<i className="fa fa-users" width="20"></i> 
 							<span>Extra Components</span>
 						</a>
 						
