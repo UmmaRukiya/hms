@@ -110,7 +110,7 @@ function Dashboard() {
                         </div>
                         <div className="card">
                             <div className="card-header d-flex justify-content-between align-items-center">
-                                <h4 className="card-title">Orders Today</h4>
+                                <h4 className="card-title">Doctors List</h4>
                                 <div className="d-flex ">
                                     <i data-feather="download"></i>
                                 </div>

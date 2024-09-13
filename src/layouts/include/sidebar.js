@@ -22,7 +22,7 @@ function Sidebar() {
 	<div id="sidebar" className='active'>
         <div className="sidebar-wrapper active">
 			<div className="sidebar-header">
-				<img src="assets_admin/images/logo.svg" alt="" srcSet=""/>
+				<img src="./assets_admin/images/logo.svg" alt="" srcSet=""/>
 			</div>
 			<div className="sidebar-menu">
 				<ul className="menu">
@@ -313,6 +313,7 @@ function Sidebar() {
 				</ul>
 			</div>
 			<button className="sidebar-toggler btn x"><i data-feather="x"></i></button>
+           
 		</div>
     </div>
   )
