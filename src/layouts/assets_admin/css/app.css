@@ -493,7 +493,7 @@ footer {
 .form-group label {
   font-size: 0.755rem;
   text-transform: uppercase;
-  color: rgba(35, 28, 99, 0.7);
+  color: #032678;
   font-weight: 500;
 }
 .form-group small {
@@ -810,6 +810,7 @@ footer {
   box-shadow: 0 0 10px #ececec;
   left: -260px;
   transition: left 0.6s ease-out;
+  overflow-x: auto;
 }
 .sidebar-wrapper .sidebar-header {
   padding: 2rem 2rem 1rem;
@@ -839,7 +840,7 @@ footer {
 .sidebar-wrapper .menu .sidebar-link {
   display: block;
   padding: 0.7rem 1.5rem;
-  font-size: 0.85rem;
+  font-size: 0.93rem;
   display: flex;
   align-items: center;
   transition: all 0.5s;
@@ -852,7 +853,7 @@ footer {
   font-weight: 500;
   margin-left: 1rem;
   opacity: 0.8;
-  font-size: 16px;
+  
 }
 .sidebar-wrapper .menu .sidebar-item {
   list-style: none;
@@ -892,7 +893,7 @@ footer {
 .sidebar-wrapper .menu .submenu li a {
   padding: 0.7rem 3rem;
   display: block;
-  color: #676767;
+  color: #32798b;
   font-size: 0.90rem;
   font-weight: 500;
   letter-spacing: 0.5px;

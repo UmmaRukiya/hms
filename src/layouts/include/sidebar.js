@@ -22,11 +22,11 @@ function Sidebar() {
 	<div id="sidebar" className='active'>
         <div className="sidebar-wrapper active">
 			<div className="sidebar-header">
-				<img src="./assets_admin/images/logo.svg" alt="" srcSet=""/>
+				<img src="/images/hospital-logo.svg" alt="hospital logo" srcSet=""/>
 			</div>
 			<div className="sidebar-menu">
 				<ul className="menu">
-					<li className='sidebar-title'>HMS Menu</li>
+					<li className='sidebar-title'>HMS Menus</li>
 					<li onClick={activeMenu} className={`sidebar-item ${isLinkActive("/")}`}>
 						<Link to={"/"} className={`sidebar-link`}>
 							<i className="fa fa-hospital-o" width="20"></i> 
@@ -41,7 +41,7 @@ function Sidebar() {
 					</li> */}
 					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
 						<a href="#" className='sidebar-link'>
-							<i className="fa fa-stethoscope" width="20"></i> 
+							<i className="fa fa-user-md" width="20"></i> 
 							<span>Doctor</span>
 						</a>
 						
@@ -167,7 +167,7 @@ function Sidebar() {
 					</li>
 					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
 						<a href="#" className='sidebar-link'>
-							<i className="fa fa-stethoscope" width="20"></i> 
+							<i className="fa fa-bed" width="20"></i> 
 							<span>Room Manager</span>
 						</a>
 						
@@ -181,7 +181,7 @@ function Sidebar() {
 					</li>
 					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
 						<a href="#" className='sidebar-link'>
-							<i className="fa fa-hospital-o" width="20"></i> 
+							<i className="fa fa-h-square" width="20"></i> 
 							<span>Hospital Activities</span>
 						</a>
 						

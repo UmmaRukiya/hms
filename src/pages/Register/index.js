@@ -7,7 +7,7 @@ function Register() {
     <AuthLayout>
        
         <div className="text-center mb-5">
-            <img src="assets/images/favicon.svg" height="48" className='mb-4'/>
+            <img src="assets_admin/images/hospital-logo.png" height="48" className='mb-4'/>
             <h3>Sign Up</h3>
             <p>Please fill the form to register.</p>
         </div>
@@ -15,40 +15,35 @@ function Register() {
             <div className="row">
                 <div className="col-md-6 col-12">
                     <div className="form-group">
-                        <label for="first-name-column">First Name</label>
-                        <input type="text" id="first-name-column" className="form-control"  name="fname-column"/>
+                        <label htmlFor="first-name">First Name</label>
+                        <input type="text" id="first-name" className="form-control"  name="first-name"/>
                     </div>
                 </div>
                 <div className="col-md-6 col-12">
                     <div className="form-group">
-                        <label for="last-name-column">Last Name</label>
-                        <input type="text" id="last-name-column" className="form-control"  name="lname-column"/>
+                        <label htmlFor="last-name">Last Name</label>
+                        <input type="text" id="last-name" className="form-control"  name="last-name"/>
                     </div>
                 </div>
-                <div className="col-md-6 col-12">
+                <div className="col-md-12 col-12">
                     <div className="form-group">
-                        <label for="username-column">Username</label>
-                        <input type="text" id="username-column" className="form-control" name="username-column"/>
+                        <label htmlFor="email">Email</label>
+                        <input type="email" id="email" className="form-control" name="email"/>
                     </div>
                 </div>
-                <div className="col-md-6 col-12">
+                <div className="col-md-12 col-12">
                     <div className="form-group">
-                        <label for="country-floating">Country</label>
-                        <input type="text" id="country-floating" className="form-control" name="country-floating"/>
+                        <label htmlFor="contact-no">Contact Number</label>
+                        <input type="text" id="contact-no" className="form-control" name="contact-no"/>
                     </div>
                 </div>
-                <div className="col-md-6 col-12">
+                <div className="col-md-12 col-12">
                     <div className="form-group">
-                        <label for="company-column">Company</label>
-                        <input type="text" id="company-column" className="form-control" name="company-column"/>
+                        <label htmlFor="password">Password</label>
+                        <input type="text" id="password" className="form-control" name="password"/>
                     </div>
                 </div>
-                <div className="col-md-6 col-12">
-                    <div className="form-group">
-                        <label for="email-id-column">Email</label>
-                        <input type="email" id="email-id-column" className="form-control" name="email-id-column"/>
-                    </div>
-                </div>
+               
             </div>
                 <Link to="/login">Have an account? Login</Link>      
             <div className="clearfix">

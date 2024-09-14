@@ -7,15 +7,15 @@ function Login(){
         <AuthLayout>
             
             <div className="text-center mb-5">
-        <img src="assets/images/favicon.svg" height="48" className='mb-4'/>
+        <img src="./assets_admin/hospital-logo.svg" height="48" className='mb-4'/>
         <h3>Sign In</h3>
-        <p>Please sign in to continue to Voler.</p>
+        <p>Please sign in to continue to HMS.</p>
     </div>
     <form action="index.html">
         <div className="form-group position-relative has-icon-left">
-            <label for="username">Username</label>
+            <label htmlFor="email">Email</label>
             <div className="position-relative">
-                <input type="text" className="form-control" id="username"/>
+                <input type="email" className="form-control" id="email" name="email"/>
                 <div className="form-control-icon">
                     <i data-feather="user"></i>
                 </div>
@@ -23,7 +23,7 @@ function Login(){
         </div>
         <div className="form-group position-relative has-icon-left">
             <div className="clearfix">
-                <label for="password">Password</label>
+                <label htmlFor="password">Password</label>
                 <a href="auth-forgot-password.html" className='float-right'>
                     <small>Forgot password?</small>
                 </a>
@@ -37,10 +37,7 @@ function Login(){
         </div>
 
         <div className='form-check clearfix my-4'>
-            <div className="checkbox float-left">
-                <input type="checkbox" id="checkbox1" className='form-check-input' />
-                <label for="checkbox1">Remember me</label>
-            </div>
+           
             <div className="float-right">
                 <Link to="/register">Don't have an account?</Link> 
             </div>

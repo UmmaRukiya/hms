@@ -11,7 +11,7 @@ function Header() {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav d-flex align-items-center navbar-light ml-auto">
                     <li className="dropdown nav-icon">
-                        <a href="#" data-toggle="dropdown" className="nav-link  dropdown-toggle nav-link-lg nav-link-user">
+                        {/* <a href="#" data-toggle="dropdown" className="nav-link  dropdown-toggle nav-link-lg nav-link-user">
                             <div className="d-lg-inline-block">
                                 <i data-feather="bell"></i>
                             </div>
@@ -31,9 +31,13 @@ function Header() {
                                     </div>
                                 </li>
                             </ul>
-                        </div>
+                        </div> */}
+
+
+                        <button type='button' className='btn btn-info' ><i className="fa fa-sign-out" width="20"></i> Logout</button>
+                    
                     </li>
-                    <li className="dropdown nav-icon mr-2">
+                    {/* <li className="dropdown nav-icon mr-2">
                         <a href="#" data-toggle="dropdown" className="nav-link  dropdown-toggle nav-link-lg nav-link-user">
                             <div className="d-lg-inline-block">
                                 <i data-feather="mail"></i>
@@ -46,8 +50,8 @@ function Header() {
                             <div className="dropdown-divider"></div>
                             <a className="dropdown-item" href="#"><i data-feather="log-out"></i> Logout</a>
                         </div>
-                    </li>
-                    <li className="dropdown">
+                    </li> */}
+                    {/* <li className="dropdown">
                         <a href="#" data-toggle="dropdown" className="nav-link dropdown-toggle nav-link-lg nav-link-user">
                             <div className="avatar mr-1">
                                 <img src="assets_admin/images/avatar/avatar-s-1.png" alt="" srcSet=""/>
@@ -61,7 +65,7 @@ function Header() {
                             <div className="dropdown-divider"></div>
                             <a className="dropdown-item" href="#"><i data-feather="log-out"></i> Logout</a>
                         </div>
-                    </li>
+                    </li> */}
                 </ul>
             </div>
         </nav>
