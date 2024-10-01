@@ -7,7 +7,7 @@ function Register() {
     <AuthLayout>
        
         <div className="text-center mb-5">
-            <img src="assets_admin/images/logo.png" height="48" className='mb-4'/>
+            <img src="assets_admin/images/hospital-logo.png" height="48" className='mb-4'/>
             <h3>Sign Up</h3>
             <p>Please fill the form to register.</p>
         </div>
