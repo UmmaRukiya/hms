@@ -22,7 +22,7 @@ function Sidebar() {
 	<div id="sidebar" className='active'>
         <div className="sidebar-wrapper active">
 			<div className="sidebar-header">
-				<img src="/images/hospital-logo.svg" alt="hospital logo" srcSet=""/>
+				<img src="logo.png" alt="hospital logo" srcSet=""/>
 			</div>
 			<div className="sidebar-menu">
 				<ul className="menu">
@@ -183,6 +183,20 @@ function Sidebar() {
 						<a href="#" className='sidebar-link'>
 							<i className="fa fa-h-square" width="20"></i> 
 							<span>Hospital Activities</span>
+						</a>
+						
+						<ul className={`submenu ${isLinkActive("/ramjan")}`}>
+							<li><Link to={"/fahim"}>Alert</Link></li>
+							<li><Link to={"/ramjan"}>Ramjan</Link></li>
+							
+							
+						</ul>
+						
+					</li>
+					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
+						<a href="#" className='sidebar-link'>
+							<i className="fa fa-cogs" width="20"></i> 
+							<span>Setting</span>
 						</a>
 						
 						<ul className={`submenu ${isLinkActive("/ramjan")}`}>

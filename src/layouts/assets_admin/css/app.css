@@ -813,12 +813,12 @@ footer {
   overflow-x: auto;
 }
 .sidebar-wrapper .sidebar-header {
-  padding: 2rem 2rem 1rem;
+  padding: 1rem 3rem 0rem;
   font-size: 2rem;
   font-weight: bold;
 }
 .sidebar-wrapper .sidebar-header img {
-  height: 2.5rem;
+  height: 7.5rem;
 }
 .sidebar-wrapper .sidebar-toggler.x {
   position: absolute;
@@ -831,7 +831,7 @@ footer {
   margin-top: 2rem;
 }
 .sidebar-wrapper .menu .sidebar-title {
-  padding: 1.5rem 1.8rem 0.5rem;
+  padding: 0.5rem 1.8rem 0.5rem;
   font-size: 0.8rem;
   font-weight: 600;
   color: #888;
