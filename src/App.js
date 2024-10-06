@@ -4,8 +4,8 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 
 import Dashboard from './pages/Dashboard';
-import Fahim from './pages/Fahim';
-import Ramjan from './pages/Ramjan';
+import Doctor from './pages/Doctor';
+import DoctorAdd from './pages/Doctor/DoctorAdd';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Protected from './components/protected';
 function App() {
@@ -20,8 +20,23 @@ function App() {
               <Dashboard />
             </Protected>
           } />
-          <Route path="/fahim" element={<Fahim />} />
-          <Route path="/ramjan" element={<Ramjan />} />
+           <Route path={"/doctor"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <Doctor />
+          </Protected>
+        } />
+        <Route path={"/doctor/add"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <DoctorAdd />
+          </Protected>
+        } />
+        <Route path={"/doctor/edit/:id"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <DoctorAdd />
+          </Protected>
+        } />
+          
+          
         </Routes>
       </BrowserRouter>
   );

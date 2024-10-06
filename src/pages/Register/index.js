@@ -15,7 +15,7 @@ function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         await register(inputs);
-        //navigate('/login')
+        navigate('/login')
     }
   return (
     <AuthLayout>
