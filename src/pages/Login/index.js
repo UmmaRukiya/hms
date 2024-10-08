@@ -26,7 +26,7 @@ function Login(){
         <AuthLayout>
             
             <div className="text-center mb-5">
-        <img src="./assets_admin/hospital-logo.svg" height="48" className='mb-4'/>
+        <img src="log.png" height="48" className='mb-4'/>
         <h3>Sign In</h3>
         <p>Please sign in to continue to HMS.</p>
     </div>

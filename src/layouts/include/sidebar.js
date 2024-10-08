@@ -22,7 +22,7 @@ function Sidebar() {
 	<div id="sidebar" className='active'>
         <div className="sidebar-wrapper active">
 			<div className="sidebar-header">
-				<img src="logo.png" alt="hospital logo" srcSet=""/>
+				<img src="log.png" alt="hospital logo" srcSet=""/>
 			</div>
 			<div className="sidebar-menu">
 				<ul className="menu">
