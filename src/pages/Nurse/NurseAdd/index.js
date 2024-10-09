@@ -89,7 +89,7 @@ function DoctorAdd() {
                                     <label>Role ID</label>
                                 </div>
                                 <div className="col-md-4 form-group">
-                                    <input type="number" id="role_id" className="form-control" name="role_id" defaultValue={inputs.role_id}  onChange={handleChange} placeholder="dd/mm/yyyy"/>
+                                    <input type="number" id="role_id" className="form-control" name="role_id" defaultValue={inputs.role_id}  onChange={handleChange} placeholder="Role ID"/>
                                 </div>
                                 <div className="col-md-2">
                                     <label>Birth Date</label>
