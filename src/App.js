@@ -6,6 +6,8 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Doctor from './pages/Doctor';
 import DoctorAdd from './pages/Doctor/DoctorAdd';
+import Nurse from './pages/Nurse';
+import NurseAdd from './pages/Nurse/NurseAdd';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Protected from './components/protected';
 function App() {
@@ -33,6 +35,21 @@ function App() {
         <Route path={"/doctor/edit/:id"} element={
           <Protected isSignedIn={isSignedIn} >
             <DoctorAdd />
+          </Protected>
+        } />
+           <Route path={"/nurse"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <Nurse />
+          </Protected>
+        } />
+        <Route path={"/nurse/add"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <NurseAdd />
+          </Protected>
+        } />
+        <Route path={"/nurse/edit/:id"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <NurseAdd />
           </Protected>
         } />
           
