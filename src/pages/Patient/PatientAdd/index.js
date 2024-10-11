@@ -4,13 +4,13 @@ import AdminLayout from '../../../layouts/AdminLayout';
 import { useNavigate } from 'react-router-dom';
 import {useParams} from "react-router-dom";
 
-function DoctorAdd() {
-    const [inputs, setInputs] = useState({id:'',role_id:'', name_en:'', name_bn:'', email:'', contact_no_en:'', contact_no_bn:'', gender:'', birth_date:'', blood_id:'', image:'', present_address:'', permanent_address:'', status:''});
+function PatientAdd() {
+    const [inputs, setInputs] = useState({id:'',patient_id:'', name_en:'',  email:'', contact_no_en:'', gender:'', birth_date:'', blood_id:'', image:'', present_address:'', permanent_address:'', status:''});
     const navigate=useNavigate();
     const {id} = useParams();
     
     function getDatas(){
-        axios.get(`${process.env.REACT_APP_API_URL}/nurse/${id}`).then(function(response) {
+        axios.get(`${process.env.REACT_APP_API_URL}/patient/${id}`).then(function(response) {
             setInputs(response.data.data);
         });
     }
@@ -34,9 +34,9 @@ function DoctorAdd() {
         try{
             let apiurl='';
             if(inputs.id!=''){
-                apiurl=`/nurse/${inputs.id}`;
+                apiurl=`/patient/${inputs.id}`;
             }else{
-                apiurl=`/nurse/create`;
+                apiurl=`/patient/create`;
             }
             
             let response= await axios({
@@ -45,7 +45,7 @@ function DoctorAdd() {
                 url: `${process.env.REACT_APP_API_URL}${apiurl}`,
                 data: inputs
             });
-            navigate('/nurse')
+            navigate('/patient')
         } 
         catch(e){
             console.log(e);
@@ -57,7 +57,7 @@ function DoctorAdd() {
             <div className="page-title">
                 <div className="row">
                     <div className="col-12 col-md-6 order-md-1 order-last">
-                        <h3>Add New Nurse</h3>
+                        <h3>Add New Patient</h3>
                     </div>
                     <div className="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" className='breadcrumb-header'>
@@ -86,10 +86,10 @@ function DoctorAdd() {
                                     <input type="text" id="name_en" className="form-control" name="name_en" defaultValue={inputs.name_en}  onChange={handleChange}  placeholder="Name"/>
                                 </div>
                                 <div className="col-md-2">
-                                    <label>Role ID</label>
+                                    <label>Patient ID</label>
                                 </div>
                                 <div className="col-md-4 form-group">
-                                    <input type="number" id="role_id" className="form-control" name="role_id" defaultValue={inputs.role_id}  onChange={handleChange} placeholder="Role ID"/>
+                                    <input type="number" id="patient_id" className="form-control" name="patient_id" defaultValue={inputs.patient_id}  onChange={handleChange} placeholder="Patient ID"/>
                                 </div>
                                 <div className="col-md-2">
                                     <label>Birth Date</label>
@@ -137,7 +137,7 @@ function DoctorAdd() {
                                     <label>Present Address</label>
                                 </div>
                                 <div className="col-md-10 form-group">
-                                    <textarea rows="3"cols="50" defaultValue={inputs.present_address} name="present_address" onChange={handleChange} placeholder="Type your present address here..."/>
+                                    <textarea rows="3"cols="50" defaultValue={inputs.present_address} name="present_address"  onChange={handleChange} placeholder="Type your present address here..."/>
                             
                                 </div>
                                 <div className="col-md-2">
@@ -173,4 +173,4 @@ function DoctorAdd() {
   )
 }
 
-export default DoctorAdd
+export default PatientAdd

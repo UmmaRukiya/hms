@@ -57,9 +57,9 @@ function Sidebar() {
 							<span>Patient</span>
 						</a>
 						
-						<ul className={`submenu ${isLinkActive("/ramjan")}`}>
-							<li><Link to={"/fahim"}>Alert</Link></li>
-							<li><Link to={"/ramjan"}>Ramjan</Link></li>
+						<ul className={`submenu ${isLinkActive("/patient")} ${isLinkActive("/patient/add")}`}>
+						<li><Link to={"/patient"}>Patient List</Link></li>
+						<li><Link to={"/patient/add"}>Patient Add</Link></li>
 							
 							
 						</ul>

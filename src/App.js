@@ -6,6 +6,8 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Doctor from './pages/Doctor';
 import DoctorAdd from './pages/Doctor/DoctorAdd';
+import Patient from './pages/Patient';
+import PatientAdd from './pages/Patient/PatientAdd';
 import Nurse from './pages/Nurse';
 import NurseAdd from './pages/Nurse/NurseAdd';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -35,6 +37,21 @@ function App() {
         <Route path={"/doctor/edit/:id"} element={
           <Protected isSignedIn={isSignedIn} >
             <DoctorAdd />
+          </Protected>
+        } />
+           <Route path={"/patient"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <Patient />
+          </Protected>
+        } />
+        <Route path={"/patient/add"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <PatientAdd />
+          </Protected>
+        } />
+        <Route path={"/patient/edit/:id"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <PatientAdd />
           </Protected>
         } />
            <Route path={"/nurse"} element={
