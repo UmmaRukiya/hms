@@ -195,11 +195,14 @@ function Sidebar() {
 							<span>Setting</span>
 						</a>
 						
-						<ul className={`submenu ${isLinkActive("/ramjan")}`}>
-							<li><Link to={"/fahim"}>Alert</Link></li>
-							<li><Link to={"/ramjan"}>Ramjan</Link></li>
-							
-							
+						<ul className={`submenu ${isLinkActive("/department")} ${isLinkActive("/department/add")}`}>
+						<li><Link to={"/department"}>Department List</Link></li>
+						<li><Link to={"/department/add"}>Department Add</Link></li>
+						
+						</ul>
+						<ul className={`submenu ${isLinkActive("/designation")} ${isLinkActive("/designation/add")}`}>
+						<li><Link to={"/designation"}>Designation List</Link></li>
+						<li><Link to={"/designation/add"}>Designation Add</Link></li>
 						</ul>
 						
 					</li>

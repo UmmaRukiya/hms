@@ -10,6 +10,12 @@ import Patient from './pages/Patient';
 import PatientAdd from './pages/Patient/PatientAdd';
 import Nurse from './pages/Nurse';
 import NurseAdd from './pages/Nurse/NurseAdd';
+import Day from './pages/Day';
+import DayAdd from './pages/Day/DayAdd';
+import Department from './pages/Department';
+import DepartmentAdd from './pages/Department/DepartmentAdd';
+import Designation from './pages/Designation';
+import DesignationAdd from './pages/Designation/DesignationAdd';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Protected from './components/protected';
 function App() {
@@ -67,6 +73,51 @@ function App() {
         <Route path={"/nurse/edit/:id"} element={
           <Protected isSignedIn={isSignedIn} >
             <NurseAdd />
+          </Protected>
+        } />
+           <Route path={"/department"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <Department />
+          </Protected>
+        } />
+        <Route path={"/department/add"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <DepartmentAdd />
+          </Protected>
+        } />
+        <Route path={"/department/edit/:id"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <DepartmentAdd />
+          </Protected>
+        } />
+           <Route path={"/designation"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <Designation />
+          </Protected>
+        } />
+        <Route path={"/designation/add"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <DesignationAdd />
+          </Protected>
+        } />
+        <Route path={"/designation/edit/:id"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <DesignationAdd />
+          </Protected>
+        } />
+           <Route path={"/day"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <Day />
+          </Protected>
+        } />
+        <Route path={"/day/add"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <DayAdd />
+          </Protected>
+        } />
+        <Route path={"/day/edit/:id"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <DayAdd />
           </Protected>
         } />
           
