@@ -34,7 +34,7 @@ function DoctorAdd() {
         try{
             let apiurl='';
             if(inputs.id!=''){
-                apiurl=`/doctor/${inputs.id}`;
+                apiurl=`/doctor/edit/${inputs.id}`;
             }else{
                 apiurl=`/doctor/create`;
             }
@@ -48,7 +48,7 @@ function DoctorAdd() {
             navigate('/doctor')
         } 
         catch(e){
-            console.log(e);
+            // console.log(e);
         }
     }
   return (
@@ -81,38 +81,38 @@ function DoctorAdd() {
                                             <div className="row">
                                                 <div className="col-12">
                                                     <div className="form-group">
-                                                    <label for="first-name-vertical">Name</label>
+                                                    <label htmlFor="first-name-vertical">Name</label>
                                                     <input type="text" id="first-name-vertical" className="form-control" defaultValue={inputs.name} name="name" onChange={handleChange} placeholder="Full Name"/>
                                                     </div>
                                                 </div>
                                                 <div className="col-12">
                                                     <div className="form-group">
-                                                    <label for="email-id-vertical">Designation</label>
+                                                    <label htmlFor="email-id-vertical">Designation</label>
                                                     <input type="text" id="email-id-vertical" className="form-control" defaultValue={inputs.designation_id} name="designation_id" onChange={handleChange} placeholder="Designation"/>
                                                     </div>
                                                 </div>
                                                 <div className="col-12">
                                                     <div className="form-group">
-                                                    <label for="email-id-vertical">Department</label>
+                                                    <label htmlFor="email-id-vertical">Department</label>
                                                     <input type="text" id="email-id-vertical" className="form-control" defaultValue={inputs.department_id} name="department_id" onChange={handleChange} placeholder="Department"/>
                                                     </div>
                                                 </div>
                                                 <div className="col-12">
                                                     <div className="form-group">
-                                                    <label for="email-id-vertical">Specialist</label>
+                                                    <label htmlFor="email-id-vertical">Specialist</label>
                                                     <input type="text" id="email-id-vertical" className="form-control" defaultValue={inputs.specialist} name="specialist" onChange={handleChange} placeholder="Specialist"/>
                                                     </div>
                                                 </div>
                                                 <div className="col-12">
                                                     <div className="form-group">
-                                                    <label for="email-id-vertical">Education</label>
+                                                    <label htmlFor="email-id-vertical">Education</label>
                                                     <input type="text" id="email-id-vertical" className="form-control" defaultValue={inputs.education} name="education" onChange={handleChange} placeholder="Education"/>
                                                     </div>
                                                 </div>
                                                 
                                                 <div className="col-12">
                                                     <div className="form-group">
-                                                    <label for="email-id-vertical">Fees</label>
+                                                    <label htmlFor="email-id-vertical">Fees</label>
                                                     <input type="text" id="email-id-vertical" className="form-control" defaultValue={inputs.fees} name="fees" onChange={handleChange} placeholder="000.00"/>
                                                     </div>
                                                 </div>

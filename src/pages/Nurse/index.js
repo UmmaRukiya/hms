@@ -50,7 +50,7 @@ function Nurse() {
                                 <table className="table table-bordered mb-0">
                                     <thead>
                                         <tr>
-                                            <th>Id</th>
+                                           
                                             <th>Role Id</th>
                                             <th>Name</th>
                                             <th>Email</th>
@@ -69,7 +69,7 @@ function Nurse() {
                                     {data && data.map((d, key) =>
                                         <tr key={d.id}>
                                             <td>{d.role_id}</td>
-                                            <td className="text-bold-500">{d.name}</td>
+                                            <td className="text-bold-500">{d.name_en}</td>
                                             <td>{d.email}</td>
                                             <td>{d.contact_no_en}</td>
                                             <td>{d.gender}</td>

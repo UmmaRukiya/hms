@@ -80,7 +80,7 @@ function Patient() {
                                             <td>{d.permanent_address}</td>
                                             <td>{d.status}</td>
                                             <td>
-                                                <Link to={`/nurse/edit/${d.id}`} className='btn btn-info' >Edit</Link>
+                                                <Link to={`/patient/edit/${d.id}`} className='btn btn-info' >Edit</Link>
                                                 <button type='button' onClick={() => deleteData(d.id)} className='btn btn-danger'>Delete</button>
                                             </td>
                                         </tr>
