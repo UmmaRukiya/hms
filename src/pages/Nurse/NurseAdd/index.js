@@ -6,6 +6,8 @@ import {useParams} from "react-router-dom";
 
 function DoctorAdd() {
     const [inputs, setInputs] = useState({id:'',role_id:'', name_en:'', name_bn:'', email:'', contact_no_en:'', contact_no_bn:'', gender:'', birth_date:'', blood_id:'', image:'', present_address:'', permanent_address:'', status:''});
+    const [role, setRole] = useState([]);
+    const [blood, setBlood] = useState([]);
     const navigate=useNavigate();
     const {id} = useParams();
     
@@ -15,10 +17,20 @@ function DoctorAdd() {
         });
     }
 
+    function get_relation(){
+        axios.get(`${process.env.REACT_APP_API_URL}/role/index`).then(function(response) {
+            setRole(response.data.data);
+        });
+        axios.get(`${process.env.REACT_APP_API_URL}/blood/index`).then(function(response) {
+            setBlood(response.data.data);
+        });
+    }
+
     useEffect(() => {
         if(id){
             getDatas();
         }
+        get_relation();
     }, []);
 
     const handleChange = (event) => {
@@ -34,7 +46,7 @@ function DoctorAdd() {
         try{
             let apiurl='';
             if(inputs.id!=''){
-                apiurl=`/nurse/${inputs.id}`;
+                apiurl=`/nurse/edit/${inputs.id}`;
             }else{
                 apiurl=`/nurse/create`;
             }
@@ -87,10 +99,18 @@ function DoctorAdd() {
                                 </div>
                                 <div className="col-md-2">
                                     <label>Role ID</label>
+                                    {role.length > 0 && 
+                                        <select className="col-md-4 form-group" id="role_id" name='role_id' defaultValue={inputs.role_id} onChange={handleChange}>
+                                            <option value="">Select Role</option>
+                                            {role.map((d, key) =>
+                                                <option value={d.id}>{d.role_name}</option>
+                                            )}
+                                        </select>
+                                    }
                                 </div>
-                                <div className="col-md-4 form-group">
+                                {/* <div className="col-md-4 form-group">
                                     <input type="number" id="role_id" className="form-control" name="role_id" defaultValue={inputs.role_id}  onChange={handleChange} placeholder="Role ID"/>
-                                </div>
+                                </div> */}
                                 <div className="col-md-2">
                                     <label>Birth Date</label>
                                 </div>
@@ -117,10 +137,18 @@ function DoctorAdd() {
                                 </div>
                                 <div className="col-md-2">
                                     <label>Blood Group</label>
+                                    {blood.length > 0 && 
+                                        <select className="col-md-4 form-group" id="blood_id" name='blood_id' defaultValue={inputs.blood_id} onChange={handleChange}>
+                                            <option value="">Select Blood</option>
+                                            {blood.map((d, key) =>
+                                                <option value={d.id}>{d.blood_type_name}</option>
+                                            )}
+                                        </select>
+                                    }
                                 </div>
-                                <div className="col-md-4 form-group">
+                                {/* <div className="col-md-4 form-group">
                                     <input type="text" id="blood_id" className="form-control" name="blood_id" defaultValue={inputs.blood_id}  onChange={handleChange} placeholder="Blood Group"/>
-                                </div>
+                                </div> */}
                                 <div className="col-md-2">
                                     <label>Image</label>
                                 </div>

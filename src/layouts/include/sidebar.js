@@ -22,7 +22,7 @@ function Sidebar() {
 	<div id="sidebar" className='active'>
         <div className="sidebar-wrapper active">
 			<div className="sidebar-header">
-				<img src="log.png" alt="hospital logo" srcSet=""/>
+				<img src="\log.png" alt="hospital logo" srcSet=""/>
 			</div>
 			<div className="sidebar-menu">
 				<ul className="menu">
@@ -60,8 +60,6 @@ function Sidebar() {
 						<ul className={`submenu ${isLinkActive("/patient")} ${isLinkActive("/patient/add")}`}>
 						<li><Link to={"/patient"}>Patient List</Link></li>
 						<li><Link to={"/patient/add"}>Patient Add</Link></li>
-							
-							
 						</ul>
 						
 					</li>
@@ -135,6 +133,18 @@ function Sidebar() {
 					</li>
 					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
 						<a href="#" className='sidebar-link'>
+							<i className="fa fa-tint" width="20"></i> 
+							<span>Blood</span>
+						</a>
+						
+						<ul className={`submenu ${isLinkActive("/blood")} ${isLinkActive("/blood/add")}`}>
+						<li><Link to={"/blood"}>Blood List</Link></li>
+						<li><Link to={"/blood/add"}>Blood Add</Link></li>
+						</ul>
+						
+					</li>
+					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
+						<a href="#" className='sidebar-link'>
 							<i className="fa fa-user-plus" width="20"></i> 
 							<span>Account Manager</span>
 						</a>
@@ -195,134 +205,15 @@ function Sidebar() {
 							<span>Setting</span>
 						</a>
 						
-						<ul className={`submenu ${isLinkActive("/department")} ${isLinkActive("/department/add")}`}>
+						<ul className={`submenu ${isLinkActive("/department")} ${isLinkActive("/designation")}  ${isLinkActive("/shift")}  ${isLinkActive("/day")}`}>
 						<li><Link to={"/department"}>Department List</Link></li>
-						<li><Link to={"/department/add"}>Department Add</Link></li>
-						
-						</ul>
-						<ul className={`submenu ${isLinkActive("/designation")} ${isLinkActive("/designation/add")}`}>
 						<li><Link to={"/designation"}>Designation List</Link></li>
-						<li><Link to={"/designation/add"}>Designation Add</Link></li>
+						<li><Link to={"/shift"}>Shift List</Link></li>
+						<li><Link to={"/day"}>Day List</Link></li>
 						</ul>
 						
 					</li>
 					
-
-					{/* <li className="sidebar-item  has-sub">
-						<a href="#" className='sidebar-link'>
-							<i className="fa fa-users" width="20"></i> 
-							<span>Extra Components</span>
-						</a>
-						
-						<ul className="submenu ">
-							
-							<li>
-								<a href="component-extra-avatar.html">Avatar</a>
-							</li>
-							
-							<li>
-								<a href="component-extra-divider.html">Divider</a>
-							</li>
-							
-						</ul>
-						
-					</li>
-
-					<li className='sidebar-title'>Forms &amp; Tables</li>
-					
-					<li className="sidebar-item  has-sub">
-						<a href="#" className='sidebar-link'>
-							<i data-feather="file-text" width="20"></i> 
-							<span>Form Elements</span>
-						</a>
-						
-						<ul className="submenu ">
-							
-							<li>
-								<a href="form-element-input.html">Input</a>
-							</li>
-							
-							<li>
-								<a href="form-element-input-group.html">Input Group</a>
-							</li>
-							
-							<li>
-								<a href="form-element-select.html">Select</a>
-							</li>
-							
-							<li>
-								<a href="form-element-radio.html">Radio</a>
-							</li>
-							
-							<li>
-								<a href="form-element-checkbox.html">Checkbox</a>
-							</li>
-							
-							<li>
-								<a href="form-element-textarea.html">Textarea</a>
-							</li>
-							
-						</ul>
-						
-					</li>
-
-					<li className="sidebar-item  ">
-						<a href="form-layout.html" className='sidebar-link'>
-							<i data-feather="layout" width="20"></i> 
-							<span>Form Layout</span>
-						</a>
-						
-					</li>
-
-					<li className="sidebar-item  ">
-						<a href="form-editor.html" className='sidebar-link'>
-							<i data-feather="layers" width="20"></i> 
-							<span>Form Editor</span>
-						</a>
-						
-					</li>
-
-					<li className="sidebar-item  ">
-						<a href="table.html" className='sidebar-link'>
-							<i data-feather="grid" width="20"></i> 
-							<span>Table</span>
-						</a>
-						
-					</li>
-
-					<li className="sidebar-item  ">
-						<a href="table-datatable.html" className='sidebar-link'>
-							<i data-feather="file-plus" width="20"></i> 
-							<span>Datatable</span>
-						</a>
-						
-					</li>
-
-					<li className='sidebar-title'>Extra UI</li>
-				
-					<li className="sidebar-item  has-sub">
-						<a href="#" className='sidebar-link'>
-							<i data-feather="user" width="20"></i> 
-							<span>Widgets</span>
-						</a>
-						
-						<ul className="submenu ">
-							
-							<li>
-								<a href="ui-chatbox.html">Chatbox</a>
-							</li>
-							
-							<li>
-								<a href="ui-pricing.html">Pricing</a>
-							</li>
-							
-							<li>
-								<a href="ui-todolist.html">To-do List</a>
-							</li>
-							
-						</ul>
-						
-					</li> */}
 				</ul>
 			</div>
 			<button className="sidebar-toggler btn x"><i data-feather="x"></i></button>

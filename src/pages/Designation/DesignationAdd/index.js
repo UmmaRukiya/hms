@@ -4,7 +4,7 @@ import AdminLayout from '../../../layouts/AdminLayout';
 import { useNavigate } from 'react-router-dom';
 import {useParams} from "react-router-dom";
 
-function DayAdd() {
+function DesignationAdd() {
     const [inputs, setInputs] = useState({id:'',designationdesig_name:'',desig_des:'', status:''});
     const navigate=useNavigate();
     const {id} = useParams();
@@ -34,7 +34,7 @@ function DayAdd() {
         try{
             let apiurl='';
             if(inputs.id!=''){
-                apiurl=`/designation/edit/${inputs.id}`;
+                apiurl=`/designation/${inputs.id}`;
             }else{
                 apiurl=`/designation/create`;
             }
@@ -87,7 +87,7 @@ function DayAdd() {
                                                 </div>
                                                 <div className="col-12">
                                                     <div className="form-group">
-                                                    <label htmlFor="desig_des">Status</label>
+                                                    <label htmlFor="desig_des">Description</label>
                                                     <input type="text" id="desig_des" className="form-control" defaultValue={inputs.desig_des} name="desig_des" onChange={handleChange} placeholder="Current status.."/>
                                                     </div>
                                                 </div>
@@ -117,4 +117,4 @@ function DayAdd() {
   )
 }
 
-export default DayAdd
+export default DesignationAdd

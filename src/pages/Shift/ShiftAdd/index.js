@@ -1,16 +1,17 @@
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import AdminLayout from '../../../layouts/AdminLayout';
 import { useNavigate } from 'react-router-dom';
 import {useParams} from "react-router-dom";
 
-function DepartmentAdd() {
-    const [inputs, setInputs] = useState({id:'',dep_name:'', dep_des:'', status:''});
+function BloodAdd() {
+    const [inputs, setInputs] = useState({id: '', shift_name:'', start_time:'', end_time:'', status:''});
     const navigate=useNavigate();
     const {id} = useParams();
     
     function getDatas(){
-        axios.get(`${process.env.REACT_APP_API_URL}/department/${id}`).then(function(response) {
+        axios.get(`${process.env.REACT_APP_API_URL}/shift/${id}`).then(function(response) {
             setInputs(response.data.data);
         });
     }
@@ -34,9 +35,9 @@ function DepartmentAdd() {
         try{
             let apiurl='';
             if(inputs.id!=''){
-                apiurl=`/department/${inputs.id}`;
+                apiurl=`/shift/${inputs.id}`;
             }else{
-                apiurl=`/department/create`;
+                apiurl=`/shift/create`;
             }
             
             let response= await axios({
@@ -45,7 +46,7 @@ function DepartmentAdd() {
                 url: `${process.env.REACT_APP_API_URL}${apiurl}`,
                 data: inputs
             });
-            navigate('/department')
+            navigate('/shift')
         } 
         catch(e){
             console.log(e);
@@ -57,13 +58,13 @@ function DepartmentAdd() {
             <div className="page-title">
                 <div className="row">
                     <div className="col-12 col-md-6 order-md-1 order-last">
-                        <h3>Add Department</h3>
+                        <h3>Add New Shift</h3>
                     </div>
                     <div className="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" className='breadcrumb-header'>
                             <ol className="breadcrumb">
                                 <li className="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                                <li to={'/department/add'} className='btn btn-primary float-right' >Add New</li>
+                                <li className="breadcrumb-item active" aria-current="page">Add New</li>
                             </ol>
                         </nav>
                     </div>
@@ -78,31 +79,39 @@ function DepartmentAdd() {
                                 <div className="card-body">
                                     <form className="form form-vertical" onSubmit={handleSubmit}>
                                         <div className="form-body">
-                                            <div className="row">
-                                                <div className="col-12">
-                                                    <div className="form-group">
-                                                    <label htmlFor="dep_name">Name</label>
-                                                    <input type="text" id="dep_name" className="form-control" defaultValue={inputs.dep_name} name="dep_name" onChange={handleChange} placeholder="day Name"/>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12">
-                                                    <div className="form-group">
-                                                    <label htmlFor="dep_des">Description</label>
-                                                    <input type="text" id="dep_des" className="form-control" defaultValue={inputs.dep_des} name="dep_des" onChange={handleChange} placeholder="Current status.."/>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12">
-                                                    <div className="form-group">
-                                                    <label htmlFor="status">Status</label>
-                                                    <input type="text" id="status" className="form-control" defaultValue={inputs.status} name="status" onChange={handleChange} placeholder="Current status.."/>
-                                                    </div>
-                                                </div>
-                                               
-                                                <div className="col-12 d-flex justify-content-end">
+                                        <div className="row">
+                                <div className="col-md-2">
+                                    <label > Name</label>
+                                </div>
+                                <div className="col-md-10 form-group">
+                                    <input type="text" id="shift_name" className="form-control" name="shift_name" defaultValue={inputs.shift_name}  onChange={handleChange}  placeholder="Name of Shift"/>
+                                </div>
+                               
+                                <div className="col-md-2">
+                                    <label > Start Time</label>
+                                </div>
+                                <div className="col-md-10 form-group">
+                                    <input type="time" id="start_time" className="form-control" name="start_time" defaultValue={inputs.start_time}  onChange={handleChange}  placeholder="Shift Start Time.."/>
+                                </div>
+                                <div className="col-md-2">
+                                    <label > End Time</label>
+                                </div>
+                                <div className="col-md-10 form-group">
+                                    <input type="time" id="end_time" className="form-control" name="end_time" defaultValue={inputs.end_time}  onChange={handleChange}  placeholder="Shift End Time.."/>
+                                </div>
+                               
+                                <div className="col-md-2">
+                                    <label>Status</label>
+                                </div>
+                                <div className="col-md-4 form-group">
+                                    <input type="text" id="status" className="form-control" name="status" defaultValue={inputs.status}  onChange={handleChange} placeholder="Status"/>
+                                </div>
+                                <div className="col-12 d-flex justify-content-end">
                                                     <button type="submit" className="btn btn-primary mr-1 mb-1">Submit</button>
                                                     <button type="reset" className="btn btn-light-secondary mr-1 mb-1">Reset</button>
                                                 </div>
-                                            </div>
+                            </div>
+                        
                                         </div>
                                     </form>
                                 </div>
@@ -117,4 +126,4 @@ function DepartmentAdd() {
   )
 }
 
-export default DepartmentAdd
+export default BloodAdd

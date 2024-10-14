@@ -10,6 +10,10 @@ import Patient from './pages/Patient';
 import PatientAdd from './pages/Patient/PatientAdd';
 import Nurse from './pages/Nurse';
 import NurseAdd from './pages/Nurse/NurseAdd';
+import Blood from './pages/Blood';
+import BloodAdd from './pages/Blood/BloodAdd';
+import Shift from './pages/Shift';
+import ShiftAdd from './pages/Shift/ShiftAdd';
 import Day from './pages/Day';
 import DayAdd from './pages/Day/DayAdd';
 import Department from './pages/Department';
@@ -118,6 +122,36 @@ function App() {
         <Route path={"/day/edit/:id"} element={
           <Protected isSignedIn={isSignedIn} >
             <DayAdd />
+          </Protected>
+        } />
+         <Route path={"/blood"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <Blood />
+          </Protected>
+        } />
+        <Route path={"/blood/add"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <BloodAdd />
+          </Protected>
+        } />
+        <Route path={"/blood/edit/:id"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <BloodAdd />
+          </Protected>
+        } />
+         <Route path={"/shift"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <Shift />
+          </Protected>
+        } />
+        <Route path={"/shift/add"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <ShiftAdd />
+          </Protected>
+        } />
+        <Route path={"/shift/edit/:id"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <ShiftAdd />
           </Protected>
         } />
           
