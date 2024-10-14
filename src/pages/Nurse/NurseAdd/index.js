@@ -99,6 +99,8 @@ function DoctorAdd() {
                                 </div>
                                 <div className="col-md-2">
                                     <label>Role ID</label>
+                                </div>
+                                <div className="col-md-4">
                                     {role.length > 0 && 
                                         <select className="col-md-4 form-group" id="role_id" name='role_id' defaultValue={inputs.role_id} onChange={handleChange}>
                                             <option value="">Select Role</option>
@@ -108,9 +110,7 @@ function DoctorAdd() {
                                         </select>
                                     }
                                 </div>
-                                {/* <div className="col-md-4 form-group">
-                                    <input type="number" id="role_id" className="form-control" name="role_id" defaultValue={inputs.role_id}  onChange={handleChange} placeholder="Role ID"/>
-                                </div> */}
+                                
                                 <div className="col-md-2">
                                     <label>Birth Date</label>
                                 </div>
@@ -137,11 +137,13 @@ function DoctorAdd() {
                                 </div>
                                 <div className="col-md-2">
                                     <label>Blood Group</label>
+                                </div>
+                                <div className="col-md-4 ">
                                     {blood.length > 0 && 
                                         <select className="col-md-4 form-group" id="blood_id" name='blood_id' defaultValue={inputs.blood_id} onChange={handleChange}>
                                             <option value="">Select Blood</option>
                                             {blood.map((d, key) =>
-                                                <option value={d.id}>{d.blood_type_name}</option>
+                                                <option value={d.id}>{d.blood_group}</option>
                                             )}
                                         </select>
                                     }

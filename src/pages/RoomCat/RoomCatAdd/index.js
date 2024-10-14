@@ -4,13 +4,13 @@ import AdminLayout from '../../../layouts/AdminLayout';
 import { useNavigate } from 'react-router-dom';
 import {useParams} from "react-router-dom";
 
-function DesignationAdd() {
-    const [inputs, setInputs] = useState({id:'',designationdesig_name:'',desig_des:'', status:''});
+function RoomCatAdd() {
+    const [inputs, setInputs] = useState({id: '', room_cat_name: '', status:''});
     const navigate=useNavigate();
     const {id} = useParams();
     
     function getDatas(){
-        axios.get(`${process.env.REACT_APP_API_URL}/designation/${id}`).then(function(response) {
+        axios.get(`${process.env.REACT_APP_API_URL}/roomcat/${id}`).then(function(response) {
             setInputs(response.data.data);
         });
     }
@@ -34,9 +34,9 @@ function DesignationAdd() {
         try{
             let apiurl='';
             if(inputs.id!=''){
-                apiurl=`/designation/${inputs.id}`;
+                apiurl=`/roomcat/${inputs.id}`;
             }else{
-                apiurl=`/designation/create`;
+                apiurl=`/roomcat/create`;
             }
             
             let response= await axios({
@@ -45,7 +45,7 @@ function DesignationAdd() {
                 url: `${process.env.REACT_APP_API_URL}${apiurl}`,
                 data: inputs
             });
-            navigate('/designation')
+            navigate('/roomcat')
         } 
         catch(e){
             console.log(e);
@@ -57,13 +57,13 @@ function DesignationAdd() {
             <div className="page-title">
                 <div className="row">
                     <div className="col-12 col-md-6 order-md-1 order-last">
-                        <h3>Add New designation</h3>
+                        <h3>Add New Room Catagories</h3>
                     </div>
                     <div className="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" className='breadcrumb-header'>
                             <ol className="breadcrumb">
                                 <li className="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                                <li to={'/designation/add'} className='btn btn-primary float-right' >Add New</li>
+                                <li className="breadcrumb-item active" aria-current="page">Add New</li>
                             </ol>
                         </nav>
                     </div>
@@ -78,31 +78,26 @@ function DesignationAdd() {
                                 <div className="card-body">
                                     <form className="form form-vertical" onSubmit={handleSubmit}>
                                         <div className="form-body">
-                                            <div className="row">
-                                                <div className="col-12">
-                                                    <div className="form-group">
-                                                    <label htmlFor="desig_name">Name</label>
-                                                    <input type="text" id="desig_name" className="form-control" defaultValue={inputs.desig_name} name="desig_name" onChange={handleChange} placeholder="Designation Name"/>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12">
-                                                    <div className="form-group">
-                                                    <label htmlFor="desig_des">Description</label>
-                                                    <input type="text" id="desig_des" className="form-control" defaultValue={inputs.desig_des} name="desig_des" onChange={handleChange} placeholder="Designation describe.."/>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12">
-                                                    <div className="form-group">
-                                                    <label htmlFor="status">Status</label>
-                                                    <input type="text" id="status" className="form-control" defaultValue={inputs.status} name="status" onChange={handleChange} placeholder="Current status.."/>
-                                                    </div>
-                                                </div>
-                                               
-                                                <div className="col-12 d-flex justify-content-end">
+                                        <div className="row">
+                                <div className="col-md-2">
+                                    <label >Catagories</label>
+                                </div>
+                                <div className="col-md-10 form-group">
+                                    <input type="text" id="room_cat_name" className="form-control" name="room_cat_name" defaultValue={inputs.room_cat_name}  onChange={handleChange}  placeholder="All Type Room Catagories.."/>
+                                </div>
+                               
+                                <div className="col-md-2">
+                                    <label>Status</label>
+                                </div>
+                                <div className="col-md-10 form-group">
+                                    <input type="text" id="status" className="form-control" name="status" defaultValue={inputs.status}  onChange={handleChange} placeholder="Status"/>
+                                </div>
+                                <div className="col-12 d-flex justify-content-end">
                                                     <button type="submit" className="btn btn-primary mr-1 mb-1">Submit</button>
                                                     <button type="reset" className="btn btn-light-secondary mr-1 mb-1">Reset</button>
                                                 </div>
-                                            </div>
+                            </div>
+                        
                                         </div>
                                     </form>
                                 </div>
@@ -117,4 +112,4 @@ function DesignationAdd() {
   )
 }
 
-export default DesignationAdd
+export default RoomCatAdd

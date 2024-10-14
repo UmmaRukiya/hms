@@ -20,6 +20,8 @@ import Department from './pages/Department';
 import DepartmentAdd from './pages/Department/DepartmentAdd';
 import Designation from './pages/Designation';
 import DesignationAdd from './pages/Designation/DesignationAdd';
+import RoomCat from './pages/RoomCat';
+import RoomCatAdd from './pages/RoomCat/RoomCatAdd';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Protected from './components/protected';
 function App() {
@@ -152,6 +154,21 @@ function App() {
         <Route path={"/shift/edit/:id"} element={
           <Protected isSignedIn={isSignedIn} >
             <ShiftAdd />
+          </Protected>
+        } />
+         <Route path={"/roomcat"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <RoomCat />
+          </Protected>
+        } />
+        <Route path={"/roomcat/add"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <RoomCatAdd />
+          </Protected>
+        } />
+        <Route path={"/roomcat/edit/:id"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <RoomCatAdd />
           </Protected>
         } />
           
