@@ -22,6 +22,10 @@ import Designation from './pages/Designation';
 import DesignationAdd from './pages/Designation/DesignationAdd';
 import RoomCat from './pages/RoomCat';
 import RoomCatAdd from './pages/RoomCat/RoomCatAdd';
+import RoomList from './pages/RoomList';
+import RoomListAdd from './pages/RoomList/RoomListAdd';
+import Employe from './pages/Employe';
+import EmployeAdd from './pages/Employe/EmployeAdd';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Protected from './components/protected';
 function App() {
@@ -171,7 +175,36 @@ function App() {
             <RoomCatAdd />
           </Protected>
         } />
-          
+         <Route path={"/roomlist"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <RoomList />
+          </Protected>
+        } />
+        <Route path={"/roomlist/add"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <RoomListAdd />
+          </Protected>
+        } />
+        <Route path={"/roomlist/edit/:id"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <RoomListAdd />
+          </Protected>
+        } />
+           <Route path={"/employe"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <Employe />
+          </Protected>
+        } />
+        <Route path={"/employe/add"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <EmployeAdd />
+          </Protected>
+        } />
+        <Route path={"/employe/edit/:id"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <EmployeAdd />
+          </Protected>
+        } />
           
         </Routes>
       </BrowserRouter>

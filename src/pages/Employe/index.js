@@ -3,19 +3,19 @@ import axios from 'axios';
 import AdminLayout from '../../layouts/AdminLayout';
 import { Link } from 'react-router-dom';
 
-function Patient() {
+function Employe() {
     const[data, setData]=useState([]);
     useEffect(() => {
         getDatas();
     }, []);
 
     function getDatas() {
-        axios.get(`${process.env.REACT_APP_API_URL}/patient/index`).then(function(response) {
+        axios.get(`${process.env.REACT_APP_API_URL}/employe/index`).then(function(response) {
             setData(response.data.data);
         });
     }
     const deleteData = (id) => {
-        axios.delete(`${process.env.REACT_APP_API_URL}/patient/${id}`).then(function(response){
+        axios.delete(`${process.env.REACT_APP_API_URL}/employe/${id}`).then(function(response){
             getDatas();
         });
     }
@@ -25,7 +25,7 @@ function Patient() {
             <div className="page-title">
                 <div className="row">
                     <div className="col-12 col-md-6 order-md-1 order-last">
-                        <h3>Patient</h3>
+                        <h3>Employe</h3>
                     </div>
                     <div className="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" className='breadcrumb-header'>
@@ -42,8 +42,8 @@ function Patient() {
                 <div className="col-12">
                     <div className="card">
                         <div className="card-header">
-                            <h4 className="card-title">All Patient</h4>
-                            <Link to={'/patient/add'} className='btn btn-primary float-right' >Add New</Link>
+                            <h4 className="card-title">All Employe</h4>
+                            <Link to={'/employe/add'} className='btn btn-primary float-right' >Add New</Link>
                         </div>
                         <div className="card-content">
                             <div className="table-responsive">
@@ -51,7 +51,7 @@ function Patient() {
                                     <thead>
                                         <tr>
                                             
-                                            <th>Patient ID</th>
+                                            <th>Role ID</th>
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Contact</th>
@@ -68,19 +68,19 @@ function Patient() {
                                     <tbody>
                                     {data && data.map((d, key) =>
                                         <tr key={d.id}>
-                                            <td>{d.patient_id}</td>
+                                            <td>{d.role?.role_name}</td>
                                             <td className="text-bold-500">{d.name_en}</td>
                                             <td>{d.email}</td>
                                             <td>{d.contact_no_en}</td>
                                             <td>{d.gender}</td>
                                             <td>{d.birth_date}</td>
-                                            <td>{d.blood_id}</td>
+                                            <td>{d.blood?.blood_group}</td>
                                             <td>{d.image}</td>
                                             <td>{d.present_address}</td>
                                             <td>{d.permanent_address}</td>
                                             <td>{d.status}</td>
                                             <td>
-                                                <Link to={`/patient/edit/${d.id}`} className='btn btn-info' >Edit</Link>
+                                                <Link to={`/employe/edit/${d.id}`} className='btn btn-info' >Edit</Link>
                                                 <button type='button' onClick={() => deleteData(d.id)} className='btn btn-danger'>Delete</button>
                                             </td>
                                         </tr>
@@ -98,4 +98,4 @@ function Patient() {
   )
 }
 
-export default Patient
+export default Employe

@@ -80,12 +80,9 @@ function Sidebar() {
 							<i className="fa fa-street-view" width="20"></i> 
 							<span>Stuff</span>
 						</a>
-						
-						<ul className={`submenu ${isLinkActive("/ramjan")}`}>
-							<li><Link to={"/fahim"}>Alert</Link></li>
-							<li><Link to={"/ramjan"}>Ramjan</Link></li>
-							
-							
+						<ul className={`submenu ${isLinkActive("/employe")} ${isLinkActive("/employe/add")}`}>
+						<li><Link to={"/employe"}>Employe List</Link></li>
+						<li><Link to={"/employe/add"}>Employe Add</Link></li>
 						</ul>
 						
 					</li>
@@ -176,14 +173,10 @@ function Sidebar() {
 							<i className="fa fa-bed" width="20"></i> 
 							<span>Room Manager</span>
 						</a>
-						
-						<ul className={`submenu ${isLinkActive("/ramjan")}`}>
-							<li><Link to={"/fahim"}>Alert</Link></li>
-							<li><Link to={"/ramjan"}>Ramjan</Link></li>
-							
-							
+						<ul className={`submenu ${isLinkActive("/roomlist")} ${isLinkActive("/roomlist/add")}`}>
+						<li><Link to={"/roomlist"}>Room List</Link></li>
+						<li><Link to={"/roomlist/add"}>Room Add</Link></li>
 						</ul>
-						
 					</li>
 					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
 						<a href="#" className='sidebar-link'>
@@ -205,11 +198,12 @@ function Sidebar() {
 							<span>Setting</span>
 						</a>
 						
-						<ul className={`submenu ${isLinkActive("/department")} ${isLinkActive("/designation")}  ${isLinkActive("/shift")}  ${isLinkActive("/day")}`}>
+						<ul className={`submenu ${isLinkActive("/department")} ${isLinkActive("/designation")}  ${isLinkActive("/shift")}  ${isLinkActive("/day")} ${isLinkActive("/roomcat")}`}>
 						<li><Link to={"/department"}>Department List</Link></li>
 						<li><Link to={"/designation"}>Designation List</Link></li>
 						<li><Link to={"/shift"}>Shift List</Link></li>
 						<li><Link to={"/day"}>Day List</Link></li>
+						<li><Link to={"/roomcat"}>Room Catagories List</Link></li>
 						</ul>
 						
 					</li>
