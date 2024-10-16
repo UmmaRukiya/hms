@@ -97,6 +97,8 @@ function EmployeAdd() {
                                 </div>
                                 <div className="col-md-2">
                                     <label>Role ID</label>
+                                </div>
+                                <div className="col-md-4">
                                     {role.length > 0 && 
                                         <select className="form-control" id="role_id" name='role_id' defaultValue={inputs.role_id} onChange={handleChange}>
                                             <option value="">Select Role</option>
@@ -133,6 +135,8 @@ function EmployeAdd() {
                                 </div>
                                 <div className="col-md-2">
                                     <label>Blood Group</label>
+                                </div>
+                                <div className="col-md-4">
                                     {blood.length > 0 && 
                                         <select className="form-control" id="blood_id" name='blood_id' defaultValue={inputs.blood_id} onChange={handleChange}>
                                             <option value="">Select Blood</option>

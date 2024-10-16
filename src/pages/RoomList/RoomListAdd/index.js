@@ -127,7 +127,7 @@ function RoomListAdd() {
                                                 </div>
                                                 <div className="col-12">
                                                     <div className="form-group">
-                                                    <label htmlFor="price">Description</label>
+                                                    <label htmlFor="price">Price</label>
                                                     <input type="number" id="price" className="form-control" defaultValue={inputs.price} name="price" onChange={handleChange} placeholder="0000.00"/>
                                                     </div>
                                                 </div>

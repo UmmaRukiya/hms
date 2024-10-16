@@ -42,7 +42,7 @@ function RoomList() {
                 <div className="col-12">
                     <div className="card">
                         <div className="card-header">
-                            <h4 className="card-title">All Designation</h4>
+                            <h4 className="card-title">All Room</h4>
                             <Link to={'/roomlist/add'} className='btn btn-primary float-right' >Add New</Link>
                         </div>
                         <div className="card-content">
@@ -63,7 +63,7 @@ function RoomList() {
                                     <tbody>
                                     {data && data.map((d, key) =>
                                         <tr key={d.id}>
-                                            <td>{d.room_cat_id?.room_cat_name}</td>
+                                            <td>{d.room_cat?.room_cat_name}</td>
                                             <td>{d.room_no}</td>
                                             <td>{d.floor_no}</td>
                                             <td>{d.description}</td>
