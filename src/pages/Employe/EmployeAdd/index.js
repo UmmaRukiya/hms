@@ -8,6 +8,8 @@ function EmployeAdd() {
     const [inputs, setInputs] = useState({id:'',role_id:'', name_en:'',  email:'', contact_no_en:'', gender:'', birth_date:'', blood_id:'', image:'', present_address:'', permanent_address:'', status:''});
     const [role, setRole] = useState([]);
     const [blood, setBlood] = useState([]);
+    const [selectedfile, setSelectedFile] = useState([]);//for image
+     
     const navigate=useNavigate();
     const {id} = useParams();
     
@@ -36,15 +38,27 @@ function EmployeAdd() {
         const value = event.target.value;
         setInputs(values => ({...values, [name]: value}));
     }
+     //for image 
+     const handelFile = (e) => {
+        setSelectedFile(e.target.files)
+    }
 
     const handleSubmit = async(e) => {
         e.preventDefault();
         console.log(inputs)
-        
+        const formData = new FormData();
+
+        for (let i = 0; i < selectedfile.length; i++) {
+            formData.append('files[]', selectedfile[i])
+        }
+
+        for (const property in inputs) {
+            formData.append(property, inputs[property])
+        }    
         try{
             let apiurl='';
             if(inputs.id!=''){
-                apiurl=`/employe/edit/${inputs.id}`;
+                apiurl=`/employe/${inputs.id}`;
             }else{
                 apiurl=`/employe/create`;
             }
@@ -151,7 +165,7 @@ function EmployeAdd() {
                                     <label>Image</label>
                                 </div>
                                 <div className="col-md-4 form-group">
-                                    <input type="file" id="image" className="form-control" name="image" defaultValue={inputs.image}  onChange={handleChange} placeholder="Image"/>
+                                <input type="file" id="image" className="form-control" multiple defaultValue={inputs.image} name="image" onChange={handelFile} placeholder="Image" />
                                 </div>
                                 <div className="col-md-2">
                                     <label>Status</label>

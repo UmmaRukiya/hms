@@ -78,7 +78,7 @@ function Sidebar() {
 					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
 						<a href="#" className='sidebar-link'>
 							<i className="fa fa-street-view" width="20"></i> 
-							<span>Stuff</span>
+							<span>Employe</span>
 						</a>
 						<ul className={`submenu ${isLinkActive("/employe")} ${isLinkActive("/employe/add")}`}>
 						<li><Link to={"/employe"}>Employe List</Link></li>
@@ -106,13 +106,10 @@ function Sidebar() {
 							<span>Appointment</span>
 						</a>
 						
-						<ul className={`submenu ${isLinkActive("/ramjan")}`}>
-							<li><Link to={"/fahim"}>Alert</Link></li>
-							<li><Link to={"/ramjan"}>Ramjan</Link></li>
-							
-							
+						<ul className={`submenu ${isLinkActive("/appointment")} ${isLinkActive("/appointment/add")}`}>
+						<li><Link to={"/appointment"}>Appointment List</Link></li>
+						<li><Link to={"/appointment/add"}>Appointment Add</Link></li>
 						</ul>
-						
 					</li>
 					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
 						<a href="#" className='sidebar-link'>

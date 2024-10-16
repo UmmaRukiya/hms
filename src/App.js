@@ -26,6 +26,8 @@ import RoomList from './pages/RoomList';
 import RoomListAdd from './pages/RoomList/RoomListAdd';
 import Employe from './pages/Employe';
 import EmployeAdd from './pages/Employe/EmployeAdd';
+import Appointment from './pages/Appointment';
+import AppointmentAdd from './pages/Appointment/AppointmentAdd';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Protected from './components/protected';
 function App() {
@@ -203,6 +205,21 @@ function App() {
         <Route path={"/employe/edit/:id"} element={
           <Protected isSignedIn={isSignedIn} >
             <EmployeAdd />
+          </Protected>
+        } />
+           <Route path={"/appointment"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <Appointment />
+          </Protected>
+        } />
+        <Route path={"/appointment/add"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <AppointmentAdd />
+          </Protected>
+        } />
+        <Route path={"/appointment/edit/:id"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <AppointmentAdd />
           </Protected>
         } />
           
