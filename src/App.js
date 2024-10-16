@@ -28,6 +28,9 @@ import Employe from './pages/Employe';
 import EmployeAdd from './pages/Employe/EmployeAdd';
 import Appointment from './pages/Appointment';
 import AppointmentAdd from './pages/Appointment/AppointmentAdd';
+import Prescription from './pages/Prescription';
+import PrescriptionAdd from './pages/Prescription/PrescriptionAdd';
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Protected from './components/protected';
 function App() {
@@ -220,6 +223,21 @@ function App() {
         <Route path={"/appointment/edit/:id"} element={
           <Protected isSignedIn={isSignedIn} >
             <AppointmentAdd />
+          </Protected>
+        } />
+           <Route path={"/prescription"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <Prescription />
+          </Protected>
+        } />
+        <Route path={"/prescription/add"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <PrescriptionAdd />
+          </Protected>
+        } />
+        <Route path={"/prescription/edit/:id"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <PrescriptionAdd />
           </Protected>
         } />
           

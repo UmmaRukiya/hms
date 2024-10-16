@@ -116,12 +116,9 @@ function Sidebar() {
 							<i className="fa fa-files-o" width="20"></i> 
 							<span>Prescripttion</span>
 						</a>
-						
-						<ul className={`submenu ${isLinkActive("/ramjan")}`}>
-							<li><Link to={"/fahim"}>Alert</Link></li>
-							<li><Link to={"/ramjan"}>Ramjan</Link></li>
-							
-							
+						<ul className={`submenu ${isLinkActive("/prescription")} ${isLinkActive("/prescription/add")}`}>
+						<li><Link to={"/prescription"}>Prescription List</Link></li>
+						<li><Link to={"/prescription/add"}>Prescription Add</Link></li>
 						</ul>
 						
 					</li>

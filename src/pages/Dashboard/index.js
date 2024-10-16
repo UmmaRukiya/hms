@@ -16,10 +16,10 @@ function Dashboard() {
                             <div className="card-body p-0">
                                 <div className="d-flex flex-column">
                                     <div className='px-3 py-3 d-flex justify-content-between'>
-                                        <h3 className='card-title'>BALANCE</h3>
-                                        <div className="card-right d-flex align-items-center">
+                                        <h3 className='card-title'><i className="fa fa-user-md" width="20"></i> Doctor</h3>
+                                        {/* <div className="card-right d-flex align-items-center">
                                             <p>$50 </p>
-                                        </div>
+                                        </div> */}
                                     </div>
                                     <div className="chart-wrapper">
                                         <canvas id="canvas1" style= {{height:'100px', important:true }}></canvas>
@@ -33,10 +33,10 @@ function Dashboard() {
                             <div className="card-body p-0">
                                 <div className="d-flex flex-column">
                                     <div className='px-3 py-3 d-flex justify-content-between'>
-                                        <h3 className='card-title'>Revenue</h3>
-                                        <div className="card-right d-flex align-items-center">
+                                        <h3 className='card-title'><i className="fa fa-users" width=""></i>Patient Record</h3>
+                                        {/* <div className="card-right d-flex align-items-center">
                                             <p>$532,2 </p>
-                                        </div>
+                                        </div> */}
                                     </div>
                                     <div className="chart-wrapper">
                                         <canvas id="canvas2" style={{height: '100px' ,important:true }}></canvas>
@@ -50,10 +50,10 @@ function Dashboard() {
                             <div className="card-body p-0">
                                 <div className="d-flex flex-column">
                                     <div className='px-3 py-3 d-flex justify-content-between'>
-                                        <h3 className='card-title'>ORDERS</h3>
-                                        <div className="card-right d-flex align-items-center">
+                                        <h3 className='card-title'><i className="fa fa-file-archive-o" width="20"></i> Birth Record</h3>
+                                        {/* <div className="card-right d-flex align-items-center">
                                             <p>1,544 </p>
-                                        </div>
+                                        </div> */}
                                     </div>
                                     <div className="chart-wrapper">
                                         <canvas id="canvas3" style={{height:'100px' ,important:true}}></canvas>
@@ -67,9 +67,9 @@ function Dashboard() {
                             <div className="card-body p-0">
                                 <div className="d-flex flex-column">
                                     <div className='px-3 py-3 d-flex justify-content-between'>
-                                        <h3 className='card-title'>Sales Today</h3>
+                                        <h3 className='card-title'>Death Record</h3>
                                         <div className="card-right d-flex align-items-center">
-                                            <p>423 </p>
+                                            {/* <p>423 </p> */}
                                         </div>
                                     </div>
                                     <div className="chart-wrapper">
@@ -82,7 +82,7 @@ function Dashboard() {
                 </div>
                 <div className="row mb-4">
                     <div className="col-md-8">
-                        <div className="card">
+                        {/* <div className="card">
                             <div className="card-header">
                                 <h3 className='card-heading p-1 pl-3'>Sales</h3>
                             </div>
@@ -107,10 +107,10 @@ function Dashboard() {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="card">
                             <div className="card-header d-flex justify-content-between align-items-center">
-                                <h4 className="card-title">Doctors List</h4>
+                                <h4 className="card-title"><i className="fa fa-user-md" width="20"></i> Doctors List</h4>
                                 <div className="d-flex ">
                                     <i data-feather="download"></i>
                                 </div>
@@ -198,7 +198,7 @@ function Dashboard() {
                         </div>
                     </div>
                     <div className="col-md-4">
-                        <div className="card ">
+                        {/* <div className="card ">
                             <div className="card-header">
                                 <h4>Your Earnings</h4>
                             </div>
@@ -209,11 +209,11 @@ function Dashboard() {
                                     <h1 className='text-green'>+$2,134</h1>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="card widget-todo">
                             <div className="card-header border-bottom d-flex justify-content-between align-items-center">
                                 <h4 className="card-title d-flex">
-                                    <i className='bx bx-check font-medium-5 pl-25 pr-75'></i>Progress
+                                    <i className='bx bx-check font-medium-5 pl-25 pr-75'></i>Inventories
                                 </h4>
                         
                             </div>
@@ -221,7 +221,7 @@ function Dashboard() {
                                 <table className='table table-borderless'>
                                     <tfoot>
                                         <tr>
-                                            <td className='col-3'>UI Design</td>
+                                            <td className='col-3'>Medical Items</td>
                                             <td className='col-6'>
                                                 <div className="progress progress-info">
                                                     <div className="progress-bar" role="progressbar" style={{width: '60%'}} aria-valuenow={0}
@@ -231,7 +231,7 @@ function Dashboard() {
                                             <td className='col-3 text-center'>60%</td>
                                         </tr>
                                         <tr>
-                                            <td className='col-3'>VueJS</td>
+                                            <td className='col-3'>Medicine</td>
                                             <td className='col-6'>
                                                 <div className="progress progress-success">
                                                     <div className="progress-bar" role="progressbar" style={{width: '35%'}} aria-valuenow={0}
@@ -241,7 +241,7 @@ function Dashboard() {
                                             <td className='col-3 text-center'>30%</td>
                                         </tr>
                                         <tr>
-                                            <td className='col-3'>Laravel</td>
+                                            <td className='col-3'>Oxygen</td>
                                             <td className='col-6'>
                                                 <div className="progress progress-danger">
                                                     <div className="progress-bar" role="progressbar" style={{width: '50%'}} aria-valuenow={0}
@@ -251,7 +251,7 @@ function Dashboard() {
                                             <td className='col-3 text-center'>50%</td>
                                         </tr>
                                         <tr>
-                                            <td className='col-3'>ReactJS</td>
+                                            <td className='col-3'>Abailable Bed</td>
                                             <td className='col-6'>
                                                 <div className="progress progress-primary">
                                                     <div className="progress-bar" role="progressbar" style={{width: '80%'}} aria-valuenow={0}
@@ -261,7 +261,7 @@ function Dashboard() {
                                             <td className='col-3 text-center'>80%</td>
                                         </tr>
                                         <tr>
-                                            <td className='col-3'>Go</td>
+                                            <td className='col-3'>Abailable Cabin</td>
                                             <td className='col-6'>
                                                 <div className="progress progress-secondary">
                                                     <div className="progress-bar" role="progressbar" style={{width: '65%'}} aria-valuenow={0}
