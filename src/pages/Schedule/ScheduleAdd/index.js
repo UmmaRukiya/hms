@@ -26,9 +26,10 @@ function ScheduleAdd() {
     //         </div>
     //     );
     // };
-    const [inputs, setInputs] = useState({id:'',name:'',designation_id:'',department_id:'',specialist:'',education:'',fees:''});
-    const [designation, setDesignation] = useState([]);
-    const [department, setDepartment] = useState([]);
+    const [inputs, setInputs] = useState({id:'',employe_id:'',day_id:'',shift_id:'',status:''});
+    const [employe, setEmploye] = useState([]);
+    const [day, setDay] = useState([]);
+    const [shift, setShift] = useState([]);
     const navigate=useNavigate();
     const {id} = useParams();
     
@@ -38,11 +39,14 @@ function ScheduleAdd() {
         });
     }
     function get_relation(){
-        axios.get(`${process.env.REACT_APP_API_URL}/designation/index`).then(function(response) {
-            setDesignation(response.data.data);
+        axios.get(`${process.env.REACT_APP_API_URL}/employe/index`).then(function(response) {
+            setEmploye(response.data.data);
         });
-        axios.get(`${process.env.REACT_APP_API_URL}/department/index`).then(function(response) {
-            setDepartment(response.data.data);
+        axios.get(`${process.env.REACT_APP_API_URL}/day/index`).then(function(response) {
+            setDay(response.data.data);
+        });
+        axios.get(`${process.env.REACT_APP_API_URL}/shift/index`).then(function(response) {
+            setShift(response.data.data);
         });
     }
 
@@ -66,9 +70,9 @@ function ScheduleAdd() {
         try{
             let apiurl='';
             if(inputs.id!=''){
-                apiurl=`/doctor/edit/${inputs.id}`;
+                apiurl=`/schedule/edit/${inputs.id}`;
             }else{
-                apiurl=`/doctor/create`;
+                apiurl=`/schedule/create`;
             }
             
             let response= await axios({
@@ -77,7 +81,7 @@ function ScheduleAdd() {
                 url: `${process.env.REACT_APP_API_URL}${apiurl}`,
                 data: inputs
             });
-            navigate('/doctor')
+            navigate('/schedule')
         } 
         catch(e){
             console.log(e);
@@ -89,7 +93,7 @@ function ScheduleAdd() {
             <div className="page-title">
                 <div className="row">
                     <div className="col-12 col-md-6 order-md-1 order-last">
-                        <h3>Add New Doctor</h3>
+                        <h3>Add New Schedule</h3>
                     </div>
                     <div className="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" className='breadcrumb-header'>
@@ -111,20 +115,15 @@ function ScheduleAdd() {
                                     <form className="form form-vertical" onSubmit={handleSubmit}>
                                         <div className="form-body">
                                             <div className="row">
+                                                
                                                 <div className="col-12">
                                                     <div className="form-group">
-                                                    <label htmlFor="first-name-vertical">Name</label>
-                                                    <input type="text" id="first-name-vertical" className="form-control" defaultValue={inputs.name} name="name" onChange={handleChange} placeholder="Full Name"/>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12">
-                                                    <div className="form-group">
-                                                    <label htmlFor="email-id-vertical">Designation</label>
-                                                    {designation.length > 0 && 
-                                                        <select className="form-control" id="designation_id" name='designation_id' defaultValue={inputs.designation_id} onChange={handleChange}>
-                                                            <option value="">Select Designation</option>
-                                                            {designation.map((d, key) =>
-                                                                <option value={d.id}>{d.desig_name}</option>
+                                                    <label htmlFor="employe_id">Employee</label>
+                                                    {employe.length > 0 && 
+                                                        <select className="form-control" id="employe_id" name='employe_id' defaultValue={inputs.employe_id} onChange={handleChange}>
+                                                            <option value="">Select Day</option>
+                                                            {employe.map((d, key) =>
+                                                                <option value={d.id}>{d.name_en}</option>
                                                             )}
                                                         </select>
                                                     }
@@ -132,11 +131,24 @@ function ScheduleAdd() {
                                                 </div>
                                                 <div className="col-12">
                                                     <div className="form-group">
-                                                    <label htmlFor="email-id-vertical">Department</label>
-                                                    {department.length > 0 && 
-                                                        <select className="form-control" id="department_id" name='department_id' defaultValue={inputs.department_id} onChange={handleChange}>
-                                                            <option value="">Select Department</option>
-                                                            {department.map((d, key) =>
+                                                    <label htmlFor="day_id">Day</label>
+                                                    {day.length > 0 && 
+                                                        <select className="form-control" id="day_id" name='day_id' defaultValue={inputs.day_id} onChange={handleChange}>
+                                                            <option value="">Select Day</option>
+                                                            {day.map((d, key) =>
+                                                                <option value={d.id}>{d.day_name}</option>
+                                                            )}
+                                                        </select>
+                                                    }
+                                                    </div>
+                                                </div>
+                                                <div className="col-12">
+                                                    <div className="form-group">
+                                                    <label htmlFor="email-id-vertical">Shift</label>
+                                                    {shift.length > 0 && 
+                                                        <select className="form-control" id="shift_id" name='shift_id' defaultValue={inputs.shift_id} onChange={handleChange}>
+                                                            <option value="">Select Shift</option>
+                                                            {shift.map((d, key) =>
                                                                 <option value={d.id}>{d.dep_name}</option>
                                                             )}
                                                         </select>
@@ -145,21 +157,8 @@ function ScheduleAdd() {
                                                 </div>
                                                 <div className="col-12">
                                                     <div className="form-group">
-                                                    <label htmlFor="email-id-vertical">Specialist</label>
-                                                    <input type="text" id="email-id-vertical" className="form-control" defaultValue={inputs.specialist} name="specialist" onChange={handleChange} placeholder="Specialist"/>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12">
-                                                    <div className="form-group">
-                                                    <label htmlFor="email-id-vertical">Education</label>
-                                                    <input type="text" id="email-id-vertical" className="form-control" defaultValue={inputs.education} name="education" onChange={handleChange} placeholder="Education"/>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="col-12">
-                                                    <div className="form-group">
-                                                    <label htmlFor="email-id-vertical">Fees</label>
-                                                    <input type="text" id="email-id-vertical" className="form-control" defaultValue={inputs.fees} name="fees" onChange={handleChange} placeholder="000.00"/>
+                                                    <label htmlFor="status">Status</label>
+                                                    <input type="number" id="status" className="form-control" defaultValue={inputs.status} name="status" onChange={handleChange} placeholder="Room Avoilable or Not..."/>
                                                     </div>
                                                 </div>
                                                 

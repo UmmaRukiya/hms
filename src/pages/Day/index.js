@@ -42,7 +42,7 @@ function Day() {
                 <div className="col-12">
                     <div className="card">
                         <div className="card-header">
-                            <h4 className="card-title">All Designation</h4>
+                            <h4 className="card-title">All Day</h4>
                             <Link to={'/day/add'} className='btn btn-primary float-right' >Add New</Link>
                         </div>
                         <div className="card-content">
@@ -61,8 +61,11 @@ function Day() {
                                             <td className="text-bold-500">{d.day_name}</td>
                                             <td>{d.status}</td>
                                             <td>
-                                                <Link to={`/day/edit/${d.id}`} className='btn btn-info' >Edit</Link>
-                                                <button type='button' onClick={() => deleteData(d.id)} className='btn btn-danger'>Delete</button>
+                                                <Link to={`/day/edit/${d.id}`} className='btn btn-info' dataToggle="tooltip"
+                                                        dataPlacement="top" title="Edit"> <i className="fa fa-money color-muted"></i></Link>
+                                                <button type='button' onClick={() => deleteData(d.id)} className='btn btn-danger' dataToggle="tooltip"
+                                                        dataPlacement="top" title="Delete"><i
+                                                        className="fa fa-close "></i></button>
                                             </td>
                                         </tr>
                                     )}

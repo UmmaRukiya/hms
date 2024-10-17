@@ -30,6 +30,8 @@ import Appointment from './pages/Appointment';
 import AppointmentAdd from './pages/Appointment/AppointmentAdd';
 import Prescription from './pages/Prescription';
 import PrescriptionAdd from './pages/Prescription/PrescriptionAdd';
+import Schedule from './pages/Schedule';
+import ScheduleAdd from './pages/Schedule/ScheduleAdd';
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Protected from './components/protected';
@@ -238,6 +240,21 @@ function App() {
         <Route path={"/prescription/edit/:id"} element={
           <Protected isSignedIn={isSignedIn} >
             <PrescriptionAdd />
+          </Protected>
+        } />
+           <Route path={"/schedule"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <Schedule />
+          </Protected>
+        } />
+        <Route path={"/schedule/add"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <ScheduleAdd />
+          </Protected>
+        } />
+        <Route path={"/schedule/edit/:id"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <ScheduleAdd />
           </Protected>
         } />
           

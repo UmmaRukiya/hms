@@ -91,14 +91,10 @@ function Sidebar() {
 							<i className="fa fa-calendar-plus-o" width="20"></i> 
 							<span>Schedule</span>
 						</a>
-						
-						<ul className={`submenu ${isLinkActive("/ramjan")}`}>
-							<li><Link to={"/fahim"}>Alert</Link></li>
-							<li><Link to={"/ramjan"}>Ramjan</Link></li>
-							
-							
+						<ul className={`submenu ${isLinkActive("/schedule")} ${isLinkActive("/schedule/add")}`}>
+						<li><Link to={"/schedule"}>Schedule List</Link></li>
+						<li><Link to={"/schedule/add"}>Schedule Add</Link></li>
 						</ul>
-						
 					</li>
 					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
 						<a href="#" className='sidebar-link'>

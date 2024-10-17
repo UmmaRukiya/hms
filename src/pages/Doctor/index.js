@@ -42,7 +42,7 @@ function Doctor() {
                 <div className="col-12">
                     <div className="card">
                         <div className="card-header">
-                            <h4 className="card-title">All Designation</h4>
+                            <h4 className="card-title">All Doctor</h4>
                             <Link to={'/doctor/add'} className='btn btn-primary float-right' >Add New</Link>
                         </div>
                         <div className="card-content">
