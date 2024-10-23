@@ -69,9 +69,9 @@ function Employe() {
                                     {data && data.map((d, key) =>
                                         <tr key={d.id}>
                                             <td>{d.role?.role_name}</td>
-                                            <td className="text-bold-500">{d.name_en}</td>
+                                            <td className="text-bold-500">{d.name}</td>
                                             <td>{d.email}</td>
-                                            <td>{d.contact_no_en}</td>
+                                            <td>{d.contact}</td>
                                             <td>{d.gender}</td>
                                             <td>{d.birth_date}</td>
                                             <td>{d.blood?.blood_group}</td>

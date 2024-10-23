@@ -1,64 +1,76 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../../../components/axios';
 import AdminLayout from '../../../layouts/AdminLayout';
 import { useNavigate } from 'react-router-dom';
 import {useParams} from "react-router-dom";
 
 function DoctorAdd() {
-    const [inputs, setInputs] = useState({id:'',name:'',designation_id:'',department_id:'',specialist:'',education:'',fees:''});
-    const [designation, setDesignation] = useState([]);
-    const [department, setDepartment] = useState([]);
-    const navigate=useNavigate();
-    const {id} = useParams();
-    
-    function getDatas(){
-        axios.get(`${process.env.REACT_APP_API_URL}/doctor/${id}`).then(function(response) {
-            setInputs(response.data.data);
-        });
-    }
-    function get_relation(){
-        axios.get(`${process.env.REACT_APP_API_URL}/designation/index`).then(function(response) {
-            setDesignation(response.data.data);
-        });
-        axios.get(`${process.env.REACT_APP_API_URL}/department/index`).then(function(response) {
-            setDepartment(response.data.data);
-        });
-    }
+    const [inputs, setInputs] = useState({
+       id:'',role_id:'', name:'',designation_id:'',department_id:'', email:'', contact:'', image:'', specialist:'',education:'', biography:'', fees:''
+    });
+    const [role, setRole] = useState([]); //role table
+    const [designation, setDesignation] = useState([]); //designation table
+    const [department, setDepartment] = useState([]); //department table
+    const [selectedfile, setSelectedFile] = useState([]);//for image 
 
+    const navigate = useNavigate();
+    const { id } = useParams();
+
+    const getDatas = async (e) => {
+        let response = await axios.get(`/doctor/${id}`);
+        setInputs(response.data.data);
+    }
+    //for relation table start
+    const getRelational = async (e) => {
+        let roles = await axios.get(`/role/index`)
+        setRole(roles.data.data);
+        let designations = await axios.get(`/designation/index`)
+        setDesignation(designations.data.data);
+        let departments = await axios.get(`/department/index`)
+        setDepartment(departments.data.data);
+    }
+//relation table end
     useEffect(() => {
-        if(id){
+        if (id) {
             getDatas();
         }
-        get_relation();
+        getRelational()
     }, []);
 
     const handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
-        setInputs(values => ({...values, [name]: value}));
+        setInputs(values => ({ ...values, [name]: value }));
     }
-
-    const handleSubmit = async(e) => {
+    //for image 
+    const handelFile = (e) => {
+        setSelectedFile(e.target.files)
+    }
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(inputs)
-        
-        try{
-            let apiurl='';
-            if(inputs.id!=''){
-                apiurl=`/doctor/edit/${inputs.id}`;
-            }else{
-                apiurl=`/doctor/create`;
+
+        const formData = new FormData();
+
+        for (let i = 0; i < selectedfile.length; i++) {
+            formData.append('files[]', selectedfile[i])
+        }
+
+        for (const property in inputs) {
+            formData.append(property, inputs[property])
+        }
+
+        try {
+            let apiurl = '';
+            if (inputs.id != '') {
+                apiurl = `/doctor/edit/${inputs.id}`;
+            } else {
+                apiurl = `/doctor/create`;
             }
-            
-            let response= await axios({
-                method: 'post',
-                responsiveTYpe: 'json',
-                url: `${process.env.REACT_APP_API_URL}${apiurl}`,
-                data: inputs
-            });
+            let res = await axios.post(apiurl, formData)
+            console.log(res);
             navigate('/doctor')
-        } 
-        catch(e){
+        }
+        catch (e) {
             console.log(e);
         }
     }
@@ -90,6 +102,19 @@ function DoctorAdd() {
                                     <form className="form form-vertical" onSubmit={handleSubmit}>
                                         <div className="form-body">
                                             <div className="row">
+                                            <div className="col-12">
+                                                    <div className="form-group">
+                                                    <label htmlFor="role_id">Role ID</label>
+                                                    {role.length > 0 && 
+                                                        <select className="form-control" id="role_id" name='role_id' defaultValue={inputs.role_id} onChange={handleChange}>
+                                                            <option value="">Select Role</option>
+                                                            {role.map((d, key) =>
+                                                                <option value={d.id}>{d.role_name}</option>
+                                                            )}
+                                                        </select>
+                                                    }
+                                                    </div>
+                                                </div>
                                                 <div className="col-12">
                                                     <div className="form-group">
                                                     <label htmlFor="first-name-vertical">Name</label>
@@ -124,6 +149,24 @@ function DoctorAdd() {
                                                 </div>
                                                 <div className="col-12">
                                                     <div className="form-group">
+                                                    <label htmlFor="email-id-vertical">Email</label>
+                                                    <input type="text" id="email" className="form-control" defaultValue={inputs.email} name="email" onChange={handleChange} placeholder="Specialist"/>
+                                                    </div>
+                                                </div>
+                                                <div className="col-12">
+                                                    <div className="form-group">
+                                                    <label htmlFor="contact">Contact</label>
+                                                    <input type="text" id="contact" className="form-control" defaultValue={inputs.contact} name="contact" onChange={handleChange} placeholder="Specialist"/>
+                                                    </div>
+                                                </div>
+                                                <div className="col-12">
+                                                    <div className="form-group">
+                                                    <label htmlFor="image">Image</label>
+                                                    <input type="file" id="email-id-vertical" className="form-control" multiple defaultValue={inputs.image} name="image" onChange={handelFile} placeholder="Image" />
+                                                    </div>
+                                                </div>
+                                                <div className="col-12">
+                                                    <div className="form-group">
                                                     <label htmlFor="email-id-vertical">Specialist</label>
                                                     <input type="text" id="email-id-vertical" className="form-control" defaultValue={inputs.specialist} name="specialist" onChange={handleChange} placeholder="Specialist"/>
                                                     </div>
@@ -132,6 +175,12 @@ function DoctorAdd() {
                                                     <div className="form-group">
                                                     <label htmlFor="email-id-vertical">Education</label>
                                                     <input type="text" id="email-id-vertical" className="form-control" defaultValue={inputs.education} name="education" onChange={handleChange} placeholder="Education"/>
+                                                    </div>
+                                                </div>
+                                                <div className="col-12">
+                                                    <div className="form-group">
+                                                    <label htmlFor="biography">Biography</label>
+                                                    <input type="text" id="biography" className="form-control" defaultValue={inputs.biography} name="biography" onChange={handleChange} placeholder="Education"/>
                                                     </div>
                                                 </div>
                                                 

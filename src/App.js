@@ -32,7 +32,8 @@ import Prescription from './pages/Prescription';
 import PrescriptionAdd from './pages/Prescription/PrescriptionAdd';
 import Schedule from './pages/Schedule';
 import ScheduleAdd from './pages/Schedule/ScheduleAdd';
-
+import InvestCat from './pages/InvestCat';
+import InvestCatAdd from './pages/InvestCat/InvestCatAdd';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Protected from './components/protected';
 function App() {
@@ -255,6 +256,22 @@ function App() {
         <Route path={"/schedule/edit/:id"} element={
           <Protected isSignedIn={isSignedIn} >
             <ScheduleAdd />
+          </Protected>
+        } />
+
+           <Route path={"/investcat"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <InvestCat />
+          </Protected>
+        } />
+        <Route path={"/investcat/add"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <InvestCatAdd />
+          </Protected>
+        } />
+        <Route path={"/investcat/edit/:id"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <InvestCatAdd />
           </Protected>
         } />
           

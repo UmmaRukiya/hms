@@ -122,8 +122,8 @@ function AppointmentAdd() {
                                                 </div>
                                                 <div className="col-12">
                                                     <div className="form-group">
-                                                    <label htmlFor="time">Time</label>
-                                                    <input type="time" id="time" className="form-control" defaultValue={inputs.time} name="time" onChange={handleChange} placeholder="Appointment Time"/>
+                                                    <label htmlFor="app_time">Time</label>
+                                                    <input type="time" id="app_time" className="form-control" defaultValue={inputs.app_time} name="app_time" onChange={handleChange} placeholder="Appointment Time"/>
                                                     </div>
                                                 </div>
                                                 

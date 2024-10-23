@@ -91,13 +91,6 @@ function DesignationAdd() {
                                                     <input type="text" id="desig_des" className="form-control" defaultValue={inputs.desig_des} name="desig_des" onChange={handleChange} placeholder="Designation describe.."/>
                                                     </div>
                                                 </div>
-                                                <div className="col-12">
-                                                    <div className="form-group">
-                                                    <label htmlFor="status">Status</label>
-                                                    <input type="text" id="status" className="form-control" defaultValue={inputs.status} name="status" onChange={handleChange} placeholder="Current status.."/>
-                                                    </div>
-                                                </div>
-                                               
                                                 <div className="col-12 d-flex justify-content-end">
                                                     <button type="submit" className="btn btn-primary mr-1 mb-1">Submit</button>
                                                     <button type="reset" className="btn btn-light-secondary mr-1 mb-1">Reset</button>

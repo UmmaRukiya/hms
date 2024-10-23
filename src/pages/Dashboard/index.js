@@ -33,7 +33,7 @@ function Dashboard() {
                             <div className="card-body p-0">
                                 <div className="d-flex flex-column">
                                     <div className='px-3 py-3 d-flex justify-content-between'>
-                                        <h3 className='card-title'><i className="fa fa-users" width=""></i>Patient Record</h3>
+                                        <h3 className='card-title'>Patient Record</h3>
                                         {/* <div className="card-right d-flex align-items-center">
                                             <p>$532,2 </p>
                                         </div> */}

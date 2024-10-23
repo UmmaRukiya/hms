@@ -67,7 +67,7 @@ function Appointment() {
                                             <td className="text-bold-500">{d.patient_name}</td>
                                             <td>{d.doctor?.name}</td>
                                             <td>{d.app_date}</td>
-                                            <td>{d.time}</td>
+                                            <td>{d.app_time}</td>
                                             <td>{d.problem}</td>
                                             <td>{d.status}</td>
                                             <td>

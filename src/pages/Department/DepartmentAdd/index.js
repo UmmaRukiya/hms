@@ -82,22 +82,15 @@ function DepartmentAdd() {
                                                 <div className="col-12">
                                                     <div className="form-group">
                                                     <label htmlFor="dep_name">Name</label>
-                                                    <input type="text" id="dep_name" className="form-control" defaultValue={inputs.dep_name} name="dep_name" onChange={handleChange} placeholder="day Name"/>
+                                                    <input type="text" id="dep_name" className="form-control" defaultValue={inputs.dep_name} name="dep_name" onChange={handleChange} placeholder="Department Name"/>
                                                     </div>
                                                 </div>
                                                 <div className="col-12">
                                                     <div className="form-group">
                                                     <label htmlFor="dep_des">Description</label>
-                                                    <input type="text" id="dep_des" className="form-control" defaultValue={inputs.dep_des} name="dep_des" onChange={handleChange} placeholder="Current status.."/>
+                                                    <input type="text" id="dep_des" className="form-control" defaultValue={inputs.dep_des} name="dep_des" onChange={handleChange} placeholder="Description about department.."/>
                                                     </div>
                                                 </div>
-                                                <div className="col-12">
-                                                    <div className="form-group">
-                                                    <label htmlFor="status">Status</label>
-                                                    <input type="text" id="status" className="form-control" defaultValue={inputs.status} name="status" onChange={handleChange} placeholder="Current status.."/>
-                                                    </div>
-                                                </div>
-                                               
                                                 <div className="col-12 d-flex justify-content-end">
                                                     <button type="submit" className="btn btn-primary mr-1 mb-1">Submit</button>
                                                     <button type="reset" className="btn btn-light-secondary mr-1 mb-1">Reset</button>

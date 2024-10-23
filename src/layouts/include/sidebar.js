@@ -194,6 +194,7 @@ function Sidebar() {
 						<li><Link to={"/shift"}>Shift List</Link></li>
 						<li><Link to={"/day"}>Day List</Link></li>
 						<li><Link to={"/roomcat"}>Room Catagories List</Link></li>
+						<li><Link to={"/investcat"}>Invest Catagories List</Link></li>
 						</ul>
 						
 					</li>

@@ -107,7 +107,7 @@ function EmployeAdd() {
                                     <label > Name</label>
                                 </div>
                                 <div className="col-md-10 form-group">
-                                    <input type="text" id="name_en" className="form-control" name="name_en" defaultValue={inputs.name_en}  onChange={handleChange}  placeholder="Name"/>
+                                    <input type="text" id="name" className="form-control" name="name" defaultValue={inputs.name}  onChange={handleChange}  placeholder="Name"/>
                                 </div>
                                 <div className="col-md-2">
                                     <label>Role ID</label>
@@ -145,7 +145,7 @@ function EmployeAdd() {
                                     <label>Contact</label>
                                 </div>
                                 <div className="col-md-4 form-group">
-                                    <input type="text" id="contact_no_en" className="form-control" name="contact_no_en" defaultValue={inputs.contact_no_en}  onChange={handleChange} placeholder="Contact Number"/>
+                                    <input type="text" id="contact" className="form-control" name="contact" defaultValue={inputs.contact}  onChange={handleChange} placeholder="Contact Number"/>
                                 </div>
                                 <div className="col-md-2">
                                     <label>Blood Group</label>

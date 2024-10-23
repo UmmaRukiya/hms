@@ -149,7 +149,7 @@ function ScheduleAdd() {
                                                         <select className="form-control" id="shift_id" name='shift_id' defaultValue={inputs.shift_id} onChange={handleChange}>
                                                             <option value="">Select Shift</option>
                                                             {shift.map((d, key) =>
-                                                                <option value={d.id}>{d.dep_name}</option>
+                                                                <option value={d.id}>{d.shift_name}</option>
                                                             )}
                                                         </select>
                                                     }

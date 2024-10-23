@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../../components/axios';
 import AdminLayout from '../../layouts/AdminLayout';
 import { Link } from 'react-router-dom';
 
 function Doctor() {
-    const[data, setData]=useState([]);
+    const [data, setData] = useState([]);
     useEffect(() => {
         getDatas();
     }, []);
 
-    function getDatas() {
-        axios.get(`${process.env.REACT_APP_API_URL}/doctor/index`).then(function(response) {
-            setData(response.data.data);
-        });
+    const getDatas = async (e) => {
+        let res = await axios.get(`/doctor/index`)
+        setData(res.data.data);
+
     }
-    const deleteData = (id) => {
-        axios.delete(`${process.env.REACT_APP_API_URL}/doctor/${id}`).then(function(response){
-            getDatas();
-        });
+    const deleteData = async (id) => {
+        let res = await axios.delete(`/doctor/${id}`)
+        getDatas();
+
     }
   return (
     <AdminLayout>
@@ -50,11 +50,16 @@ function Doctor() {
                                 <table className="table table-bordered mb-0">
                                     <thead>
                                         <tr>
+                                            <th>Role ID</th>
                                             <th>Name</th>
                                             <th>Designation</th>
                                             <th>Department</th>
-                                            <th>specialist</th>
-                                            <th>education</th>
+                                            <th>Email</th>
+                                            <th>Contact</th>
+                                            <th>image</th>
+                                            <th>Specialist</th>
+                                            <th>Education</th>
+                                            <th>Biography</th>
                                             <th>fees</th>
                                             <th>Action</th>
                                         </tr>
@@ -62,11 +67,24 @@ function Doctor() {
                                     <tbody>
                                     {data && data.map((d, key) =>
                                         <tr key={d.id}>
+                                            <td>{d.role?.role_name}</td>
                                             <td className="text-bold-500">{d.name}</td>
                                             <td>{d.designation?.desig_name}</td>
                                             <td>{d.department?.dep_name}</td>
+                                            <td>{d.email}</td>
+                                            <td>{d.contact}</td>
+                                            <td>
+                                                {
+                                                    d.image?.split(',').map((src, i) => (
+                                                        <img src={`${process.env.REACT_APP_BACKEND_URL}/employe/${src}`} alt="employe" style={{ width:"50px", height:'50px', padding:'0px' }}/>
+                                                    ))
+                                                }
+
+
+                                            </td>
                                             <td>{d.specialist}</td>
                                             <td>{d.education}</td>
+                                            <td>{d.biography}</td>
                                             <td>{d.fees}</td>
                                             <td>
                                                 <Link to={`/doctor/edit/${d.id}`} className='btn btn-info' ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">

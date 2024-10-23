@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../../../components/axios';
 import AdminLayout from '../../../layouts/AdminLayout';
 import { useNavigate } from 'react-router-dom';
 import {useParams} from "react-router-dom";
 
-function BloodAdd() {
-    const [inputs, setInputs] = useState({id: '', blood_group: '', status:''});
+function InvestCatAdd() {
+    const [inputs, setInputs] = useState({id: '', invset_cat_name: '', status:''});
     const navigate=useNavigate();
     const {id} = useParams();
     
-    function getDatas(){
-        axios.get(`${process.env.REACT_APP_API_URL}/blood/${id}`).then(function(response) {
+    const getDatas = async (e)=>{
+        let response = await axios.get(`/investcat/${id}`)
             setInputs(response.data.data);
-        });
+       
     }
 
     useEffect(() => {
@@ -34,20 +34,16 @@ function BloodAdd() {
         try{
             let apiurl='';
             if(inputs.id!=''){
-                apiurl=`/blood/${inputs.id}`;
+                apiurl=`/investcat/${inputs.id}`;
             }else{
-                apiurl=`/blood/create`;
+                apiurl=`/investcat/create`;
             }
             
-            let response= await axios({
-                method: 'post',
-                responsiveTYpe: 'json',
-                url: `${process.env.REACT_APP_API_URL}${apiurl}`,
-                data: inputs
-            });
-            navigate('/blood')
-        } 
-        catch(e){
+            let res = await axios.post(apiurl, inputs)
+            console.log(res);
+            navigate('/investcat')
+        }
+        catch (e) {
             console.log(e);
         }
     }
@@ -57,7 +53,7 @@ function BloodAdd() {
             <div className="page-title">
                 <div className="row">
                     <div className="col-12 col-md-6 order-md-1 order-last">
-                        <h3>Add New Blood</h3>
+                        <h3>Add New Invest Categories</h3>
                     </div>
                     <div className="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" className='breadcrumb-header'>
@@ -79,17 +75,17 @@ function BloodAdd() {
                                     <form className="form form-vertical" onSubmit={handleSubmit}>
                                         <div className="form-body">
                                         <div className="row">
-                                <div className="col-md-2">
-                                    <label > Blood Group</label>
+                                <div className="col-md-3">
+                                    <label >Invest Categoriesat</label>
                                 </div>
-                                <div className="col-md-10 form-group">
-                                    <input type="text" id="blood_group" className="form-control" name="blood_group" defaultValue={inputs.blood_group}  onChange={handleChange}  placeholder="Blood Group type.."/>
+                                <div className="col-md-9 form-group">
+                                    <input type="text" id="invset_cat_name" className="form-control" name="invset_cat_name" defaultValue={inputs.invset_cat_name}  onChange={handleChange}  placeholder="Input Invest Categories Name.."/>
                                 </div>
                                
-                                <div className="col-md-2">
+                                <div className="col-md-3">
                                     <label>Status</label>
                                 </div>
-                                <div className="col-md-4 form-group">
+                                <div className="col-md-9 form-group">
                                     <input type="text" id="status" className="form-control" name="status" defaultValue={inputs.status}  onChange={handleChange} placeholder="Status"/>
                                 </div>
                                 <div className="col-12 d-flex justify-content-end">
@@ -112,4 +108,4 @@ function BloodAdd() {
   )
 }
 
-export default BloodAdd
+export default InvestCatAdd

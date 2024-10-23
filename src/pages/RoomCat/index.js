@@ -25,7 +25,7 @@ function RoomCat() {
             <div className="page-title">
                 <div className="row">
                     <div className="col-12 col-md-6 order-md-1 order-last">
-                        <h3>Room Catagories</h3>
+                        <h3>Room Categories</h3>
                     </div>
                     <div className="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" className='breadcrumb-header'>
@@ -42,7 +42,7 @@ function RoomCat() {
                 <div className="col-12">
                     <div className="card">
                         <div className="card-header">
-                            <h4 className="card-title">All Room Catagories</h4>
+                            <h4 className="card-title">All Room Categories</h4>
                             <Link to={'/roomcat/add'} className='btn btn-primary float-right' >Add New</Link>
                         </div>
                         <div className="card-content">
