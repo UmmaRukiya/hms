@@ -6,6 +6,7 @@ import {useParams} from "react-router-dom";
 
 function PatientAdd() {
     const [inputs, setInputs] = useState({id:'',name:'',  email:'', contact:'', gender:'', birth_date:'', blood_id:'', present_address:'', permanent_address:'', status:''});
+    const [blood, setBlood] = useState([]);
     const navigate=useNavigate();
     const {id} = useParams();
     
@@ -14,11 +15,17 @@ function PatientAdd() {
             setInputs(response.data.data);
         });
     }
+    function getRelational(){
+        axios.get(`${process.env.REACT_APP_API_URL}/blood/index`).then(function(response) {
+            setBlood(response.data.data);
+        });
+    }
 
     useEffect(() => {
         if(id){
             getDatas();
         }
+        getRelational()
     }, []);
 
     const handleChange = (event) => {
@@ -113,7 +120,14 @@ function PatientAdd() {
                                     <label>Blood Group</label>
                                 </div>
                                 <div className="col-md-4 form-group">
-                                    <input type="text" id="blood_id" className="form-control" name="blood_id" defaultValue={inputs.blood_id}  onChange={handleChange} placeholder="Blood Group"/>
+                                {blood.length > 0 && 
+                                        <select className="form-control" id="blood_id" name='blood_id' defaultValue={inputs.blood_id} onChange={handleChange}>
+                                            <option value="">Select Blood</option>
+                                            {blood.map((d, key) =>
+                                                <option value={d.id}>{d.blood_group}</option>
+                                            )}
+                                        </select>
+                                    }
                                 </div>
                                 <div className="col-md-2">
                                     <label>Status</label>
@@ -134,12 +148,7 @@ function PatientAdd() {
                                 <div className="col-md-10 form-group">
                                 <textarea rows="3"cols="50" defaultValue={inputs.permanent_address} name="permanent_address" onChange={handleChange} placeholder="Type your permanent address here..."/>
                                 </div>
-                                {/* <div className="col-md-2">
-                                    <label>Status</label>
-                                </div>
-                                <div className="col-md-4 form-group">
-                                    <input type="number" id="password" className="form-control" name="status" defaultValue={inputs.status}  onChange={handleChange} placeholder="Status"/>
-                                </div> */}
+                                
                                
                                 <div className="col-12 d-flex justify-content-end">
                                                     <button type="submit" className="btn btn-primary mr-1 mb-1">Submit</button>

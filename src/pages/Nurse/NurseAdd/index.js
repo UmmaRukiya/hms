@@ -4,7 +4,7 @@ import AdminLayout from '../../../layouts/AdminLayout';
 import { useNavigate } from 'react-router-dom';
 import {useParams} from "react-router-dom";
 
-function DoctorAdd() {
+function NurseAdd() {
     const [inputs, setInputs] = useState({
        id:'',role_id:'', name:'', email:'', contact:'', image:'', gender:'',birth_date:'', blood_id:'', present_address:'', permanent_address:''
     });
@@ -210,4 +210,4 @@ function DoctorAdd() {
   )
 }
 
-export default DoctorAdd
+export default NurseAdd
