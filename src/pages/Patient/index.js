@@ -50,15 +50,12 @@ function Patient() {
                                 <table className="table table-bordered mb-0">
                                     <thead>
                                         <tr>
-                                            
-                                            <th>Patient ID</th>
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Contact</th>
                                             <th>Gender</th>
                                             <th>Birth Date</th>
                                             <th>Blood Group</th>
-                                            <th>Image</th>
                                             <th>Present Address</th>
                                             <th>Permanent Address</th>
                                             <th>Status</th>
@@ -68,14 +65,12 @@ function Patient() {
                                     <tbody>
                                     {data && data.map((d, key) =>
                                         <tr key={d.id}>
-                                            <td>{d.patient_id}</td>
-                                            <td className="text-bold-500">{d.name_en}</td>
+                                            <td className="text-bold-500">{d.name}</td>
                                             <td>{d.email}</td>
-                                            <td>{d.contact_no_en}</td>
+                                            <td>{d.contact}</td>
                                             <td>{d.gender}</td>
                                             <td>{d.birth_date}</td>
-                                            <td>{d.blood_id}</td>
-                                            <td>{d.image}</td>
+                                            <td>{d.blood?.blood_group}</td>
                                             <td>{d.present_address}</td>
                                             <td>{d.permanent_address}</td>
                                             <td>{d.status}</td>

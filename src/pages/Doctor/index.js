@@ -79,8 +79,6 @@ function Doctor() {
                                                         <img src={`${process.env.REACT_APP_BACKEND_URL}/employe/${src}`} alt="employe" style={{ width:"50px", height:'50px', padding:'0px' }}/>
                                                     ))
                                                 }
-
-
                                             </td>
                                             <td>{d.specialist}</td>
                                             <td>{d.education}</td>

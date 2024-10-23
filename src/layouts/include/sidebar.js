@@ -78,11 +78,11 @@ function Sidebar() {
 					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
 						<a href="#" className='sidebar-link'>
 							<i className="fa fa-street-view" width="20"></i> 
-							<span>Employe</span>
+							<span>Employee</span>
 						</a>
 						<ul className={`submenu ${isLinkActive("/employe")} ${isLinkActive("/employe/add")}`}>
-						<li><Link to={"/employe"}>Employe List</Link></li>
-						<li><Link to={"/employe/add"}>Employe Add</Link></li>
+						<li><Link to={"/employe"}>Employee List</Link></li>
+						<li><Link to={"/employe/add"}>Employee Add</Link></li>
 						</ul>
 						
 					</li>

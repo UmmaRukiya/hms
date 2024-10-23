@@ -1,65 +1,74 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../../../components/axios';
 import AdminLayout from '../../../layouts/AdminLayout';
 import { useNavigate } from 'react-router-dom';
 import {useParams} from "react-router-dom";
 
 function DoctorAdd() {
-    const [inputs, setInputs] = useState({id:'',role_id:'', name_en:'', name_bn:'', email:'', contact_no_en:'', contact_no_bn:'', gender:'', birth_date:'', blood_id:'', image:'', present_address:'', permanent_address:'', status:''});
-    const [role, setRole] = useState([]);
-    const [blood, setBlood] = useState([]);
-    const navigate=useNavigate();
-    const {id} = useParams();
-    
-    function getDatas(){
-        axios.get(`${process.env.REACT_APP_API_URL}/nurse/${id}`).then(function(response) {
-            setInputs(response.data.data);
-        });
-    }
+    const [inputs, setInputs] = useState({
+       id:'',role_id:'', name:'', email:'', contact:'', image:'', gender:'',birth_date:'', blood_id:'', present_address:'', permanent_address:''
+    });
+    const [role, setRole] = useState([]); //role table
+    const [blood, setBlood] = useState([]); //blood table
+    const [selectedfile, setSelectedFile] = useState([]);//for image 
 
-    function get_relation(){
-        axios.get(`${process.env.REACT_APP_API_URL}/role/index`).then(function(response) {
-            setRole(response.data.data);
-        });
-        axios.get(`${process.env.REACT_APP_API_URL}/blood/index`).then(function(response) {
-            setBlood(response.data.data);
-        });
-    }
+    const navigate = useNavigate();
+    const { id } = useParams();
 
+    const getDatas = async (e) => {
+        let response = await axios.get(`/nurse/${id}`);
+        setInputs(response.data.data);
+    }
+    //for relation table start
+    const getRelational = async (e) => {
+        let roles = await axios.get(`/role/index`)
+        setRole(roles.data.data);
+        let bloods = await axios.get(`/blood/index`)
+        setBlood(bloods.data.data);
+        
+    }
+//relation table end
     useEffect(() => {
-        if(id){
+        if (id) {
             getDatas();
         }
-        get_relation();
+        getRelational()
     }, []);
 
     const handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
-        setInputs(values => ({...values, [name]: value}));
+        setInputs(values => ({ ...values, [name]: value }));
     }
-
-    const handleSubmit = async(e) => {
+    //for image 
+    const handelFile = (e) => {
+        setSelectedFile(e.target.files)
+    }
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(inputs)
-        
-        try{
-            let apiurl='';
-            if(inputs.id!=''){
-                apiurl=`/nurse/edit/${inputs.id}`;
-            }else{
-                apiurl=`/nurse/create`;
+
+        const formData = new FormData();
+
+        for (let i = 0; i < selectedfile.length; i++) {
+            formData.append('files[]', selectedfile[i])
+        }
+
+        for (const property in inputs) {
+            formData.append(property, inputs[property])
+        }
+
+        try {
+            let apiurl = '';
+            if (inputs.id != '') {
+                apiurl = `/nurse/${inputs.id}`;
+            } else {
+                apiurl = `/nurse/create`;
             }
-            
-            let response= await axios({
-                method: 'post',
-                responsiveTYpe: 'json',
-                url: `${process.env.REACT_APP_API_URL}${apiurl}`,
-                data: inputs
-            });
+            let res = await axios.post(apiurl, formData)
+            console.log(res);
             navigate('/nurse')
-        } 
-        catch(e){
+        }
+        catch (e) {
             console.log(e);
         }
     }
@@ -153,7 +162,7 @@ function DoctorAdd() {
                                     <label>Image</label>
                                 </div>
                                 <div className="col-md-4 form-group">
-                                    <input type="file" id="image" className="form-control" name="image" defaultValue={inputs.image}  onChange={handleChange} placeholder="Image"/>
+                                <input type="file" id="image" className="form-control" multiple defaultValue={inputs.image} name="image" onChange={handelFile} placeholder="Image" />
                                 </div>
                                 <div className="col-md-2">
                                     <label>Status</label>

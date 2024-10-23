@@ -1,87 +1,84 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../../../components/axios';
 import AdminLayout from '../../../layouts/AdminLayout';
 import { useNavigate } from 'react-router-dom';
 import {useParams} from "react-router-dom";
 
 function EmployeAdd() {
-    const [inputs, setInputs] = useState({id:'',role_id:'', name_en:'',  email:'', contact_no_en:'', gender:'', birth_date:'', blood_id:'', image:'', present_address:'', permanent_address:'', status:''});
-    const [role, setRole] = useState([]);
-    const [blood, setBlood] = useState([]);
-    const [selectedfile, setSelectedFile] = useState([]);//for image
-     
-    const navigate=useNavigate();
-    const {id} = useParams();
-    
-    function getDatas(){
-        axios.get(`${process.env.REACT_APP_API_URL}/employe/${id}`).then(function(response) {
-            setInputs(response.data.data);
-        });
-    }
-    function get_relation(){
-        axios.get(`${process.env.REACT_APP_API_URL}/role/index`).then(function(response) {
-            setRole(response.data.data);
-        });
-        axios.get(`${process.env.REACT_APP_API_URL}/blood/index`).then(function(response) {
-            setBlood(response.data.data);
-        });
-    }
-    useEffect(() => {
-        if(id){
-            getDatas();
-        }
-        get_relation();
-    }, []);
-
-    const handleChange = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        setInputs(values => ({...values, [name]: value}));
-    }
+    const [inputs, setInputs] = useState({
+        id:'',role_id:'', name:'', email:'', contact:'', image:'', gender:'',birth_date:'', blood_id:'', present_address:'', permanent_address:'',status:'',
+     });
+     const [role, setRole] = useState([]); //role table
+     const [blood, setBlood] = useState([]); //blood table
+     const [selectedfile, setSelectedFile] = useState([]);//for image 
+ 
+     const navigate = useNavigate();
+     const { id } = useParams();
+ 
+     const getDatas = async (e) => {
+         let response = await axios.get(`/employe/${id}`);
+         setInputs(response.data.data);
+     }
+     //for relation table start
+     const getRelational = async (e) => {
+         let roles = await axios.get(`/role/index`)
+         setRole(roles.data.data);
+         let bloods = await axios.get(`/blood/index`)
+         setBlood(bloods.data.data);
+         
+     }
+ //relation table end
+     useEffect(() => {
+         if (id) {
+             getDatas();
+         }
+         getRelational()
+     }, []);
+ 
+     const handleChange = (event) => {
+         const name = event.target.name;
+         const value = event.target.value;
+         setInputs(values => ({ ...values, [name]: value }));
+     }
      //for image 
      const handelFile = (e) => {
-        setSelectedFile(e.target.files)
-    }
-
-    const handleSubmit = async(e) => {
-        e.preventDefault();
-        console.log(inputs)
-        const formData = new FormData();
-
-        for (let i = 0; i < selectedfile.length; i++) {
-            formData.append('files[]', selectedfile[i])
-        }
-
-        for (const property in inputs) {
-            formData.append(property, inputs[property])
-        }    
-        try{
-            let apiurl='';
-            if(inputs.id!=''){
-                apiurl=`/employe/${inputs.id}`;
-            }else{
-                apiurl=`/employe/create`;
-            }
-            
-            let response= await axios({
-                method: 'post',
-                responsiveTYpe: 'json',
-                url: `${process.env.REACT_APP_API_URL}${apiurl}`,
-                data: inputs
-            });
-            navigate('/employe')
-        } 
-        catch(e){
-            console.log(e);
-        }
-    }
+         setSelectedFile(e.target.files)
+     }
+     const handleSubmit = async (e) => {
+         e.preventDefault();
+ 
+         const formData = new FormData();
+ 
+         for (let i = 0; i < selectedfile.length; i++) {
+             formData.append('files[]', selectedfile[i])
+         }
+ 
+         for (const property in inputs) {
+             formData.append(property, inputs[property])
+         }
+ 
+         try {
+             let apiurl = '';
+             if (inputs.id != '') {
+                 apiurl = `/employe/${inputs.id}`;
+             } else {
+                 apiurl = `/employe/create`;
+             }
+             let res = await axios.post(apiurl, formData)
+             console.log(res);
+             navigate('/employe')
+         }
+         catch (e) {
+             console.log(e);
+         }
+     }
   return (
     <AdminLayout>
         <div className="main-content container-fluid">
             <div className="page-title">
                 <div className="row">
                     <div className="col-12 col-md-6 order-md-1 order-last">
-                        <h3>Add New Employe</h3>
+                        <h3>Add New Employee</h3>
                     </div>
                     <div className="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" className='breadcrumb-header'>
@@ -186,12 +183,12 @@ function EmployeAdd() {
                                 <div className="col-md-10 form-group">
                                 <textarea rows="3"cols="50" defaultValue={inputs.permanent_address} name="permanent_address" onChange={handleChange} placeholder="Type your permanent address here..."/>
                                 </div>
-                                {/* <div className="col-md-2">
+                                <div className="col-md-2">
                                     <label>Status</label>
                                 </div>
                                 <div className="col-md-4 form-group">
                                     <input type="number" id="password" className="form-control" name="status" defaultValue={inputs.status}  onChange={handleChange} placeholder="Status"/>
-                                </div> */}
+                                </div>
                                
                                 <div className="col-12 d-flex justify-content-end">
                                                     <button type="submit" className="btn btn-primary mr-1 mb-1">Submit</button>

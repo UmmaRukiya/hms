@@ -62,7 +62,7 @@ function DoctorAdd() {
         try {
             let apiurl = '';
             if (inputs.id != '') {
-                apiurl = `/doctor/edit/${inputs.id}`;
+                apiurl = `/doctor/${inputs.id}`;
             } else {
                 apiurl = `/doctor/create`;
             }

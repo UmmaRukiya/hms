@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import {useParams} from "react-router-dom";
 
 function PatientAdd() {
-    const [inputs, setInputs] = useState({id:'',patient_id:'', name_en:'',  email:'', contact_no_en:'', gender:'', birth_date:'', blood_id:'', image:'', present_address:'', permanent_address:'', status:''});
+    const [inputs, setInputs] = useState({id:'',name:'',  email:'', contact:'', gender:'', birth_date:'', blood_id:'', present_address:'', permanent_address:'', status:''});
     const navigate=useNavigate();
     const {id} = useParams();
     
@@ -83,13 +83,7 @@ function PatientAdd() {
                                     <label > Name</label>
                                 </div>
                                 <div className="col-md-10 form-group">
-                                    <input type="text" id="name_en" className="form-control" name="name_en" defaultValue={inputs.name_en}  onChange={handleChange}  placeholder="Name"/>
-                                </div>
-                                <div className="col-md-2">
-                                    <label>Patient ID</label>
-                                </div>
-                                <div className="col-md-4 form-group">
-                                    <input type="number" id="patient_id" className="form-control" name="patient_id" defaultValue={inputs.patient_id}  onChange={handleChange} placeholder="Patient ID"/>
+                                    <input type="text" id="name" className="form-control" name="name" defaultValue={inputs.name}  onChange={handleChange}  placeholder="Name"/>
                                 </div>
                                 <div className="col-md-2">
                                     <label>Birth Date</label>
@@ -113,19 +107,13 @@ function PatientAdd() {
                                     <label>Contact</label>
                                 </div>
                                 <div className="col-md-4 form-group">
-                                    <input type="text" id="contact_no_en" className="form-control" name="contact_no_en" defaultValue={inputs.contact_no_en}  onChange={handleChange} placeholder="Contact Number"/>
+                                    <input type="text" id="contact" className="form-control" name="contact" defaultValue={inputs.contact}  onChange={handleChange} placeholder="Contact Number"/>
                                 </div>
                                 <div className="col-md-2">
                                     <label>Blood Group</label>
                                 </div>
                                 <div className="col-md-4 form-group">
                                     <input type="text" id="blood_id" className="form-control" name="blood_id" defaultValue={inputs.blood_id}  onChange={handleChange} placeholder="Blood Group"/>
-                                </div>
-                                <div className="col-md-2">
-                                    <label>Image</label>
-                                </div>
-                                <div className="col-md-4 form-group">
-                                    <input type="file" id="image" className="form-control" name="image" defaultValue={inputs.image}  onChange={handleChange} placeholder="Image"/>
                                 </div>
                                 <div className="col-md-2">
                                     <label>Status</label>

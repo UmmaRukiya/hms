@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../../components/axios';
 import AdminLayout from '../../layouts/AdminLayout';
 import { Link } from 'react-router-dom';
 
 function Employe() {
-    const[data, setData]=useState([]);
+    const [data, setData] = useState([]);
     useEffect(() => {
         getDatas();
     }, []);
 
-    function getDatas() {
-        axios.get(`${process.env.REACT_APP_API_URL}/employe/index`).then(function(response) {
-            setData(response.data.data);
-        });
+    const getDatas = async (e) => {
+        let res = await axios.get(`/employe/index`)
+        setData(res.data.data);
+
     }
-    const deleteData = (id) => {
-        axios.delete(`${process.env.REACT_APP_API_URL}/employe/${id}`).then(function(response){
-            getDatas();
-        });
+    const deleteData = async (id) => {
+        let res = await axios.delete(`/employe/${id}`)
+        getDatas();
+
     }
   return (
     <AdminLayout>
@@ -25,7 +25,7 @@ function Employe() {
             <div className="page-title">
                 <div className="row">
                     <div className="col-12 col-md-6 order-md-1 order-last">
-                        <h3>Employe</h3>
+                        <h3>Employee</h3>
                     </div>
                     <div className="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" className='breadcrumb-header'>
@@ -42,7 +42,7 @@ function Employe() {
                 <div className="col-12">
                     <div className="card">
                         <div className="card-header">
-                            <h4 className="card-title">All Employe</h4>
+                            <h4 className="card-title">All Employee</h4>
                             <Link to={'/employe/add'} className='btn btn-primary float-right' >Add New</Link>
                         </div>
                         <div className="card-content">
@@ -78,7 +78,7 @@ function Employe() {
                                             <td>
                                                 {
                                                     d.image?.split(',').map((src, i) => (
-                                                        <img src={`${process.env.REACT_APP_BACKEND_URL}/employe/${src}`} alt="employe" />
+                                                        <img src={`${process.env.REACT_APP_BACKEND_URL}/employe/${src}`} alt="employe" style={{ width:"50px", height:'50px', padding:'0px' }}/>
                                                     ))
                                                 }
                                             </td>
