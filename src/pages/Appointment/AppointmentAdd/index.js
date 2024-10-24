@@ -95,8 +95,14 @@ function AppointmentAdd() {
                                                 </div>
                                                 <div className="col-12">
                                                     <div className="form-group">
-                                                    <label htmlFor="patient_name">Patient Name</label>
-                                                    <input type="text" id="patient_name" className="form-control" defaultValue={inputs.patient_name} name="patient_name" onChange={handleChange} placeholder="Full Name"/>
+                                                    <label htmlFor="patient_contact">Patient Contact</label>
+                                                    <input type="text" id="patient_contact" className="form-control" defaultValue={inputs.patient_contact} name="patient_contact" onChange={handleChange} />
+                                                    </div>
+                                                </div>
+                                                <div className="col-12">
+                                                    <div className="form-group">
+                                                        <label htmlFor="patient_name">Patient Name</label>
+                                                        <input type="text" id="patient_name" className="form-control" defaultValue={inputs.patient_name} name="patient_name" onChange={handleChange} placeholder="Full Name"/>
                                                     </div>
                                                 </div>
                                                 <div className="col-12">

@@ -4,22 +4,6 @@ import AdminLayout from '../../layouts/AdminLayout';
 import { Link } from 'react-router-dom';
 
 function InvestCat() {
-    // const[data, setData]=useState([]);
-    // useEffect(() => {
-    //     getDatas();
-    // }, []);
-
-    // const getDatas = async (e)=> {
-    //    let res = await axios.get(`/investcat/index`)
-    //         setData(res.data.data);
-       
-    // }
-    // const deleteData = async (id) => {
-    //     let res = await axios.delete(`/investcat/${id}`)
-    //         getDatas();
-        
-    // }
-
     const [data, setData] = useState([]);
     useEffect(() => {
         getDatas();
