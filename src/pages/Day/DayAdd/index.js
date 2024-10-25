@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import {useParams} from "react-router-dom";
 
 function DayAdd() {
-    const [inputs, setInputs] = useState({id:'',day_name:'',status:''});
+    const [inputs, setInputs] = useState({id:'',day_name:''});
     const navigate=useNavigate();
     const {id} = useParams();
     
@@ -85,12 +85,7 @@ function DayAdd() {
                                                     <input type="text" id="day_name" className="form-control" defaultValue={inputs.day_name} name="day_name" onChange={handleChange} placeholder="day Name"/>
                                                     </div>
                                                 </div>
-                                                <div className="col-12">
-                                                    <div className="form-group">
-                                                    <label htmlFor="status">Status</label>
-                                                    <input type="text" id="status" className="form-control" defaultValue={inputs.status} name="status" onChange={handleChange} placeholder="Current status.."/>
-                                                    </div>
-                                                </div>
+                                               
                                                
                                                 <div className="col-12 d-flex justify-content-end">
                                                     <button type="submit" className="btn btn-primary mr-1 mb-1">Submit</button>

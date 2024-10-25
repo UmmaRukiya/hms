@@ -51,7 +51,6 @@ function Day() {
                                     <thead>
                                         <tr>
                                             <th>Name</th>
-                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -59,7 +58,7 @@ function Day() {
                                     {data && data.map((d, key) =>
                                         <tr key={d.id}>
                                             <td className="text-bold-500">{d.day_name}</td>
-                                            <td>{d.status}</td>
+                                            
                                             <td>
                                                 <Link to={`/day/edit/${d.id}`} className='btn btn-info' dataToggle="tooltip"
                                                         dataPlacement="top" title="Edit"> <i className="fa fa-money color-muted"></i></Link>

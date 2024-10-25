@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import {useParams} from "react-router-dom";
 
 function BloodAdd() {
-    const [inputs, setInputs] = useState({id: '', shift_name:'', start_time:'', end_time:'', status:''});
+    const [inputs, setInputs] = useState({id: '', shift_name:'', start_time:'', end_time:''});
     const navigate=useNavigate();
     const {id} = useParams();
     
@@ -100,12 +100,7 @@ function BloodAdd() {
                                     <input type="time" id="end_time" className="form-control" name="end_time" defaultValue={inputs.end_time}  onChange={handleChange}  placeholder="Shift End Time.."/>
                                 </div>
                                
-                                <div className="col-md-2">
-                                    <label>Status</label>
-                                </div>
-                                <div className="col-md-4 form-group">
-                                    <input type="text" id="status" className="form-control" name="status" defaultValue={inputs.status}  onChange={handleChange} placeholder="Status"/>
-                                </div>
+                               
                                 <div className="col-12 d-flex justify-content-end">
                                                     <button type="submit" className="btn btn-primary mr-1 mb-1">Submit</button>
                                                     <button type="reset" className="btn btn-light-secondary mr-1 mb-1">Reset</button>
