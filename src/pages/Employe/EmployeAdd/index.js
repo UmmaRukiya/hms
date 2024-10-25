@@ -6,7 +6,7 @@ import {useParams} from "react-router-dom";
 
 function EmployeAdd() {
     const [inputs, setInputs] = useState({
-        id:'',role_id:'', name:'', email:'', contact:'', image:'', gender:'',birth_date:'', blood_id:'', present_address:'', permanent_address:'',status:'',
+        id:'',role_id:'', name:'', email:'', contact:'', image:'', gender:'',birth_date:'', blood_id:'', present_address:'', permanent_address:''
      });
      const [role, setRole] = useState([]); //role table
      const [blood, setBlood] = useState([]); //blood table
@@ -183,13 +183,6 @@ function EmployeAdd() {
                                 <div className="col-md-10 form-group">
                                 <textarea rows="3"cols="50" defaultValue={inputs.permanent_address} name="permanent_address" onChange={handleChange} placeholder="Type your permanent address here..."/>
                                 </div>
-                                <div className="col-md-2">
-                                    <label>Status</label>
-                                </div>
-                                <div className="col-md-4 form-group">
-                                    <input type="number" id="password" className="form-control" name="status" defaultValue={inputs.status}  onChange={handleChange} placeholder="Status"/>
-                                </div>
-                               
                                 <div className="col-12 d-flex justify-content-end">
                                                     <button type="submit" className="btn btn-primary mr-1 mb-1">Submit</button>
                                                     <button type="reset" className="btn btn-light-secondary mr-1 mb-1">Reset</button>

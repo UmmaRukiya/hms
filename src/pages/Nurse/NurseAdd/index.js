@@ -164,12 +164,7 @@ function NurseAdd() {
                                 <div className="col-md-4 form-group">
                                 <input type="file" id="image" className="form-control" multiple defaultValue={inputs.image} name="image" onChange={handelFile} placeholder="Image" />
                                 </div>
-                                <div className="col-md-2">
-                                    <label>Status</label>
-                                </div>
-                                <div className="col-md-4 form-group">
-                                    <input type="text" id="status" className="form-control" name="status" defaultValue={inputs.status}  onChange={handleChange} placeholder="Status"/>
-                                </div>
+                                
                                 <div className="col-md-2">
                                     <label>Present Address</label>
                                 </div>

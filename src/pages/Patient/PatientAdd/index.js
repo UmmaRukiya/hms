@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import {useParams} from "react-router-dom";
 
 function PatientAdd() {
-    const [inputs, setInputs] = useState({id:'',name:'',  email:'', contact:'', gender:'', birth_date:'', blood_id:'', present_address:'', permanent_address:'', status:''});
+    const [inputs, setInputs] = useState({id:'',name:'',  email:'', contact:'', gender:'', birth_date:'', blood_id:'', present_address:'', permanent_address:''});
     const [blood, setBlood] = useState([]);
     const navigate=useNavigate();
     const {id} = useParams();
@@ -129,12 +129,7 @@ function PatientAdd() {
                                         </select>
                                     }
                                 </div>
-                                <div className="col-md-2">
-                                    <label>Status</label>
-                                </div>
-                                <div className="col-md-4 form-group">
-                                    <input type="text" id="status" className="form-control" name="status" defaultValue={inputs.status}  onChange={handleChange} placeholder="Status"/>
-                                </div>
+                                
                                 <div className="col-md-2">
                                     <label>Present Address</label>
                                 </div>
