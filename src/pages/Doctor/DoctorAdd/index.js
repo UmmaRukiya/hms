@@ -102,7 +102,7 @@ function DoctorAdd() {
                                     <form className="form form-vertical" onSubmit={handleSubmit}>
                                         <div className="form-body">
                                             <div className="row">
-                                            <div className="col-12">
+                                            <div className="col-12 form-group">
                                                     <div className="form-group">
                                                     <label htmlFor="role_id">Role ID</label>
                                                     {role.length > 0 && 

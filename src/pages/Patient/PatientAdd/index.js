@@ -85,7 +85,7 @@ function PatientAdd() {
                                 <div className="card-body">
                                     <form className="form form-vertical" onSubmit={handleSubmit}>
                                         <div className="form-body">
-                                        <div className="row">
+                                        <div className="row form-group">
                                 <div className="col-md-2">
                                     <label > Name</label>
                                 </div>
