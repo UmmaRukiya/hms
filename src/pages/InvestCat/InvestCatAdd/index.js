@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import {useParams} from "react-router-dom";
 
 function InvestCatAdd() {
-    const [inputs, setInputs] = useState({id: '', invset_cat_name: '', status:''});
+    const [inputs, setInputs] = useState({id: '', invest_cat_name: '', status:''});
     const navigate=useNavigate();
     const {id} = useParams();
     
@@ -53,7 +53,7 @@ function InvestCatAdd() {
             <div className="page-title">
                 <div className="row">
                     <div className="col-12 col-md-6 order-md-1 order-last">
-                        <h3>Add New Invest Categories</h3>
+                        <h3>Add New Investigation Categories</h3>
                     </div>
                     <div className="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" className='breadcrumb-header'>
@@ -76,10 +76,10 @@ function InvestCatAdd() {
                                         <div className="form-body">
                                         <div className="row form-group">
                                 <div className="col-md-3">
-                                    <label >Invest Categoriesat</label>
+                                    <label >Investigation Categoriesat</label>
                                 </div>
                                 <div className="col-md-9 form-group">
-                                    <input type="text" id="invset_cat_name" className="form-control" name="invset_cat_name" defaultValue={inputs.invset_cat_name}  onChange={handleChange}  placeholder="Input Invest Categories Name.."/>
+                                    <input type="text" id="invest_cat_name" className="form-control" name="invest_cat_name" defaultValue={inputs.invest_cat_name}  onChange={handleChange}  placeholder="Input Invest Categories Name.."/>
                                 </div>
                                
                                 <div className="col-md-3">

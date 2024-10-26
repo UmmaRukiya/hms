@@ -25,7 +25,7 @@ function InvestCat() {
             <div className="page-title">
                 <div className="row">
                     <div className="col-12 col-md-6 order-md-1 order-last">
-                        <h3>Invest Categories</h3>
+                        <h3>Investigation Categories</h3>
                     </div>
                     <div className="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" className='breadcrumb-header'>
@@ -42,7 +42,7 @@ function InvestCat() {
                 <div className="col-12">
                     <div className="card">
                         <div className="card-header">
-                            <h4 className="card-title">All Invest Categories</h4>
+                            <h4 className="card-title">All Investigation Categories</h4>
                             <Link to={'/investcat/add'} className='btn btn-primary float-right' >Add New</Link>
                         </div>
                         <div className="card-content">
@@ -58,7 +58,7 @@ function InvestCat() {
                                     <tbody>
                                     {data && data.map((d, key) =>
                                         <tr key={d.id}>
-                                            <td className="text-bold-500">{d.invset_cat_name}</td>
+                                            <td className="text-bold-500">{d.invest_cat_name}</td>
                                             <td>{d.status}</td>
                                             <td>
                                             <Link to={`/investcat/edit/${d.id}`} className='btn btn-info' ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">

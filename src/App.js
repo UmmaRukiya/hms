@@ -38,6 +38,10 @@ import MedicineCat from './pages/MedicineCat';
 import MedicineCatAdd from './pages/MedicineCat/MedicineCatAdd';
 import Medicine from './pages/Medicine';
 import MedicineAdd from './pages/Medicine/MedicineAdd';
+import InvestList from './pages/InvestList';
+import InvestListAdd from './pages/InvestList/InvestListAdd';
+import PatientAdmit from './pages/PatientAdmit';
+import PatientAdmitAdd from './pages/PatientAdmit/PatientAdmitAdd';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Protected from './components/protected';
 function App() {
@@ -283,6 +287,21 @@ function App() {
             <InvestCatAdd />
           </Protected>
         } />
+        <Route path={"/investlist"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <InvestList />
+          </Protected>
+        } />
+        <Route path={"/investlist/add"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <InvestListAdd />
+          </Protected>
+        } />
+        <Route path={"/investlist/edit/:id"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <InvestListAdd />
+          </Protected>
+        } />
         <Route path={"/medicinecat"} element={
           <Protected isSignedIn={isSignedIn} >
             <MedicineCat />
@@ -295,7 +314,7 @@ function App() {
         } />
         <Route path={"/medicinecat/edit/:id"} element={
           <Protected isSignedIn={isSignedIn} >
-            <MedicineAdd />
+            <MedicineCatAdd />
           </Protected>
         } />
         <Route path={"/medicine"} element={
@@ -313,7 +332,22 @@ function App() {
             <MedicineAdd />
           </Protected>
         } />
-          
+
+<Route path={"/patientadmit"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <PatientAdmit />
+          </Protected>
+        } />
+        <Route path={"/patientadmit/add"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <PatientAdmitAdd />
+          </Protected>
+        } />
+        <Route path={"/patientadmit/edit/:id"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <PatientAdmitAdd />
+          </Protected>
+        } /> 
         </Routes>
       </BrowserRouter>
   );

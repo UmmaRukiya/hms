@@ -133,14 +133,14 @@ function PatientAdd() {
                                 <div className="col-md-2">
                                     <label>Present Address</label>
                                 </div>
-                                <div className="col-md-10 form-group">
+                                <div className="col-md-4 form-group">
                                     <textarea rows="3"cols="50" defaultValue={inputs.present_address} name="present_address"  onChange={handleChange} placeholder="Type your present address here..."/>
                             
                                 </div>
                                 <div className="col-md-2">
                                     <label>Permanent Address</label>
                                 </div>
-                                <div className="col-md-10 form-group">
+                                <div className="col-md-4 form-group">
                                 <textarea rows="3"cols="50" defaultValue={inputs.permanent_address} name="permanent_address" onChange={handleChange} placeholder="Type your permanent address here..."/>
                                 </div>
                                 

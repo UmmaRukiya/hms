@@ -65,6 +65,18 @@ function Sidebar() {
 					</li>
 					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
 						<a href="#" className='sidebar-link'>
+							<i className="fa fa-users" width="20"></i> 
+							<span>Patient Admit</span>
+						</a>
+						
+						<ul className={`submenu ${isLinkActive("/patientadmit")} ${isLinkActive("/patientadmit/add")}`}>
+						<li><Link to={"/patientadmit"}>Patient Admit List</Link></li>
+						<li><Link to={"/patientadmit/add"}>Patient Admit Add</Link></li>
+						</ul>
+						
+					</li>
+					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
+						<a href="#" className='sidebar-link'>
 							<i className="fa fa-medkit" width="20"></i> 
 							<span>Nurse</span>
 						</a>
@@ -139,6 +151,18 @@ function Sidebar() {
 						<ul className={`submenu ${isLinkActive("/medicine")} ${isLinkActive("/medicine/add")}`}>
 						<li><Link to={"/medicine"}>Medicine List</Link></li>
 						<li><Link to={"/medicine/add"}>Medicine Add</Link></li>
+						</ul>
+						
+					</li>
+					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
+						<a href="#" className='sidebar-link'>
+							<i className="fa fa-tint" width="20"></i> 
+							<span>Investigation</span>
+						</a>
+						
+						<ul className={`submenu ${isLinkActive("/investlist")} ${isLinkActive("/investlist/add")}`}>
+						<li><Link to={"/investlist"}>Investigation List</Link></li>
+						<li><Link to={"/investlist/add"}>Investigation Add</Link></li>
 						</ul>
 						
 					</li>

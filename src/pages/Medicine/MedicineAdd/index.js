@@ -84,6 +84,7 @@ function MedicineAdd() {
                                 <div className="col-md-3">
                                     <label >Medicine Categories</label>
                                 </div>
+                                <div className="col-md-9">
                                 {medicinecat.length > 0 && 
                                                         <select className="form-control" id="medicine_cat_id" name='medicine_cat_id' defaultValue={inputs.medicine_cat_id} onChange={handleChange}>
                                                             <option value="">Select Designation</option>
@@ -92,6 +93,8 @@ function MedicineAdd() {
                                                             )}
                                                         </select>
                                                     }
+                                </div>
+                                
                                 <div className="col-md-3">
                                     <label >Medicine </label>
                                 </div>
