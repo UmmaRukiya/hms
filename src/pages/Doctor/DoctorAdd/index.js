@@ -58,7 +58,7 @@ function DoctorAdd() {
         for (const property in inputs) {
             formData.append(property, inputs[property])
         }
-
+     //
         try {
             let apiurl = '';
             if (inputs.id != '') {

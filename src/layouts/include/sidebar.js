@@ -132,6 +132,18 @@ function Sidebar() {
 					</li>
 					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
 						<a href="#" className='sidebar-link'>
+							<i className="fa fa-tint" width="20"></i> 
+							<span>Medicine</span>
+						</a>
+						
+						<ul className={`submenu ${isLinkActive("/medicine")} ${isLinkActive("/medicine/add")}`}>
+						<li><Link to={"/medicine"}>Medicine List</Link></li>
+						<li><Link to={"/medicine/add"}>Medicine Add</Link></li>
+						</ul>
+						
+					</li>
+					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
+						<a href="#" className='sidebar-link'>
 							<i className="fa fa-user-plus" width="20"></i> 
 							<span>Account Manager</span>
 						</a>
@@ -195,6 +207,7 @@ function Sidebar() {
 						<li><Link to={"/day"}>Day List</Link></li>
 						<li><Link to={"/roomcat"}>Room Catagories List</Link></li>
 						<li><Link to={"/investcat"}>Invest Catagories List</Link></li>
+						<li><Link to={"/medicinecat"}>Medicine Catagories List</Link></li>
 						</ul>
 						
 					</li>

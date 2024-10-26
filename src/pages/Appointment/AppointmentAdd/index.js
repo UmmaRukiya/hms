@@ -7,6 +7,7 @@ import {useParams} from "react-router-dom";
 function AppointmentAdd() {
     const [inputs, setInputs] = useState({id:'',patient_name:'',doctor_id:'',app_date:'',serial:'',time:'', problem:'', status:''});
     const [doctor, setDoctor] = useState([]);
+    const [department, setDepartment] = useState([]);
     const navigate=useNavigate();
     const {id} = useParams();
     
@@ -18,6 +19,9 @@ function AppointmentAdd() {
     function get_relation(){
         axios.get(`${process.env.REACT_APP_API_URL}/doctor/index`).then(function(response) {
             setDoctor(response.data.data);
+        });
+        axios.get(`${process.env.REACT_APP_API_URL}/department/index`).then(function(response) {
+            setDepartment(response.data.data);
         });
        
     }
@@ -113,6 +117,19 @@ function AppointmentAdd() {
                                                                 <option value="">Select Doctor</option>
                                                                 {doctor.map((d, key) =>
                                                                     <option value={d.id}>{d.name}</option>
+                                                                )}
+                                                            </select>
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div className="col-12">
+                                                    <div className="form-group">
+                                                    <label htmlFor="doctor_id">Department</label>
+                                                        {department.length > 0 && 
+                                                            <select className="form-control" id="department_id" name='department_id' defaultValue={inputs.department_id} onChange={handleChange}>
+                                                                <option value="">Select Department</option>
+                                                                {department.map((d, key) =>
+                                                                    <option value={d.id}>{d.dep_name}</option>
                                                                 )}
                                                             </select>
                                                         }

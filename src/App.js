@@ -34,6 +34,10 @@ import Schedule from './pages/Schedule';
 import ScheduleAdd from './pages/Schedule/ScheduleAdd';
 import InvestCat from './pages/InvestCat';
 import InvestCatAdd from './pages/InvestCat/InvestCatAdd';
+import MedicineCat from './pages/MedicineCat';
+import MedicineCatAdd from './pages/MedicineCat/MedicineCatAdd';
+import Medicine from './pages/Medicine';
+import MedicineAdd from './pages/Medicine/MedicineAdd';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Protected from './components/protected';
 function App() {
@@ -238,6 +242,11 @@ function App() {
             <PrescriptionAdd />
           </Protected>
         } />
+        <Route path={"/prescription/add/:patient_id"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <PrescriptionAdd />
+          </Protected>
+        } />
         <Route path={"/prescription/edit/:id"} element={
           <Protected isSignedIn={isSignedIn} >
             <PrescriptionAdd />
@@ -259,7 +268,7 @@ function App() {
           </Protected>
         } />
 
-           <Route path={"/investcat"} element={
+        <Route path={"/investcat"} element={
           <Protected isSignedIn={isSignedIn} >
             <InvestCat />
           </Protected>
@@ -272,6 +281,36 @@ function App() {
         <Route path={"/investcat/edit/:id"} element={
           <Protected isSignedIn={isSignedIn} >
             <InvestCatAdd />
+          </Protected>
+        } />
+        <Route path={"/medicinecat"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <MedicineCat />
+          </Protected>
+        } />
+        <Route path={"/medicinecat/add"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <MedicineCatAdd />
+          </Protected>
+        } />
+        <Route path={"/medicinecat/edit/:id"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <MedicineAdd />
+          </Protected>
+        } />
+        <Route path={"/medicine"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <Medicine />
+          </Protected>
+        } />
+        <Route path={"/medicine/add"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <MedicineAdd />
+          </Protected>
+        } />
+        <Route path={"/medicine/edit/:id"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <MedicineAdd />
           </Protected>
         } />
           

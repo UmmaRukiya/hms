@@ -4,22 +4,7 @@ import AdminLayout from '../../../layouts/AdminLayout';
 import { useNavigate, useParams } from 'react-router-dom';
 
 function PrescriptionAdd() {
-    const [inputs, setInputs] = useState({
-        id: '',
-        doctor_id: '',
-        patient_id: '',
-        age: '',
-        address: '',
-        temp: '',
-        weight: '',
-        bp: '',
-        cc: '',
-        inv: '',
-        mh: '',
-        de: '',
-        advice: '',
-        follow_up: '',
-        issue_date: ''
+    const [inputs, setInputs] = useState({ id: '', doctor_id: '', patient_id: '', age: '', address: '', temp: '', weight: '', bp: '', cc: '', inv: '', mh: '',de:'',advice: '',follow_up: '', issue_date: ''
     });
 
     const [arr, setArr] = useState([{ id: 0, type: "text", value: "" }]);
@@ -100,26 +85,69 @@ function PrescriptionAdd() {
                                                     <div className='col-4'>
                                                         <label>Age:</label>
                                                         <input type="text" id="age" className="form-control" value={inputs.age} name="age" onChange={handleChange} placeholder="Input Patient Age" />
-                                                        <label>Address:</label>
-                                                        <input type="text" id="address" className="form-control" value={inputs.address} name="address" onChange={handleChange} />
+                                                        <label>Address:</label> <br/>
+                                                        <textarea cols="33" defaultValue={inputs.address} name="address" onChange={handleChange} />
                                                         <label>Weight:</label>
                                                         <input type="text" id="weight" className="form-control" value={inputs.weight} name="weight" onChange={handleChange} />
                                                         <label>Temperature:</label>
                                                         <input type="text" id="temperature" className="form-control" value={inputs.temp} name="temp" onChange={handleChange} />
-                                                        <label>BP:</label>
-                                                        <input type="text" id="bp" className="form-control" value={inputs.bp} name="bp" onChange={handleChange} />
+                                                        <label>BP:</label> <br/>
+                                                        <textarea cols="33" defaultValue={inputs.bp} name="bp" onChange={handleChange} />
+                                                        <label>Cheif complaint:</label> <br/>
+                                                        <textarea cols="33" defaultValue={inputs.cc} name="cc" onChange={handleChange} placeholder="CC"/>
+                                                        <label>Clinical Finding:</label> <br/>
+                                                        <textarea cols="33" defaultValue={inputs.inv} name="inv" onChange={handleChange} placeholder="Investigation"/>
+                                                        <label>Medical history:</label> <br/>
+                                                        <textarea cols="33" defaultValue={inputs.mh} name="mh" onChange={handleChange} />
+                                                       
                                                     </div>
                                                     <div className='col-8 '>
+                                                    <lable>RX:</lable>
                                                          <div>
                                                             {arr.map((item, i) => (
-                                                                <input
-                                                                    key={item.id}
-                                                                    onChange={(e) => handleDynamicChange(i, e.target.value)}
-                                                                    value={item.value}
-                                                                    type={item.type}
-                                                                    size="40"
-                                                                    className="form-control mb-2"
-                                                                />
+                                                                <div className='row'>
+                                                                    
+                                                                    <div className='col-3'>
+                                                                        <input
+                                                                            key={item.id}
+                                                                            onChange={(e) => handleDynamicChange(i, e.target.value)}
+                                                                            value={item.value}
+                                                                            type={item.type}
+                                                                            size="40"
+                                                                            className="form-control mb-2"
+                                                                        />
+                                                                    </div>
+                                                                    <div className='col-3'>
+                                                                        <input
+                                                                            key={item.id}
+                                                                            onChange={(e) => handleDynamicChange(i, e.target.value)}
+                                                                            value={item.value}
+                                                                            type={item.type}
+                                                                            size="40"
+                                                                            className="form-control mb-2"
+                                                                        />
+                                                                    </div>
+                                                                    <div className='col-3'>
+                                                                        <input
+                                                                            key={item.id}
+                                                                            onChange={(e) => handleDynamicChange(i, e.target.value)}
+                                                                            value={item.value}
+                                                                            type={item.type}
+                                                                            size="40"
+                                                                            className="form-control mb-2"
+                                                                        />
+                                                                    </div>
+                                                                    <div className='col-3'>
+                                                                        <input
+                                                                            key={item.id}
+                                                                            onChange={(e) => handleDynamicChange(i, e.target.value)}
+                                                                            value={item.value}
+                                                                            type={item.type}
+                                                                            size="40"
+                                                                            className="form-control mb-2"
+                                                                        />
+                                                                    </div>
+                                                                </div>
                                                             ))}
                                                         </div>
                                                         <div className="d-flex justify-content-center mt-2"> {/* Centering the button */}

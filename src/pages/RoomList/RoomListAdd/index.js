@@ -5,8 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import {useParams} from "react-router-dom";
 
 function RoomListAdd() {
-    const [inputs, setInputs] = useState({id:'',room_cat_id:'',room_no:'',department_id:'',floor_no:'',description:'',capacity:'',price:'', status:'' });
+    const [inputs, setInputs] = useState({id:'',room_cat_id:'',room_no:'',department_id:'',floor_no:'',description:'', status:'' });
     const [roomcat, setRoom_Cat] = useState([]);
+    const [department, setDepartment] = useState([]);
     const navigate=useNavigate();
     const {id} = useParams();
     
@@ -18,6 +19,9 @@ function RoomListAdd() {
     function get_relation(){
         axios.get(`${process.env.REACT_APP_API_URL}/roomcat/index`).then(function(response) {
             setRoom_Cat(response.data.data);
+        });
+        axios.get(`${process.env.REACT_APP_API_URL}/department/index`).then(function(response) {
+            setDepartment(response.data.data);
         });
        
     }
@@ -103,7 +107,20 @@ function RoomListAdd() {
                                                 <div className="col-12">
                                                     <div className="form-group">
                                                     <label htmlFor="room_no">Room No</label>
-                                                    <input type="text" id="room_no" className="form-control" defaultValue={inputs.room_no} name="room_no" onChange={handleChange} placeholder="Insert Room No"/>
+                                                    <input type="text" id="room_no" className="form-control" defaultValue={inputs.room_no} name="room_no" onChange={handleChange} placeholder="Choose Department Name"/>
+                                                    </div>
+                                                </div>
+                                                <div className="col-12">
+                                                    <div className="form-group">
+                                                    <label htmlFor="department_id">Department ID</label>
+                                                    {department.length > 0 && 
+                                                        <select className="form-control" id="department_id" name='department_id' defaultValue={inputs.department_id} onChange={handleChange}>
+                                                            <option value="">Select Room Catagories</option>
+                                                            {department.map((d, key) =>
+                                                                <option value={d.id}>{d.dep_name}</option>
+                                                            )}
+                                                        </select>
+                                                    }
                                                     </div>
                                                 </div>
                                                 <div className="col-12">
@@ -119,18 +136,7 @@ function RoomListAdd() {
                                                     <input type="text" id="description" className="form-control" defaultValue={inputs.description} name="description" onChange={handleChange} placeholder="Describe About Room..."/>
                                                     </div>
                                                 </div>
-                                                <div className="col-12">
-                                                    <div className="form-group">
-                                                    <label htmlFor="capacity">Capacity</label>
-                                                    <input type="text" id="capacity" className="form-control" defaultValue={inputs.capacity} name="capacity" onChange={handleChange} placeholder="Capacity of Room..."/>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12">
-                                                    <div className="form-group">
-                                                    <label htmlFor="price">Price</label>
-                                                    <input type="number" id="price" className="form-control" defaultValue={inputs.price} name="price" onChange={handleChange} placeholder="0000.00"/>
-                                                    </div>
-                                                </div>
+                                                
                                                 <div className="col-12">
                                                     <div className="form-group">
                                                     <label htmlFor="status">Status</label>

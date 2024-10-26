@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../../components/axios';
 import AdminLayout from '../../layouts/AdminLayout';
 import { Link } from 'react-router-dom';
 
-function RoomList() {
-    const[data, setData]=useState([]);
+function MedicineCat() {
+    const [data, setData] = useState([]);
     useEffect(() => {
         getDatas();
     }, []);
 
-    function getDatas() {
-        axios.get(`${process.env.REACT_APP_API_URL}/roomlist/index`).then(function(response) {
-            setData(response.data.data);
-        });
+    const getDatas = async (e) => {
+        let res = await axios.get(`/medicinecat/index`)
+        setData(res.data.data);
+
     }
-    const deleteData = (id) => {
-        axios.delete(`${process.env.REACT_APP_API_URL}/roomlist/${id}`).then(function(response){
-            getDatas();
-        });
+    const deleteData = async (id) => {
+        let res = await axios.delete(`/medicinecat/${id}`)
+        getDatas();
+
     }
   return (
     <AdminLayout>
@@ -25,7 +25,7 @@ function RoomList() {
             <div className="page-title">
                 <div className="row">
                     <div className="col-12 col-md-6 order-md-1 order-last">
-                        <h3>Room List</h3>
+                        <h3>Medicine Categories</h3>
                     </div>
                     <div className="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" className='breadcrumb-header'>
@@ -42,19 +42,15 @@ function RoomList() {
                 <div className="col-12">
                     <div className="card">
                         <div className="card-header">
-                            <h4 className="card-title">All Room</h4>
-                            <Link to={'/roomlist/add'} className='btn btn-primary float-right' >Add New</Link>
+                            <h4 className="card-title">All Medicine Categories</h4>
+                            <Link to={'/medicinecat/add'} className='btn btn-primary float-right' >Add New</Link>
                         </div>
                         <div className="card-content">
                             <div className="table-responsive">
                                 <table className="table table-bordered mb-0">
                                     <thead>
                                         <tr>
-                                            <th>Room Catagories</th>
-                                            <th>Room No</th>
-                                            <th>Department </th>
-                                            <th>Floor No</th>
-                                            <th>Description</th>
+                                            <th>Medicine Categories</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -62,14 +58,10 @@ function RoomList() {
                                     <tbody>
                                     {data && data.map((d, key) =>
                                         <tr key={d.id}>
-                                            <td>{d.room_cat?.room_cat_name}</td>
-                                            <td>{d.room_no}</td>
-                                            <td>{d.department?.dep_name}</td>
-                                            <td>{d.floor_no}</td>
-                                            <td>{d.description}</td>
+                                            <td className="text-bold-500">{d.medicine_cat_name}</td>
                                             <td>{d.status}</td>
                                             <td>
-                                                <Link to={`/roomlist/edit/${d.id}`} className='btn btn-info' ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
+                                            <Link to={`/medicinecat/edit/${d.id}`} className='btn btn-info' ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
   <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
   <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
 </svg></Link>
@@ -92,4 +84,4 @@ function RoomList() {
   )
 }
 
-export default RoomList
+export default MedicineCat

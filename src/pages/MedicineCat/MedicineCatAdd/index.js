@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../../../components/axios';
 import AdminLayout from '../../../layouts/AdminLayout';
 import { useNavigate } from 'react-router-dom';
 import {useParams} from "react-router-dom";
 
-function RoomCatAdd() {
-    const [inputs, setInputs] = useState({id: '', room_cat_name: '', description:'', price:''});
+function MedicineCatAdd() {
+    const [inputs, setInputs] = useState({id: '', medicine_cat_name: '', status:''});
     const navigate=useNavigate();
     const {id} = useParams();
     
-    function getDatas(){
-        axios.get(`${process.env.REACT_APP_API_URL}/roomcat/${id}`).then(function(response) {
+    const getDatas = async (e)=>{
+        let response = await axios.get(`/medicinecat/${id}`)
             setInputs(response.data.data);
-        });
+       
     }
 
     useEffect(() => {
@@ -34,20 +34,16 @@ function RoomCatAdd() {
         try{
             let apiurl='';
             if(inputs.id!=''){
-                apiurl=`/roomcat/${inputs.id}`;
+                apiurl=`/medicinecat/${inputs.id}`;
             }else{
-                apiurl=`/roomcat/create`;
+                apiurl=`/medicinecat/create`;
             }
             
-            let response= await axios({
-                method: 'post',
-                responsiveTYpe: 'json',
-                url: `${process.env.REACT_APP_API_URL}${apiurl}`,
-                data: inputs
-            });
-            navigate('/roomcat')
-        } 
-        catch(e){
+            let res = await axios.post(apiurl, inputs)
+            console.log(res);
+            navigate('/medicinecat')
+        }
+        catch (e) {
             console.log(e);
         }
     }
@@ -57,7 +53,7 @@ function RoomCatAdd() {
             <div className="page-title">
                 <div className="row">
                     <div className="col-12 col-md-6 order-md-1 order-last">
-                        <h3>Add New Room Categories</h3>
+                        <h3>Add New Medicine Categories</h3>
                     </div>
                     <div className="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" className='breadcrumb-header'>
@@ -79,24 +75,18 @@ function RoomCatAdd() {
                                     <form className="form form-vertical" onSubmit={handleSubmit}>
                                         <div className="form-body">
                                         <div className="row form-group">
-                                <div className="col-md-2">
-                                    <label >Catagories</label>
+                                <div className="col-md-3">
+                                    <label >Medicine Categoriesat</label>
                                 </div>
-                                <div className="col-md-10 form-group">
-                                    <input type="text" id="room_cat_name" className="form-control" name="room_cat_name" defaultValue={inputs.room_cat_name}  onChange={handleChange}  placeholder="All Type Room Catagories.."/>
+                                <div className="col-md-9 form-group">
+                                    <input type="text" id="medicine_cat_name" className="form-control" name="medicine_cat_name" defaultValue={inputs.medicine_cat_name}  onChange={handleChange}  placeholder="Input Medicine Categories Name.."/>
                                 </div>
                                
-                                <div className="col-md-2">
-                                    <label>Description</label>
+                                <div className="col-md-3">
+                                    <label>Status</label>
                                 </div>
-                                <div className="col-md-10 form-group">
-                                    <input type="text" id="description" className="form-control" name="description" defaultValue={inputs.description}  onChange={handleChange} placeholder="Description"/>
-                                </div>
-                                <div className="col-md-2">
-                                    <label>Price</label>
-                                </div>
-                                <div className="col-md-10 form-group">
-                                    <input type="text" id="price" className="form-control" name="price" defaultValue={inputs.price}  onChange={handleChange} placeholder="000.00"/>
+                                <div className="col-md-9 form-group">
+                                    <input type="text" id="status" className="form-control" name="status" defaultValue={inputs.status}  onChange={handleChange} placeholder="Status"/>
                                 </div>
                                 <div className="col-12 d-flex justify-content-end">
                                                     <button type="submit" className="btn btn-primary mr-1 mb-1">Submit</button>
@@ -118,4 +108,4 @@ function RoomCatAdd() {
   )
 }
 
-export default RoomCatAdd
+export default MedicineCatAdd
