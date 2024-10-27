@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import {useParams} from "react-router-dom";
 
 function PatientAdd() {
-    const [inputs, setInputs] = useState({id:'',name:'',  email:'', contact:'', gender:'', birth_date:'', blood_id:'', present_address:'', permanent_address:''});
+    const [inputs, setInputs] = useState({id:'',name:'',  father_name:'', mother_name:'', husband_name:'', marital_status:'',  email:'', contact:'', gender:'', birth_date:'', blood_id:'', present_address:'', permanent_address:''});
     const [blood, setBlood] = useState([]);
     const navigate=useNavigate();
     const {id} = useParams();
@@ -89,8 +89,32 @@ function PatientAdd() {
                                 <div className="col-md-2">
                                     <label > Name</label>
                                 </div>
-                                <div className="col-md-10 form-group">
+                                <div className="col-md-4 form-group">
                                     <input type="text" id="name" className="form-control" name="name" defaultValue={inputs.name}  onChange={handleChange}  placeholder="Name"/>
+                                </div>
+                                <div className="col-md-2">
+                                    <label>Father Name:</label>
+                                </div>
+                                <div className="col-md-4 form-group">
+                                    <input type="text" id="father_name" className="form-control" name="father_name" defaultValue={inputs.father_name}  onChange={handleChange} />
+                                </div>
+                                <div className="col-md-2">
+                                    <label>Mother Name:</label>
+                                </div>
+                                <div className="col-md-4 form-group">
+                                    <input type="text" id="mother_name" className="form-control" name="mother_name" defaultValue={inputs.mother_name}  onChange={handleChange} />
+                                                </div>
+                                <div className="col-md-2">
+                                    <label>Husband Name:</label>
+                                </div>
+                                <div className="col-md-4 form-group">
+                                    <input type="text" id="husband_name" className="form-control" name="husband_name" defaultValue={inputs.husband_name}  onChange={handleChange}/>
+                                </div>
+                                <div className="col-md-2">
+                                    <label>Marital Status:</label>
+                                </div>
+                                <div className="col-md-4 form-group">
+                                    <input type="text" id="marital_status" className="form-control" name="marital_status" defaultValue={inputs.marital_status}  onChange={handleChange} />
                                 </div>
                                 <div className="col-md-2">
                                     <label>Birth Date</label>
@@ -134,14 +158,14 @@ function PatientAdd() {
                                     <label>Present Address</label>
                                 </div>
                                 <div className="col-md-4 form-group">
-                                    <textarea rows="3"cols="50" defaultValue={inputs.present_address} name="present_address"  onChange={handleChange} placeholder="Type your present address here..."/>
+                                    <textarea rows="2"cols="43" defaultValue={inputs.present_address} name="present_address"  onChange={handleChange} placeholder="Type your present address here..."/>
                             
                                 </div>
                                 <div className="col-md-2">
                                     <label>Permanent Address</label>
                                 </div>
                                 <div className="col-md-4 form-group">
-                                <textarea rows="3"cols="50" defaultValue={inputs.permanent_address} name="permanent_address" onChange={handleChange} placeholder="Type your permanent address here..."/>
+                                <textarea rows="2"cols="43" defaultValue={inputs.permanent_address} name="permanent_address" onChange={handleChange} placeholder="Type your permanent address here..."/>
                                 </div>
                                 
                                

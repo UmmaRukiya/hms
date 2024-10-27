@@ -103,7 +103,7 @@ function EmployeAdd() {
                                 <div className="col-md-2">
                                     <label > Name</label>
                                 </div>
-                                <div className="col-md-10 form-group">
+                                <div className="col-md-4 form-group">
                                     <input type="text" id="name" className="form-control" name="name" defaultValue={inputs.name}  onChange={handleChange}  placeholder="Name"/>
                                 </div>
                                 <div className="col-md-2">
@@ -164,24 +164,19 @@ function EmployeAdd() {
                                 <div className="col-md-4 form-group">
                                 <input type="file" id="image" className="form-control" multiple defaultValue={inputs.image} name="image" onChange={handelFile} placeholder="Image" />
                                 </div>
-                                <div className="col-md-2">
-                                    <label>Status</label>
-                                </div>
-                                <div className="col-md-4 form-group">
-                                    <input type="text" id="status" className="form-control" name="status" defaultValue={inputs.status}  onChange={handleChange} placeholder="Status"/>
-                                </div>
+                               
                                 <div className="col-md-2">
                                     <label>Present Address</label>
                                 </div>
                                 <div className="col-md-10 form-group">
-                                    <textarea rows="3"cols="50" defaultValue={inputs.present_address} name="present_address"  onChange={handleChange} placeholder="Type your present address here..."/>
+                                    <textarea rows="2"cols="43" defaultValue={inputs.present_address} name="present_address"  onChange={handleChange} placeholder="Type your present address here..."/>
                             
                                 </div>
                                 <div className="col-md-2">
                                     <label>Permanent Address</label>
                                 </div>
                                 <div className="col-md-10 form-group">
-                                <textarea rows="3"cols="50" defaultValue={inputs.permanent_address} name="permanent_address" onChange={handleChange} placeholder="Type your permanent address here..."/>
+                                <textarea rows="2"cols="43" defaultValue={inputs.permanent_address} name="permanent_address" onChange={handleChange} placeholder="Type your permanent address here..."/>
                                 </div>
                                 <div className="col-12 d-flex justify-content-end">
                                                     <button type="submit" className="btn btn-primary mr-1 mb-1">Submit</button>

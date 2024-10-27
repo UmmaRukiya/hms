@@ -42,8 +42,12 @@ import InvestList from './pages/InvestList';
 import InvestListAdd from './pages/InvestList/InvestListAdd';
 import PatientAdmit from './pages/PatientAdmit';
 import PatientAdmitAdd from './pages/PatientAdmit/PatientAdmitAdd';
+import PatientBill from './pages/PatientBill';
+import PatientBillAdd from './pages/PatientBill/PatientBillAdd';
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Protected from './components/protected';
+
 function App() {
   const isSignedIn = localStorage.getItem("access_token") || false;
   return (
@@ -333,7 +337,7 @@ function App() {
           </Protected>
         } />
 
-<Route path={"/patientadmit"} element={
+        <Route path={"/patientadmit"} element={
           <Protected isSignedIn={isSignedIn} >
             <PatientAdmit />
           </Protected>
@@ -348,6 +352,23 @@ function App() {
             <PatientAdmitAdd />
           </Protected>
         } /> 
+        <Route path={"/patientbill"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <PatientBill />
+          </Protected>
+        } />
+        <Route path={"/patientbill/add"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <PatientBillAdd />
+          </Protected>
+        } />
+        <Route path={"/patientbill/edit/:id"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <PatientBillAdd />
+          </Protected>
+        } /> 
+
+
         </Routes>
       </BrowserRouter>
   );

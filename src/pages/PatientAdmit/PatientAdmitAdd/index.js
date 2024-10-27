@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import {useParams} from "react-router-dom";
 
 function PatientAdmitAdd() {
-    const [inputs, setInputs] = useState({id:'',patient_id:'',  father_name:'', mother_name:'', husband_name:'', marital_status:'', doctor_id:'', problem:'', admit_date:'',release_date:'',room_id:'',guardian:'',relation:'',condition:''});
+    const [inputs, setInputs] = useState({id:'',patient_id:'', doctor_id:'', problem:'', admit_date:'',release_date:'',room_id:'',guardian:'',relation:'',condition:''});
     const [patient, setPatient] = useState([]);
     const [doctor, setDoctor] = useState([]);
     const [roomlist, setRoom_List] = useState([]);
@@ -109,100 +109,77 @@ function PatientAdmitAdd() {
                                                         </select>
                                                     }
                                                 </div>
+                                               
                                                 <div className="col-md-2">
-                                                    <label>Father Name:</label>
+                                                    <label>Doctor:</label>
                                                 </div>
                                                 <div className="col-md-4 form-group">
-                                                    <input type="text" id="father_name" className="form-control" name="father_name" defaultValue={inputs.father_name}  onChange={handleChange} />
+                                                    {doctor.length > 0 && 
+                                                        <select className="form-control" id="doctor_id" name='doctor_id' defaultValue={inputs.doctor_id} onChange={handleChange}>
+                                                            <option value="">Select Doctor</option>
+                                                            {doctor.map((d, key) =>
+                                                                <option value={d.id}>{d.name}</option>
+                                                            )}
+                                                        </select>
+                                                    }
                                                 </div>
                                                 <div className="col-md-2">
-                                                    <label>Mother Name:</label>
+                                                    <label>Room No:</label>
                                                 </div>
                                                 <div className="col-md-4 form-group">
-                                                    <input type="text" id="mother_name" className="form-control" name="mother_name" defaultValue={inputs.mother_name}  onChange={handleChange} />
+                                                    {roomlist.length > 0 && 
+                                                        <select className="form-control" id="room_id" name='room_id' defaultValue={inputs.room_id} onChange={handleChange}>
+                                                            <option value="">Select Room No</option>
+                                                            {roomlist.map((d, key) =>
+                                                                <option value={d.id}>{d.room_no}</option>
+                                                            )}
+                                                        </select>
+                                                    }
                                                 </div>
-                                <div className="col-md-2">
-                                    <label>Husband Name:</label>
-                                </div>
-                                <div className="col-md-4 form-group">
-                                    <input type="text" id="husband_name" className="form-control" name="husband_name" defaultValue={inputs.husband_name}  onChange={handleChange}/>
-                                </div>
-                                <div className="col-md-2">
-                                    <label>Marital Status:</label>
-                                </div>
-                                <div className="col-md-4 form-group">
-                                    <input type="text" id="marital_status" className="form-control" name="marital_status" defaultValue={inputs.marital_status}  onChange={handleChange} />
-                                </div>
-                                <div className="col-md-2">
-                                    <label>Doctor:</label>
-                                </div>
-                                <div className="col-md-4 form-group">
-                                    {doctor.length > 0 && 
-                                        <select className="form-control" id="doctor_id" name='doctor_id' defaultValue={inputs.doctor_id} onChange={handleChange}>
-                                            <option value="">Select Doctor</option>
-                                            {doctor.map((d, key) =>
-                                                <option value={d.id}>{d.name}</option>
-                                            )}
-                                        </select>
-                                    }
-                                </div>
-                                <div className="col-md-2">
-                                    <label>Room No:</label>
-                                </div>
-                                <div className="col-md-4 form-group">
-                                    {roomlist.length > 0 && 
-                                        <select className="form-control" id="room_id" name='room_id' defaultValue={inputs.room_id} onChange={handleChange}>
-                                            <option value="">Select Room No</option>
-                                            {roomlist.map((d, key) =>
-                                                <option value={d.id}>{d.room_no}</option>
-                                            )}
-                                        </select>
-                                    }
-                                </div>
-                                <div className="col-md-2">
-                                    <label>Gaurdian:</label>
-                                </div>
-                                <div className="col-md-4 form-group">
-                                    <input type="text" id="guardian" className="form-control" name="guardian" defaultValue={inputs.guardian}  onChange={handleChange} />
-                                </div>
-                                <div className="col-md-2">
-                                    <label>Relation:</label>
-                                </div>
-                                <div className="col-md-4 form-group">
-                                    <input type="text" id="relation" className="form-control" name="relation" defaultValue={inputs.relation}  onChange={handleChange} />
-                                </div>
-                                <div className="col-md-2">
-                                    <label>Problem:</label>
-                                </div>
-                                <div className="col-md-4 form-group">
-                                    <textarea id="problem" className="form-control" name="problem" defaultValue={inputs.problem}  onChange={handleChange}></textarea>
-                                    
-                                </div>
-                                <div className="col-md-2">
-                                    <label>Condition:</label>
-                                </div>
-                                <div className="col-md-4 form-group">
-                                    <textarea id="condition" className="form-control" name="condition" defaultValue={inputs.condition}  onChange={handleChange}></textarea>
-                                    
-                                </div>
-                                <div className="col-md-2">
-                                    <label>Admit Date:</label>
-                                </div>
-                                <div className="col-md-4 form-group">
-                                    <input type="date" id="admit_date" className="form-control" name="admit_date" defaultValue={inputs.admit_date}  onChange={handleChange} placeholder="Contact Number"/>
-                                </div>
-                                <div className="col-md-2">
-                                    <label>Release Date:</label>
-                                </div>
-                                <div className="col-md-4 form-group">
-                                    <input type="date" id="release_date" className="form-control" name="release_date" defaultValue={inputs.release_date}  onChange={handleChange} placeholder="Contact Number"/>
-                                </div>
-                               
-                                <div className="col-12 d-flex justify-content-end">
-                                                    <button type="submit" className="btn btn-primary mr-1 mb-1">Submit</button>
+                                                <div className="col-md-2">
+                                                    <label>Gaurdian:</label>
+                                                </div>
+                                                <div className="col-md-4 form-group">
+                                                    <input type="text" id="guardian" className="form-control" name="guardian" defaultValue={inputs.guardian}  onChange={handleChange} />
+                                                </div>
+                                                <div className="col-md-2">
+                                                    <label>Relation:</label>
+                                                </div>
+                                                <div className="col-md-4 form-group">
+                                                    <input type="text" id="relation" className="form-control" name="relation" defaultValue={inputs.relation}  onChange={handleChange} />
+                                                                </div>
+                                                <div className="col-md-2">
+                                                    <label>Problem:</label>
+                                                </div>
+                                                <div className="col-md-4 form-group">
+                                                    <textarea id="problem" className="form-control" name="problem" defaultValue={inputs.problem}  onChange={handleChange}></textarea>
+                                                    
+                                                </div>
+                                                <div className="col-md-2">
+                                                    <label>Condition:</label>
+                                                </div>
+                                                <div className="col-md-4 form-group">
+                                                    <textarea id="condition" className="form-control" name="condition" defaultValue={inputs.condition}  onChange={handleChange}></textarea>
+                                                    
+                                                </div>
+                                                <div className="col-md-2">
+                                                    <label>Admit Date:</label>
+                                                </div>
+                                                <div className="col-md-4 form-group">
+                                                    <input type="date" id="admit_date" className="form-control" name="admit_date" defaultValue={inputs.admit_date}  onChange={handleChange} placeholder="Contact Number"/>
+                                                </div>
+                                                <div className="col-md-2">
+                                                    <label>Release Date:</label>
+                                                </div>
+                                                <div className="col-md-4 form-group">
+                                                    <input type="date" id="release_date" className="form-control" name="release_date" defaultValue={inputs.release_date}  onChange={handleChange} placeholder="Contact Number"/>
+                                                </div>
+                                            
+                                                <div className="col-12 d-flex justify-content-end">
+                                                     <button type="submit" className="btn btn-primary mr-1 mb-1">Submit</button>
                                                     <button type="reset" className="btn btn-light-secondary mr-1 mb-1">Reset</button>
                                                 </div>
-                            </div>
+                                            </div>
                         
                                         </div>
                                     </form>

@@ -3,19 +3,19 @@ import axios from 'axios';
 import AdminLayout from '../../layouts/AdminLayout';
 import { Link } from 'react-router-dom';
 
-function PatientAdmit() {
+function PatientBill() {
     const[data, setData]=useState([]);
     useEffect(() => {
         getDatas();
     }, []);
 
     function getDatas() {
-        axios.get(`${process.env.REACT_APP_API_URL}/patientadmit/index`).then(function(response) {
+        axios.get(`${process.env.REACT_APP_API_URL}/patientbill/index`).then(function(response) {
             setData(response.data.data);
         });
     }
     const deleteData = (id) => {
-        axios.delete(`${process.env.REACT_APP_API_URL}/patientadmit/${id}`).then(function(response){
+        axios.delete(`${process.env.REACT_APP_API_URL}/patientbill/${id}`).then(function(response){
             getDatas();
         });
     }
@@ -25,7 +25,7 @@ function PatientAdmit() {
             <div className="page-title">
                 <div className="row">
                     <div className="col-12 col-md-6 order-md-1 order-last">
-                        <h3>Patient Admission</h3>
+                        <h3>Bill</h3>
                     </div>
                     <div className="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" className='breadcrumb-header'>
@@ -42,42 +42,28 @@ function PatientAdmit() {
                 <div className="col-12">
                     <div className="card">
                         <div className="card-header">
-                            <h4 className="card-title">All Patient</h4>
-                            <Link to={'/patientadmit/add'} className='btn btn-primary float-right' >Add New</Link>
+                            <h4 className="card-title">All Bill</h4>
+                            <Link to={'/patientbill/add'} className='btn btn-primary float-right' >Add New</Link>
                         </div>
                         <div className="card-content">
                             <div className="table-responsive">
                                 <table className="table table-bordered mb-0">
                                     <thead>
                                         <tr>
-                                            <th>Patient ID</th>
-                                            <th>Doctor</th>
-                                            <th>Room No</th>
-                                            <th>Guardian</th>
-                                            <th>Relation</th>
-                                            <th>Problem</th>
-                                            <th>Condition</th>
-                                            <th>Admit Date</th>
-                                            <th>Release Date</th>
-                                            
+                                            <th>Room Catagories</th>
+                                            <th>Description</th>
+                                            <th>Price</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     {data && data.map((d, key) =>
                                         <tr key={d.id}>
-                                            <td>{d.patient?. name}</td>
-                                            <td>{d.doctor?. name}</td>
-                                            <td>{d.room_list?.room_no}</td>
-                                            <td>{d.guardian}</td>
-                                            <td>{d.relation}</td>
-                                            <td>{d.problem}</td>
-                                            <td>{d.condition}</td>
-                                            <td>{d.admit_date}</td>
-                                            <td>{d.release_date}</td>
-                                            
+                                            <td className="text-bold-500">{d.room_cat_name}</td>
+                                            <td>{d.description}</td>
+                                            <td>{d.price}</td>
                                             <td>
-                                                <Link to={`/patientadmit/edit/${d.id}`} className='btn btn-info' ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
+                                            <Link to={`/patientbill/edit/${d.id}`} className='btn btn-info' ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
   <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
   <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
 </svg></Link>
@@ -100,4 +86,4 @@ function PatientAdmit() {
   )
 }
 
-export default PatientAdmit
+export default PatientBill

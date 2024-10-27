@@ -51,6 +51,10 @@ function Patient() {
                                     <thead>
                                         <tr>
                                             <th>Name</th>
+                                            <th>Father Name</th>
+                                            <th>Mother Name</th>
+                                            <th>Husband Name</th>
+                                            <th>Marital Status</th>
                                             <th>Email</th>
                                             <th>Contact</th>
                                             <th>Gender</th>
@@ -65,6 +69,10 @@ function Patient() {
                                     {data && data.map((d, key) =>
                                         <tr key={d.id}>
                                             <td className="text-bold-500">{d.name}</td>
+                                            <td>{d.father_name}</td>
+                                            <td>{d.mother_name}</td>
+                                            <td>{d.husband_name}</td>
+                                            <td>{d.marital_status}</td>
                                             <td>{d.email}</td>
                                             <td>{d.contact}</td>
                                             <td>{d.gender}</td>
