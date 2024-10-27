@@ -246,7 +246,7 @@ function App() {
             <PrescriptionAdd />
           </Protected>
         } />
-        <Route path={"/prescription/add/:patient_id"} element={
+        <Route path={"/prescription/add/:app_id"} element={
           <Protected isSignedIn={isSignedIn} >
             <PrescriptionAdd />
           </Protected>

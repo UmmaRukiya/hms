@@ -7,27 +7,50 @@ function PrescriptionAdd() {
     const [inputs, setInputs] = useState({ id: '', doctor_id: '', patient_id: '', age: '', address: '', temp: '', weight: '', bp: '', cc: '', inv: '', mh: '',de:'',advice: '',follow_up: '', issue_date: ''
     });
 
-    const [arr, setArr] = useState([{ id: 0, type: "text", value: "" }]);
+    const [arr, setArr] = useState([{ id: 0, medicine_id: "", duration: "", dosage: ""  }]);
+    const [medicien, setMedicine] = useState([]);
+    const [appointment, setAppointment] = useState([]);
+    const [patient, setPatient] = useState([]);
     const navigate = useNavigate();
-    const { id } = useParams();
+    const { id,app_id } = useParams();
 
     const getDatas = async () => {
         try {
             const response = await axios.get(`${process.env.REACT_APP_API_URL}/prescription/${id}`);
             setInputs(response.data.data);
+            setPatient(response.data.data?.patient);
+            setArr(response.data.data?.details)
+            setInputs(values => ({ ...values, ['address']: response.data.data?.patient.present_address}));
         } catch (error) {
             console.error(error);
         }
     };
+    function getRelational(){
 
+        axios.get(`${process.env.REACT_APP_API_URL}/medicine/index`).then(function(response) {
+            setMedicine(response.data.data);
+        });
+
+        if(app_id){
+            axios.get(`${process.env.REACT_APP_API_URL}/appointment/${app_id}`).then(function(response) {
+                setAppointment(response.data.data);
+                setPatient(response.data.data?.patient);
+                setInputs(values => ({ ...values, ['patient_id']: response.data.data?.paitent_id }));
+                setInputs(values => ({ ...values, ['doctor_id']: response.data.data?.doctor_id }));
+                setInputs(values => ({ ...values, ['address']: response.data.data?.patient.present_address}));
+            });
+        }
+    }
+    
     const addInput = () => {
-        setArr(s => [...s, { id: s.length, type: "text", value: "" }]);
+        setArr(s => [...s, { id: s.length, medicine_id: "", duration: "", dosage: "" }]);
     };
 
     useEffect(() => {
         if (id) {
             getDatas();
         }
+        getRelational();
     }, [id]);
 
     const handleChange = (event) => {
@@ -35,19 +58,34 @@ function PrescriptionAdd() {
         setInputs(values => ({ ...values, [name]: value }));
     };
 
-    const handleDynamicChange = (index, value) => {
+    const handleDynamicChange = (index, e) => {
+        const nowData = arr[index]
+        if(e.target.name=="medicine_id"){
+            nowData.medicine_id=e.target.value
+        }
+        if(e.target.name=="dosage"){
+            nowData.dosage=e.target.value
+        }
+        if(e.target.name=="duration"){
+            nowData.duration=e.target.value
+        }
         setArr(s => {
             const newArr = s.slice();
-            newArr[index].value = value;
+            newArr[index] = nowData;
             return newArr;
         });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        let obj={
+            pres:inputs,
+            pres_d:arr
+        }
+        
         try {
             const apiurl = inputs.id ? `/prescription/edit/${inputs.id}` : `/prescription/create`;
-            await axios.post(`${process.env.REACT_APP_API_URL}${apiurl}`, inputs);
+            await axios.post(`${process.env.REACT_APP_API_URL}${apiurl}`, obj);
             navigate('/prescription');
         } catch (error) {
             console.error(error);
@@ -83,14 +121,20 @@ function PrescriptionAdd() {
                                             <div className="form-body">
                                                 <div className="row form-group">
                                                     <div className='col-4'>
+                                                        
+                                                        {patient && 
+                                                            <>
+                                                                <h3><label>Patient Name:</label> {patient?.name}</h3>
+                                                                <label>Address:</label> <br/>
+                                                                <textarea cols="33" defaultValue={patient?.present_address} name="address" onChange={handleChange} />
+                                                            </>
+                                                        }
                                                         <label>Age:</label>
-                                                        <input type="text" id="age" className="form-control" value={inputs.age} name="age" onChange={handleChange} placeholder="Input Patient Age" />
-                                                        <label>Address:</label> <br/>
-                                                        <textarea cols="33" defaultValue={inputs.address} name="address" onChange={handleChange} />
+                                                        <input type="text" id="age" className="form-control" defaultValue={inputs.age} name="age" onChange={handleChange} placeholder="Input Patient Age" />
                                                         <label>Weight:</label>
-                                                        <input type="text" id="weight" className="form-control" value={inputs.weight} name="weight" onChange={handleChange} />
+                                                        <input type="text" id="weight" className="form-control" defaultValue={inputs.weight} name="weight" onChange={handleChange} />
                                                         <label>Temperature:</label>
-                                                        <input type="text" id="temperature" className="form-control" value={inputs.temp} name="temp" onChange={handleChange} />
+                                                        <input type="text" id="temperature" className="form-control" defaultValue={inputs.temp} name="temp" onChange={handleChange} />
                                                         <label>BP:</label> <br/>
                                                         <textarea cols="33" defaultValue={inputs.bp} name="bp" onChange={handleChange} />
                                                         <label>Cheif complaint:</label> <br/>
@@ -104,49 +148,53 @@ function PrescriptionAdd() {
                                                     <div className='col-8 '>
                                                     <lable>RX:</lable>
                                                          <div>
+                                                            <div className='row'>
+                                                                <div className='col-6'>
+                                                                    <b>Medicine</b>
+                                                                </div>
+                                                                <div className='col-3'>
+                                                                    <b>Dosage</b>
+                                                                </div>
+                                                                <div className='col-3'>
+                                                                    <b>Duration</b>
+                                                                </div>
+                                                            </div>
                                                             {arr.map((item, i) => (
                                                                 <div className='row'>
                                                                     
+                                                                    <div className='col-6'>
+                                                                        {medicien.length > 0 && 
+                                                                            <select className="form-control" defaultValue={item.medicine_id} name='medicine_id' onChange={(e) => handleDynamicChange(i, e)}>
+                                                                                <option value="">Select Medicine</option>
+                                                                                {medicien.map((d, key) =>
+                                                                                    <option value={d.id}>{d.medicine_name} {d.dosage}</option>
+                                                                                )}
+                                                                            </select>
+                                                                        }
+                                                                    </div>
                                                                     <div className='col-3'>
                                                                         <input
                                                                             key={item.id}
-                                                                            onChange={(e) => handleDynamicChange(i, e.target.value)}
-                                                                            value={item.value}
-                                                                            type={item.type}
+                                                                            onChange={(e) => handleDynamicChange(i, e)}
+                                                                            type="text"
+                                                                            defaultValue={item.dosage}
                                                                             size="40"
+                                                                            name='dosage'
                                                                             className="form-control mb-2"
                                                                         />
                                                                     </div>
                                                                     <div className='col-3'>
                                                                         <input
                                                                             key={item.id}
-                                                                            onChange={(e) => handleDynamicChange(i, e.target.value)}
-                                                                            value={item.value}
-                                                                            type={item.type}
+                                                                            onChange={(e) => handleDynamicChange(i, e)}
+                                                                            type="text"
+                                                                            defaultValue={item.duration}
                                                                             size="40"
+                                                                            name='duration'
                                                                             className="form-control mb-2"
                                                                         />
                                                                     </div>
-                                                                    <div className='col-3'>
-                                                                        <input
-                                                                            key={item.id}
-                                                                            onChange={(e) => handleDynamicChange(i, e.target.value)}
-                                                                            value={item.value}
-                                                                            type={item.type}
-                                                                            size="40"
-                                                                            className="form-control mb-2"
-                                                                        />
-                                                                    </div>
-                                                                    <div className='col-3'>
-                                                                        <input
-                                                                            key={item.id}
-                                                                            onChange={(e) => handleDynamicChange(i, e.target.value)}
-                                                                            value={item.value}
-                                                                            type={item.type}
-                                                                            size="40"
-                                                                            className="form-control mb-2"
-                                                                        />
-                                                                    </div>
+                                                                    
                                                                 </div>
                                                             ))}
                                                         </div>

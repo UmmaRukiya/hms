@@ -16,6 +16,7 @@ function PatientAdmitAdd() {
     function getDatas(){
         axios.get(`${process.env.REACT_APP_API_URL}/patientadmit/${id}`).then(function(response) {
             setInputs(response.data.data);
+            console.log(response)
         });
     }
     function getRelational(){
@@ -94,32 +95,32 @@ function PatientAdmitAdd() {
                                 <div className="card-body">
                                     <form className="form form-vertical" onSubmit={handleSubmit}>
                                         <div className="form-body">
-                                        <div className="row form-group">
-                                <div className="col-md-2">
-                                    <label > Patient ID:</label>
-                                </div>
-                                <div className="col-md-4 form-group">
-                                    {patient.length > 0 && 
-                                        <select className="form-control" id="patient_id" name='patient_id' defaultValue={inputs.patient_id} onChange={handleChange}>
-                                            <option value="">Select Patient</option>
-                                            {patient.map((d, key) =>
-                                                <option value={d.id}>{d.name}</option>
-                                            )}
-                                        </select>
-                                    }
-                                </div>
-                                <div className="col-md-2">
-                                    <label>Father Name:</label>
-                                </div>
-                                <div className="col-md-4 form-group">
-                                    <input type="text" id="father_name" className="form-control" name="father_name" defaultValue={inputs.father_name}  onChange={handleChange} />
-                                </div>
-                                <div className="col-md-2">
-                                    <label>Mother Name:</label>
-                                </div>
-                                <div className="col-md-4 form-group">
-                                    <input type="text" id="mother_name" className="form-control" name="mother_name" defaultValue={inputs.mother_name}  onChange={handleChange} />
-                                </div>
+                                            <div className="row form-group">
+                                                <div className="col-md-2">
+                                                    <label > Patient ID:</label>
+                                                </div>
+                                                <div className="col-md-4 form-group">
+                                                    {patient.length > 0 && 
+                                                        <select className="form-control" id="patient_id" name='patient_id' defaultValue={inputs.patient_id} onChange={handleChange}>
+                                                            <option value="">Select Patient</option>
+                                                            {patient.map((d, key) =>
+                                                                <option value={d.id}>{d.name}</option>
+                                                            )}
+                                                        </select>
+                                                    }
+                                                </div>
+                                                <div className="col-md-2">
+                                                    <label>Father Name:</label>
+                                                </div>
+                                                <div className="col-md-4 form-group">
+                                                    <input type="text" id="father_name" className="form-control" name="father_name" defaultValue={inputs.father_name}  onChange={handleChange} />
+                                                </div>
+                                                <div className="col-md-2">
+                                                    <label>Mother Name:</label>
+                                                </div>
+                                                <div className="col-md-4 form-group">
+                                                    <input type="text" id="mother_name" className="form-control" name="mother_name" defaultValue={inputs.mother_name}  onChange={handleChange} />
+                                                </div>
                                 <div className="col-md-2">
                                     <label>Husband Name:</label>
                                 </div>

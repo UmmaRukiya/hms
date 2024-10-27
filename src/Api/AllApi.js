@@ -12,7 +12,7 @@ const login = async (data) => {
 
         if(response.data.data.token){
             localStorage.setItem("access_token", response.data.data.token);
-            localStorage.setItem("userdata", response.data.data.data);
+            localStorage.setItem("userdata",  response.data.data.data);
             return true;
         }else{
             return false;
