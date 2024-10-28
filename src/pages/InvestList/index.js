@@ -61,7 +61,7 @@ function InvestList() {
                                     <tbody>
                                     {data && data.map((d, key) =>
                                         <tr key={d.id}>
-                                            <td>{d.invest_cat?.invest_cat_name}</td>
+                                            <td>{d.investcat?.invest_cat_name}</td>
                                             <td>{d.invest_name}</td>
                                             <td>{d.description}</td>
                                             <td>{d.price}</td>

@@ -50,12 +50,19 @@ function Prescription() {
                                 <table className="table table-bordered mb-0">
                                     <thead>
                                         <tr>
-                                            <th>Patient ID</th>
+                                            <th>Patient Name</th>
+                                            <th>Age</th>
+                                            <th>Temperature</th>
+                                            <th>Weight</th>
+                                            <th>BP</th>
                                             <th>Chief Complaint</th>
-                                            <th>Test</th>
+                                            <th>Investigation</th>
+                                            <th>Medical history</th>
+                                            <th>DE</th>
+                                            <th>Doctor</th>
                                             <th>Advice</th>
-                                            <th>Visit</th>
-                                            <th>Status</th>
+                                            <th>Follow Up</th>
+                                            <th>Issue Date</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -64,11 +71,19 @@ function Prescription() {
                                         <tr key={d.id}>
                                             
                                             <td>{d.patient?.name}</td>
+                                            <td>{d.age}</td>
+                                            <td>{d.temp}</td>
+                                            <td>{d.weight}</td>
+                                            <td>{d.bp}</td>
                                             <td>{d.cc}</td>
                                             <td>{d.inv}</td>
+                                            <td>{d.mh}</td>
+                                            <td>{d.de}</td>
+                                            <td>{d. doctor_id  }</td>
                                             <td>{d.advice}</td>
-                                            <td>{d.visit}</td>
-                                            <td>{d.status}</td>
+                                            <td>{d.follow_up}</td>
+                                            <td>{d.issue_date}</td>
+                                            
                                             <td>
                                                 <Link to={`/prescription/edit/${d.id}`} className='btn btn-success' ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-printer-fill" viewBox="0 0 16 16">
   <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1"/>

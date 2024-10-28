@@ -143,6 +143,12 @@ function PrescriptionAdd() {
                                                         <textarea cols="33" defaultValue={inputs.inv} name="inv" onChange={handleChange} placeholder="Investigation"/>
                                                         <label>Medical history:</label> <br/>
                                                         <textarea cols="33" defaultValue={inputs.mh} name="mh" onChange={handleChange} />
+                                                        <label>Advice:</label> <br/>
+                                                        <textarea cols="33" defaultValue={inputs.advice} name="advice" onChange={handleChange} />
+                                                        <label>follow Up:</label> <br/>
+                                                        <input type="date" id="follow_up" className="form-control" defaultValue={inputs.follow_up} name="follow_up" onChange={handleChange} />
+                                                        <label>Issue Date:</label> <br/>
+                                                        <input type="date" id="issue_date" className="form-control" defaultValue={inputs.issue_date} name="issue_date" onChange={handleChange} />
                                                        
                                                     </div>
                                                     <div className='col-8 '>

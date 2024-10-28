@@ -59,7 +59,7 @@ function Medicine() {
                                     <tbody>
                                     {data && data.map((d, key) =>
                                         <tr key={d.id}>
-                                            <td className="text-bold-500">{d.medicine_cat?.medicine_cat_name}</td>
+                                            <td className="text-bold-500">{d.medicinecat?.medicine_cat_name}</td>
                                             <td className="text-bold-500">{d.medicine_name}</td>
                                             <td>{d.dosage}</td>
                                             <td>

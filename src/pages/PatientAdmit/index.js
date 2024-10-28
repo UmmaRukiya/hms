@@ -68,7 +68,7 @@ function PatientAdmit() {
                                         <tr key={d.id}>
                                             <td>{d.patient?. name}</td>
                                             <td>{d.doctor?. name}</td>
-                                            <td>{d.room_list?.room_no}</td>
+                                            <td>{d.roomlist?.room_no}</td>
                                             <td>{d.guardian}</td>
                                             <td>{d.relation}</td>
                                             <td>{d.problem}</td>
