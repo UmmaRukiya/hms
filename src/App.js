@@ -44,7 +44,8 @@ import PatientAdmit from './pages/PatientAdmit';
 import PatientAdmitAdd from './pages/PatientAdmit/PatientAdmitAdd';
 import PatientBill from './pages/PatientBill';
 import PatientBillAdd from './pages/PatientBill/PatientBillAdd';
-
+import PatientTest from './pages/PatientTest';
+import PatientTestAdd from './pages/PatientTest/PatientTestAdd'; 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Protected from './components/protected';
 
@@ -365,6 +366,21 @@ function App() {
         <Route path={"/patientbill/edit/:id"} element={
           <Protected isSignedIn={isSignedIn} >
             <PatientBillAdd />
+          </Protected>
+        } /> 
+        <Route path={"/patienttest"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <PatientTest />
+          </Protected>
+        } />
+        <Route path={"/patienttest/add"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <PatientTestAdd />
+          </Protected>
+        } />
+        <Route path={"/patienttest/edit/:id"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <PatientTestAdd />
           </Protected>
         } /> 
 

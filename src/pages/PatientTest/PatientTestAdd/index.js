@@ -3,18 +3,22 @@ import axios from 'axios';
 import AdminLayout from '../../../layouts/AdminLayout';
 import { useNavigate, useParams } from 'react-router-dom';
 
-function PatientBillAdd() {
-    const [inputs, setInputs] = useState({ id: '', patient_id: '', sub_amount:'', discount: 0, tax: 0, bill_date: '' });
+function PatientTestAdd() {
+    const [inputs, setInputs] = useState({ id: '', patient_id: '', admit_id: '', discount: 0, vat: 0, total_amount: '', paid: '' });
     const [patients, setPatients] = useState([]);
-    const [cartItems, setCartItems] = useState([]);
-    const [totalData, setTotalData] = useState({ total: 0, discountAmount: 0, taxAmount: 0, finalTotal: 0 });
+    const [patientAdmit, setPatientAdmit] = useState([]);
+    const [investList, setInvestList] = useState([]);
+    const [cartItems, setCartItems] = useState([{ id: Date.now(), investigations: '', unit: 1, price: 0, sub_total: 0 }]);
+    const [totalData, setTotalData] = useState({ total: 0, discountAmount: 0, vatAmount: 0, finalTotal: 0 });
     const navigate = useNavigate();
     const { id } = useParams();
 
     useEffect(() => {
         fetchPatientList();
+        fetchPatientAdmitList();
+        fetchInvestList();
         if (id) {
-            fetchBillData();
+            fetchTestData();
         }
     }, [id]);
 
@@ -23,54 +27,80 @@ function PatientBillAdd() {
         setPatients(response.data.data);
     };
 
-    const fetchBillData = async () => {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patientbill/${id}`);
+    const fetchPatientAdmitList = async () => {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patientadmit/index`);
+        setPatientAdmit(response.data.data);
+    };
+
+    const fetchInvestList = async () => {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/investlist/index`);
+        setInvestList(response.data.data);
+    };
+
+    const fetchTestData = async () => {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patienttest/${id}`);
         setInputs(response.data.data);
         setCartItems(response.data.cartItems || []);
-        calculateTotals(response.data.cartItems || [], response.data.data.discount, response.data.data.tax);
+        calculateTotals(response.data.cartItems || [], response.data.data.discount, response.data.data.vat);
     };
 
     const handleChange = (event) => {
         const { name, value } = event.target;
         setInputs((prev) => ({ ...prev, [name]: value }));
-        calculateTotals(cartItems, name === 'discount' ? value : inputs.discount, name === 'tax' ? value : inputs.tax); // Calculate based on changed field
+        calculateTotals(cartItems, name === 'discount' ? value : inputs.discount, name === 'vat' ? value : inputs.vat);
     };
 
     const handleCartChange = (event, item) => {
         const { name, value } = event.target;
-        const updatedItem = { ...item, [name]: parseFloat(value) || 0 };
-        updatedItem.sub_total = updatedItem.unit * updatedItem.price; // Update subtotal based on unit and price
+        const updatedItem = { ...item };
+
+        if (name === 'investigations') {
+            updatedItem.investigations = value;
+            const selectedInvestigation = investList.find(invest => invest.id === value);
+            updatedItem.price = selectedInvestigation ? selectedInvestigation.price : 0;
+        } else {
+            updatedItem[name] = parseFloat(value) || 0;
+        }
+
+        updatedItem.sub_total = updatedItem.unit * updatedItem.price;
         setCartItems((prev) => prev.map((i) => (i.id === updatedItem.id ? updatedItem : i)));
-        calculateTotals(cartItems, inputs.discount, inputs.tax); // Recalculate totals
+        calculateTotals(cartItems, inputs.discount, inputs.vat);
     };
 
     const addCartItem = () => {
-        setCartItems((prev) => [...prev, { id: Date.now(), particulars: '', unit: 1, price: 0, sub_total: 0 }]);
+        setCartItems((prev) => [...prev, { id: Date.now(), investigations: '', unit: 1, price: 0, sub_total: 0 }]);
     };
 
-    const calculateTotals = (items, discount = 0, tax = 0) => {
+    const calculateTotals = (items, discount = 0, vat = 0) => {
         const total = items.reduce((acc, item) => acc + (item.sub_total || 0), 0);
-        const discountAmount = (parseFloat(discount) / 100) * total; // Calculate discount as percentage
-        const taxableAmount = total - discountAmount; // Calculate amount after discount
-        const taxAmount = (parseFloat(tax) / 100) * taxableAmount; // Calculate tax on the discounted amount
-        const finalTotal = total - discountAmount + taxAmount; // Calculate final total
+        const discountAmount = (parseFloat(discount) / 100) * total; 
+        const vatableAmount = total - discountAmount; 
+        const vatAmount = (parseFloat(vat) / 100) * vatableAmount; 
+        const finalTotal = total - discountAmount + vatAmount; 
 
         setTotalData({
             total,
             discountAmount,
-            taxAmount,
+            vatAmount,
             finalTotal,
         });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const allInvestigationsSelected = cartItems.every(item => item.investigations);
+        if (!allInvestigationsSelected) {
+            alert("Please select investigations for all cart items.");
+            return;
+        }
+
         try {
-            await axios.post(`${process.env.REACT_APP_API_URL}/patientbill/create`, {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/patienttest/create`, {
                 input: { ...inputs, total_amount: totalData.finalTotal },
                 cartItems,
             });
-            navigate('/patientbill'); 
+            navigate('/patienttest'); 
         } catch (error) {
             console.error("Error submitting bill:", error);
         }
@@ -82,7 +112,7 @@ function PatientBillAdd() {
                 <div className="page-title">
                     <div className="row">
                         <div className="col-12 col-md-6">
-                            <h3>Add New Bill</h3>
+                            <h3>Add Patient Test</h3>
                         </div>
                         <div className="col-12 col-md-6">
                             <nav aria-label="breadcrumb">
@@ -116,10 +146,15 @@ function PatientBillAdd() {
                                                         </select>
                                                     </div>
                                                     <div className="col-md-1">
-                                                        <label>Bill Date:</label>
+                                                        <label>Admit No:</label>
                                                     </div>
                                                     <div className="col-md-3 form-group">
-                                                        <input type="date" className="form-control" name="bill_date" value={inputs.bill_date} onChange={handleChange} />
+                                                        <select className="form-control" name='admit_id' value={inputs.admit_id} onChange={handleChange}>
+                                                            <option value="">Select Admit No</option>
+                                                            {patientAdmit.map((admit) => (
+                                                                <option key={admit.id} value={admit.id}>{admit.id}</option>
+                                                            ))}
+                                                        </select>
                                                     </div>
                                                 </div>
 
@@ -127,7 +162,7 @@ function PatientBillAdd() {
                                                     <table className='mt-3 table table-bordered'>
                                                         <thead>
                                                             <tr style={{ backgroundColor: '#e9ecef', fontWeight: 'bold' }}>
-                                                                <th>Particulars</th>
+                                                                <th>Investigations</th>
                                                                 <th>Unit</th>
                                                                 <th>Price</th>
                                                                 <th>Total</th>
@@ -137,12 +172,17 @@ function PatientBillAdd() {
                                                             {cartItems.map((item) => (
                                                                 <tr key={item.id}>
                                                                     <td>
-                                                                        <input 
+                                                                        <select 
                                                                             className='form-control' 
-                                                                            type="text" 
-                                                                            value={item.particulars} 
-                                                                            onChange={(e) => handleCartChange(e, { ...item, particulars: e.target.value })} 
-                                                                        />
+                                                                            name="investigations"
+                                                                            value={item.investigations} 
+                                                                            onChange={(e) => handleCartChange(e, item)} 
+                                                                        >
+                                                                            <option value="">Select Investigations</option>
+                                                                            {investList.map((invest) => (
+                                                                                <option key={invest.id} value={invest.id}>{invest.inv_cat_id}</option>
+                                                                            ))}
+                                                                        </select>
                                                                     </td>
                                                                     <td>
                                                                         <input 
@@ -159,7 +199,7 @@ function PatientBillAdd() {
                                                                             type="number" 
                                                                             name="price" 
                                                                             value={item.price} 
-                                                                            onChange={(e) => handleCartChange(e, { ...item, price: parseFloat(e.target.value) })} 
+                                                                            readOnly // Make price read-only, calculated from selected investigation
                                                                         />
                                                                     </td>
                                                                     <td>{item.sub_total.toFixed(2)}</td>
@@ -195,8 +235,8 @@ function PatientBillAdd() {
                                                                     <input 
                                                                         className='form-control' 
                                                                         type="number" 
-                                                                        name="tax" 
-                                                                        value={inputs.tax} 
+                                                                        name="vat" 
+                                                                        value={inputs.vat} 
                                                                         onChange={handleChange} 
                                                                     />
                                                                 </td>
@@ -207,11 +247,15 @@ function PatientBillAdd() {
                                                             </tr>
                                                             <tr>
                                                                 <td style={{ fontWeight: 'bold' }}>Tax Amount:</td>
-                                                                <td>{totalData.taxAmount.toFixed(2)}</td>
+                                                                <td>{totalData.vatAmount.toFixed(2)}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td style={{ fontWeight: 'bold' }}>Grand Total:</td>
                                                                 <td>{totalData.finalTotal.toFixed(2)}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style={{ fontWeight: 'bold' }}>Paid:</td>
+                                                                <td> <input type="number" className="form-control" defaultValue={inputs.paid} name="paid" onChange={handleChange}/></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -234,4 +278,4 @@ function PatientBillAdd() {
     );
 }
 
-export default PatientBillAdd;
+export default PatientTestAdd;
