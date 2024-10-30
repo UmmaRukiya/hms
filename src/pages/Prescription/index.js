@@ -48,7 +48,7 @@ function Prescription() {
                 <div class="container">
                     <div class="row">
                         <div class="col-4 pt-5">
-                            <h6>Dr. ${prescription.doctor_id}</h6>
+                            <h6>Dr. ${prescription.doctor?.name}</h6>
                             <div>${prescription.doctor?.education} (Reg no.: 12345)</div>
                             <div>Mob. No: 123455645</div>
                         </div>
@@ -95,9 +95,9 @@ function Prescription() {
                         <div class="col-4 fw-bold px-5">Duration</div>
                     </div>
                     <hr/>
-                    ${prescription.medicines ? prescription.medicines.map(med => `
+                    ${prescription.details ? prescription.details.map(med => `
                     <div class="row px-4">
-                        <div class="col-4">${med.medicine_id}</div>
+                        <div class="col-4">${med.medicine?.medicine_name}</div>
                         <div class="col-4">${med.dosage}</div>
                         <div class="col-4">${med.duration}</div>
                     </div>
@@ -114,9 +114,10 @@ function Prescription() {
             </html>
         `;
     
-        const newWindow = window.open('', '_blank');
+        const newWindow = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
         newWindow.document.write(printContent);
         newWindow.document.close();
+        newWindow.focus();
         newWindow.print();
     };
     

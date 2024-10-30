@@ -64,7 +64,7 @@ function PatientAdd() {
             <div className="page-title">
                 <div className="row">
                     <div className="col-12 col-md-6 order-md-1 order-last">
-                        <h3>Add New Patient</h3>
+                        <h3>Add New Patient Registration</h3>
                     </div>
                     <div className="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" className='breadcrumb-header'>
@@ -158,14 +158,14 @@ function PatientAdd() {
                                     <label>Present Address</label>
                                 </div>
                                 <div className="col-md-4 form-group">
-                                    <textarea rows="2"cols="43" defaultValue={inputs.present_address} name="present_address"  onChange={handleChange} placeholder="Type your present address here..."/>
+                                    <textarea rows="2"cols="33" defaultValue={inputs.present_address} name="present_address"  onChange={handleChange} placeholder="Type your present address here..."/>
                             
                                 </div>
                                 <div className="col-md-2">
                                     <label>Permanent Address</label>
                                 </div>
                                 <div className="col-md-4 form-group">
-                                <textarea rows="2"cols="43" defaultValue={inputs.permanent_address} name="permanent_address" onChange={handleChange} placeholder="Type your permanent address here..."/>
+                                <textarea rows="2"cols="33" defaultValue={inputs.permanent_address} name="permanent_address" onChange={handleChange} placeholder="Type your permanent address here..."/>
                                 </div>
                                 
                                

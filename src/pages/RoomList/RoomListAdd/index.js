@@ -46,7 +46,7 @@ function RoomListAdd() {
         try{
             let apiurl='';
             if(inputs.id!=''){
-                apiurl=`/roomlist/edit/${inputs.id}`;
+                apiurl=`/roomlist/${inputs.id}`;
             }else{
                 apiurl=`/roomlist/create`;
             }

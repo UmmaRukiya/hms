@@ -53,6 +53,30 @@ function Sidebar() {
 					</li>
 					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
 						<a href="#" className='sidebar-link'>
+							<i className="fa fa-medkit" width="20"></i> 
+							<span>Nurse</span>
+						</a>
+						
+						<ul className={`submenu ${isLinkActive("/nurse")} ${isLinkActive("/nurse/add")}`}>
+						<li><Link to={"/nurse"}>Nurse List</Link></li>
+						<li><Link to={"/nurse/add"}>Nurse Add</Link></li>
+						</ul>
+						
+					</li>
+					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
+						<a href="#" className='sidebar-link'>
+							<i className="fa fa-street-view" width="20"></i> 
+							<span>Employee</span>
+						</a>
+						<ul className={`submenu ${isLinkActive("/employe")} ${isLinkActive("/employe/add")}`}>
+						<li><Link to={"/employe"}>Employee List</Link></li>
+						<li><Link to={"/employe/add"}>Employee Add</Link></li>
+						</ul>
+						
+					</li>
+
+					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
+						<a href="#" className='sidebar-link'>
 							<i className="fa fa-users" width="20"></i> 
 							<span>Patient</span>
 						</a>
@@ -65,11 +89,36 @@ function Sidebar() {
 					</li>
 					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
 						<a href="#" className='sidebar-link'>
+							<i className="fa fa-file-archive-o" width="20"></i> 
+							<span>Appointment</span>
+						</a>
+						
+						<ul className={`submenu ${isLinkActive("/appointment")} ${isLinkActive("/appointment/add")}`}>
+						<li><Link to={"/appointment"}>Appointment List</Link></li>
+						<li><Link to={"/appointment/add"}>Appointment Add</Link></li>
+						</ul>
+					</li>
+					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
+						<a href="#" className='sidebar-link'>
+						<svg xmlns="http://www.w3.org/2000/svg" width="18" height="" fill="currentColor" className="bi bi-prescription" viewBox="0 0 16 16">
+						<path d="M5.5 6a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 1 0V9h.293l2 2-1.147 1.146a.5.5 0 0 0 .708.708L9 11.707l1.146 1.147a.5.5 0 0 0 .708-.708L9.707 11l1.147-1.146a.5.5 0 0 0-.708-.708L9 10.293 7.695 8.987A1.5 1.5 0 0 0 7.5 6zM6 7h1.5a.5.5 0 0 1 0 1H6z"/>
+						<path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v10.5a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 3 14.5V4a1 1 0 0 1-1-1zm2 3v10.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V4zM3 3h10V1H3z"/>
+						</svg>
+							<span>Prescription</span>
+						</a>
+						<ul className={`submenu ${isLinkActive("/prescription")} ${isLinkActive("/prescription/add")}`}>
+						<li><Link to={"/prescription"}>Prescription List</Link></li>
+						<li><Link to={"/prescription/add"}>Prescription Add</Link></li>
+						</ul>
+						
+					</li>
+					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
+						<a href="#" className='sidebar-link'>
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-journal-plus" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M8 5.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 .5-.5"/>
-  <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2"/>
-  <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z"/>
-</svg>
+						<path fill-rule="evenodd" d="M8 5.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 .5-.5"/>
+						<path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2"/>
+						<path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z"/>
+						</svg>
 							<span>Patient Admit</span>
 						</a>
 						
@@ -107,29 +156,7 @@ function Sidebar() {
 						<li><Link to={"/patienttest/add"}>Patient Test Add</Link></li>
 						</ul>
 					</li>
-					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
-						<a href="#" className='sidebar-link'>
-							<i className="fa fa-medkit" width="20"></i> 
-							<span>Nurse</span>
-						</a>
-						
-						<ul className={`submenu ${isLinkActive("/nurse")} ${isLinkActive("/nurse/add")}`}>
-						<li><Link to={"/nurse"}>Nurse List</Link></li>
-						<li><Link to={"/nurse/add"}>Nurse Add</Link></li>
-						</ul>
-						
-					</li>
-					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
-						<a href="#" className='sidebar-link'>
-							<i className="fa fa-street-view" width="20"></i> 
-							<span>Employee</span>
-						</a>
-						<ul className={`submenu ${isLinkActive("/employe")} ${isLinkActive("/employe/add")}`}>
-						<li><Link to={"/employe"}>Employee List</Link></li>
-						<li><Link to={"/employe/add"}>Employee Add</Link></li>
-						</ul>
-						
-					</li>
+					
 					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
 						<a href="#" className='sidebar-link'>
 							<i className="fa fa-calendar-plus-o" width="20"></i> 
@@ -140,31 +167,7 @@ function Sidebar() {
 						<li><Link to={"/schedule/add"}>Schedule Add</Link></li>
 						</ul>
 					</li>
-					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
-						<a href="#" className='sidebar-link'>
-							<i className="fa fa-file-archive-o" width="20"></i> 
-							<span>Appointment</span>
-						</a>
-						
-						<ul className={`submenu ${isLinkActive("/appointment")} ${isLinkActive("/appointment/add")}`}>
-						<li><Link to={"/appointment"}>Appointment List</Link></li>
-						<li><Link to={"/appointment/add"}>Appointment Add</Link></li>
-						</ul>
-					</li>
-					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
-						<a href="#" className='sidebar-link'>
-						<svg xmlns="http://www.w3.org/2000/svg" width="18" height="" fill="currentColor" className="bi bi-prescription" viewBox="0 0 16 16">
-  <path d="M5.5 6a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 1 0V9h.293l2 2-1.147 1.146a.5.5 0 0 0 .708.708L9 11.707l1.146 1.147a.5.5 0 0 0 .708-.708L9.707 11l1.147-1.146a.5.5 0 0 0-.708-.708L9 10.293 7.695 8.987A1.5 1.5 0 0 0 7.5 6zM6 7h1.5a.5.5 0 0 1 0 1H6z"/>
-  <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v10.5a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 3 14.5V4a1 1 0 0 1-1-1zm2 3v10.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V4zM3 3h10V1H3z"/>
-</svg>
-							<span>Prescripttion</span>
-						</a>
-						<ul className={`submenu ${isLinkActive("/prescription")} ${isLinkActive("/prescription/add")}`}>
-						<li><Link to={"/prescription"}>Prescription List</Link></li>
-						<li><Link to={"/prescription/add"}>Prescription Add</Link></li>
-						</ul>
-						
-					</li>
+					
 					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
 						<a href="#" className='sidebar-link'>
 							<i className="fa fa-tint" width="20"></i> 
@@ -208,7 +211,7 @@ function Sidebar() {
 						</ul>
 						
 					</li>
-					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
+					{/* <li className={`sidebar-item has-sub`} onClick={activeMenu}>
 						<a href="#" className='sidebar-link'>
 							<i className="fa fa-user-plus" width="20"></i> 
 							<span>Account Manager</span>
@@ -221,8 +224,8 @@ function Sidebar() {
 							
 						</ul>
 						
-					</li>
-					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
+					</li> */}
+					{/* <li className={`sidebar-item has-sub`} onClick={activeMenu}>
 						<a href="#" className='sidebar-link'>
 							<i className="fa fa-female" width="20"></i> 
 							<span>Human Resources</span>
@@ -235,7 +238,7 @@ function Sidebar() {
 							
 						</ul>
 						
-					</li>
+					</li> */}
 					<li className={`sidebar-item has-sub`} onClick={activeMenu}>
 						<a href="#" className='sidebar-link'>
 							<i className="fa fa-bed" width="20"></i> 
