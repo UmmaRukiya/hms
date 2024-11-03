@@ -4,9 +4,9 @@ import AdminLayout from '../../../layouts/AdminLayout';
 import { useNavigate, useParams } from 'react-router-dom';
 
 function PatientBillAdd() {
-    const [inputs, setInputs] = useState({ id: '', patient_id: '', sub_amount:'', discount: 0, tax: 0, bill_date: '' });
+    const [inputs, setInputs] = useState({ id: '', patient_id: '', sub_amount:'0', discount: 0, tax: 0, bill_date: '' });
     const [patients, setPatients] = useState([]);
-    const [cartItems, setCartItems] = useState([]);
+    const [madiCarts, setMadiCarts] = useState([]);
     const [totalData, setTotalData] = useState({ total: 0, discountAmount: 0, taxAmount: 0, finalTotal: 0 });
     const navigate = useNavigate();
     const { id } = useParams();
@@ -19,14 +19,14 @@ function PatientBillAdd() {
     }, [id]);
 
     const fetchPatientList = async () => {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patient/index`);
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patientadmit/index`);
         setPatients(response.data.data);
     };
 
     const fetchBillData = async () => {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/patientbill/${id}`);
         setInputs(response.data.data);
-        setCartItems(response.data.cartItems || []);
+        setMadiCarts(response.data.cartItems || []);
         calculateTotals(response.data.cartItems || [], response.data.data.discount, response.data.data.tax);
     };
 
