@@ -5,47 +5,48 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 function PatientBillAdd() {
     const [inputs, setInputs] = useState({ id: '', patient_id: '', sub_amount:'0', discount: 0, tax: 0, bill_date: '' });
-    const [patients, setPatients] = useState([]);
+    // const [patients, setPatients] = useState([]);
+    const [bill, setPatientadmit] = useState([]);
     const [madiCarts, setMadiCarts] = useState([]);
     const [totalData, setTotalData] = useState({ total: 0, discountAmount: 0, taxAmount: 0, finalTotal: 0 });
     const navigate = useNavigate();
     const { id } = useParams();
 
     useEffect(() => {
-        fetchPatientList();
+        PatientList();
         if (id) {
-            fetchBillData();
+            BillData();
         }
     }, [id]);
 
-    const fetchPatientList = async () => {
+    const PatientList = async () => {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/patientadmit/index`);
-        setPatients(response.data.data);
+        setPatientadmit(response.data.data);
     };
 
-    const fetchBillData = async () => {
+    const BillData = async () => {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/patientbill/${id}`);
         setInputs(response.data.data);
-        setMadiCarts(response.data.cartItems || []);
-        calculateTotals(response.data.cartItems || [], response.data.data.discount, response.data.data.tax);
+        setMadiCarts(response.data.madiCarts || []);
+        calculateTotals(response.data.madiCarts || [], response.data.data.discount, response.data.data.tax);
     };
 
     const handleChange = (event) => {
         const { name, value } = event.target;
         setInputs((prev) => ({ ...prev, [name]: value }));
-        calculateTotals(cartItems, name === 'discount' ? value : inputs.discount, name === 'tax' ? value : inputs.tax); // Calculate based on changed field
+        calculateTotals(madiCarts, name === 'discount' ? value : inputs.discount, name === 'tax' ? value : inputs.tax); // Calculate based on changed field
     };
 
     const handleCartChange = (event, item) => {
         const { name, value } = event.target;
         const updatedItem = { ...item, [name]: parseFloat(value) || 0 };
         updatedItem.sub_total = updatedItem.unit * updatedItem.price; // Update subtotal based on unit and price
-        setCartItems((prev) => prev.map((i) => (i.id === updatedItem.id ? updatedItem : i)));
-        calculateTotals(cartItems, inputs.discount, inputs.tax); // Recalculate totals
+        setMadiCarts((prev) => prev.map((i) => (i.id === updatedItem.id ? updatedItem : i)));
+        calculateTotals(madiCarts, inputs.discount, inputs.tax); // Recalculate totals
     };
 
-    const addCartItem = () => {
-        setCartItems((prev) => [...prev, { id: Date.now(), particulars: '', unit: 1, price: 0, sub_total: 0 }]);
+    const addMadiCart= () => {
+        setMadiCarts((prev) => [...prev, { id: Date.now(), particulars: '', unit: 1, price: '', sub_total: 0 }]);
     };
 
     const calculateTotals = (items, discount = 0, tax = 0) => {
@@ -68,7 +69,7 @@ function PatientBillAdd() {
         try {
             await axios.post(`${process.env.REACT_APP_API_URL}/patientbill/create`, {
                 input: { ...inputs, total_amount: totalData.finalTotal },
-                cartItems,
+                madiCarts,
             });
             navigate('/patientbill'); 
         } catch (error) {
@@ -104,23 +105,21 @@ function PatientBillAdd() {
                                         <form className="form form-vertical" onSubmit={handleSubmit}>
                                             <div className="form-body">
                                                 <div className="row form-group">
-                                                    <div className="col-md-1">
-                                                        <label>Patient:</label>
+                                                    <div className="col-md-4">
+                                                        {bill && 
+                                                            <>
+                                                                <h3><label>Patient Name:</label> {bill?.name}</h3>
+                                                                <h3><label>Bill Date:</label> {bill?.bill_date}</h3>
+                                                               
+                                                            </>
+                                                        }
                                                     </div>
-                                                    <div className="col-md-3 form-group">
-                                                        <select className="form-control" name='patient_id' value={inputs.patient_id} onChange={handleChange}>
-                                                            <option value="">Select Patient</option>
-                                                            {patients.map((patient) => (
-                                                                <option key={patient.id} value={patient.id}>{patient.name}</option>
-                                                            ))}
-                                                        </select>
-                                                    </div>
-                                                    <div className="col-md-1">
+                                                    {/* <div className="col-md-1">
                                                         <label>Bill Date:</label>
                                                     </div>
                                                     <div className="col-md-3 form-group">
                                                         <input type="date" className="form-control" name="bill_date" value={inputs.bill_date} onChange={handleChange} />
-                                                    </div>
+                                                    </div> */}
                                                 </div>
 
                                                 <div className='row'>
@@ -134,7 +133,7 @@ function PatientBillAdd() {
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            {cartItems.map((item) => (
+                                                            {madiCarts.map((item) => (
                                                                 <tr key={item.id}>
                                                                     <td>
                                                                         <input 
@@ -167,7 +166,7 @@ function PatientBillAdd() {
                                                             ))}
                                                         </tbody>
                                                     </table>
-                                                    <button type="button" className="btn btn-secondary" onClick={addCartItem}>Add Item</button>
+                                                    <button type="button" className="btn btn-secondary" onClick={addMadiCart}>Add Item</button>
                                                 </div>
 
                                                 <div className="col-12 d-flex justify-content-end">
