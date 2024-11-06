@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {useNavigate } from "react-router-dom";
+import {json, useNavigate } from "react-router-dom";
 
 const login = async (data) => {
     const LOGIN_ENDPOINT = `${process.env.REACT_APP_API_URL}/login`;
@@ -12,7 +12,7 @@ const login = async (data) => {
 
         if(response.data.data.token){
             localStorage.setItem("access_token", response.data.data.token);
-            localStorage.setItem("userdata",  response.data.data.data);
+            localStorage.setItem("userdata", JSON.stringify(response.data.data.data));
             return true;
         }else{
             return false;
