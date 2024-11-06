@@ -79,9 +79,151 @@ function Dashboard() {
                             </div>
                         </div>
                     </div>
+                    <div className="col-12 col-md-3">
+                        <div className="card card-statistic">
+                            <div className="card-body p-0">
+                                <div className="d-flex flex-column">
+                                    <div className='px-3 py-3 d-flex justify-content-between'>
+                                        <h3 className='card-title'>Appointment</h3>
+                                        <div className="card-right d-flex align-items-center">
+                                            {/* <p>423 </p> */}
+                                        </div>
+                                    </div>
+                                    <div className="chart-wrapper">
+                                        <canvas id="canvas4" style={{height:'100px' ,important:true }}></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-12 col-md-3">
+                        <div className="card card-statistic">
+                            <div className="card-body p-0">
+                                <div className="d-flex flex-column">
+                                    <div className='px-3 py-3 d-flex justify-content-between'>
+                                        <h3 className='card-title'>Investigation</h3>
+                                        <div className="card-right d-flex align-items-center">
+                                            {/* <p>423 </p> */}
+                                        </div>
+                                    </div>
+                                    <div className="chart-wrapper">
+                                        <canvas id="canvas4" style={{height:'100px' ,important:true }}></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-12 col-md-3">
+                        <div className="card card-statistic">
+                            <div className="card-body p-0">
+                                <div className="d-flex flex-column">
+                                    <div className='px-3 py-3 d-flex justify-content-between'>
+                                        <h3 className='card-title'>BiLL</h3>
+                                        <div className="card-right d-flex align-items-center">
+                                            {/* <p>423 </p> */}
+                                        </div>
+                                    </div>
+                                    <div className="chart-wrapper">
+                                        <canvas id="canvas4" style={{height:'100px' ,important:true }}></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-12 col-md-3">
+                        <div className="card card-statistic">
+                            <div className="card-body p-0">
+                                <div className="d-flex flex-column">
+                                    <div className='px-3 py-3 d-flex justify-content-between'>
+                                        <h3 className='card-title'>Schedule</h3>
+                                        <div className="card-right d-flex align-items-center">
+                                            {/* <p>423 </p> */}
+                                        </div>
+                                    </div>
+                                    <div className="chart-wrapper">
+                                        <canvas id="canvas4" style={{height:'100px' ,important:true }}></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-12 col-md-3">
+                        <div className="card card-statistic">
+                            <div className="card-body p-0">
+                                <div className="d-flex flex-column">
+                                    <div className='px-3 py-3 d-flex justify-content-between'>
+                                        <h3 className='card-title'>Blood</h3>
+                                        <div className="card-right d-flex align-items-center">
+                                            {/* <p>423 </p> */}
+                                        </div>
+                                    </div>
+                                    <div className="chart-wrapper">
+                                        <canvas id="canvas4" style={{height:'100px' ,important:true }}></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-12 col-md-3">
+                        <div className="card card-statistic">
+                            <div className="card-body p-0">
+                                <div className="d-flex flex-column">
+                                    <div className='px-3 py-3 d-flex justify-content-between'>
+                                        <h3 className='card-title'>Medicine</h3>
+                                        <div className="card-right d-flex align-items-center">
+                                            {/* <p>423 </p> */}
+                                        </div>
+                                    </div>
+                                    <div className="chart-wrapper">
+                                        <canvas id="canvas4" style={{height:'100px' ,important:true }}></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-12 col-md-3">
+                        <div className="card card-statistic">
+                            <div className="card-body p-0">
+                                <div className="d-flex flex-column">
+                                    <div className='px-3 py-3 d-flex justify-content-between'>
+                                        <h3 className='card-title'>Room</h3>
+                                        <div className="card-right d-flex align-items-center">
+                                            {/* <p>423 </p> */}
+                                        </div>
+                                    </div>
+                                    <div className="chart-wrapper">
+                                        <canvas id="canvas4" style={{height:'100px' ,important:true }}></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-12 col-md-3">
+                        <div className="card card-statistic">
+                            <div className="card-body p-0">
+                                <div className="d-flex flex-column">
+                                    <div className='px-3 py-3 d-flex justify-content-between'>
+                                        <h3 className='card-title'>Ambulance</h3>
+                                        <div className="card-right d-flex align-items-center">
+                                            {/* <p>423 </p> */}
+                                        </div>
+                                    </div>
+                                    <div className="chart-wrapper">
+                                        <canvas id="canvas4" style={{height:'100px' ,important:true }}></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div className="row mb-4">
-                    <div className="col-md-8">
+
+
+
+
+
+
+                {/* <div className="row mb-4">
+                    <div className="col-md-8"> */}
                         {/* <div className="card">
                             <div className="card-header">
                                 <h3 className='card-heading p-1 pl-3'>Sales</h3>
@@ -108,7 +250,7 @@ function Dashboard() {
                                 </div>
                             </div>
                         </div> */}
-                        <div className="card">
+                        {/* <div className="card">
                             <div className="card-header d-flex justify-content-between align-items-center">
                                 <h4 className="card-title"><i className="fa fa-user-md" width="20"></i> Doctors List</h4>
                                 <div className="d-flex ">
@@ -195,9 +337,9 @@ function Dashboard() {
                                     </table>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="col-md-4">
+                        </div> */}
+                    {/* </div> */}
+                    {/* <div className="col-md-4"> */}
                         {/* <div className="card ">
                             <div className="card-header">
                                 <h4>Your Earnings</h4>
@@ -210,7 +352,7 @@ function Dashboard() {
                                 </div>
                             </div>
                         </div> */}
-                        <div className="card widget-todo">
+                        {/* <div className="card widget-todo">
                             <div className="card-header border-bottom d-flex justify-content-between align-items-center">
                                 <h4 className="card-title d-flex">
                                     <i className='bx bx-check font-medium-5 pl-25 pr-75'></i>Inventories
@@ -273,9 +415,9 @@ function Dashboard() {
                                     </tfoot>
                                 </table>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                        </div> */}
+                    {/* </div> */}
+                {/* </div> */}
             </section>
         </div>
     </AdminLayout>       

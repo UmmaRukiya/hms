@@ -64,43 +64,68 @@ function ScheduleAdd() {
                         </div>
                     </div>
                 </div>
-
-                <form onSubmit={handleSubmit}>
-                    <div>
-                        <label htmlFor="employe_id">Employee</label>
-                        <select name="employe_id" onChange={handleChange} value={inputs.employe_id}>
-                            <option value="">Select Employee</option>
-                            {employe.map((employe) => (
-                                <option key={employe.id} value={employe.id}>{employe.name}</option>
-                            ))}
-                        </select>
+                <section id="basic-vertical-layouts">
+                <div className="row match-height">
+                    <div className="col-12">
+                        <div className="card">
+                            <div className="card-content">
+                                <div className="card-body">
+                                    <form className="form form-vertical" onSubmit={handleSubmit}>
+                                        <div className="form-body">
+                                        <div className="row form-group">
+                                            <div className="col-md-2">
+                                            <label htmlFor="employe_id">Employee</label>
+                                            </div>
+                                            <div className="col-md-10 form-group">
+                                                <select name="employe_id" onChange={handleChange} value={inputs.employe_id}>
+                                                    <option value="">Select Employee</option>
+                                                    {employe.map((employe) => (
+                                                        <option key={employe.id} value={employe.id}>{employe.name}</option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                            <div className="col-md-2">
+                                            <label htmlFor="day_id">Day</label>
+                                            </div>
+                                            <div className="col-md-10 form-group">
+                                                <select name="day_id" onChange={handleChange} value={inputs.day_id}>
+                                                    <option value="">Select Day</option>
+                                                    {day.map((d) => (
+                                                        <option key={d.id} value={d.id}>{d.day_name}</option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                            <div className="col-md-2">
+                                            <label htmlFor="shift_id">Shift</label>
+                                            </div>
+                                            <div className="col-md-10 form-group">
+                                                <select name="shift_id" onChange={handleChange} value={inputs.shift_id}>
+                                                    <option value="">Select Shift</option>
+                                                    {shift.map((s) => (
+                                                        <option key={s.id} value={s.id}>{s.shift_name}</option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                            <div className="col-md-2">
+                                            <label htmlFor="status">Status</label>
+                                            </div>
+                                            <div className="col-md-10 form-group">
+                                            <input type="number" name="status" value={inputs.status} onChange={handleChange} />
+                                            </div>
+                                            <div className="col-12 d-flex justify-content-end">
+                                                <button type="submit" className="btn btn-primary mr-1 mb-1">Submit</button>
+                                                <button type="reset" className="btn btn-light-secondary mr-1 mb-1">Reset</button>
+                                            </div>
+                                        </div>
+                        
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <label htmlFor="day_id">Day</label>
-                        <select name="day_id" onChange={handleChange} value={inputs.day_id}>
-                            <option value="">Select Day</option>
-                            {day.map((d) => (
-                                <option key={d.id} value={d.id}>{d.day_name}</option>
-                            ))}
-                        </select>
-                    </div>
-                    <div>
-                        <label htmlFor="shift_id">Shift</label>
-                        <select name="shift_id" onChange={handleChange} value={inputs.shift_id}>
-                            <option value="">Select Shift</option>
-                            {shift.map((s) => (
-                                <option key={s.id} value={s.id}>{s.shift_name}</option>
-                            ))}
-                        </select>
-                    </div>
-                    <div>
-                        <label htmlFor="status">Status</label>
-                        <input type="number" name="status" value={inputs.status} onChange={handleChange} placeholder="Room Available or Not..." />
-                    </div>
-                    <div>
-                        <button type="submit">Add Schedule</button>
-                    </div>
-                </form>
+                </div>
+            </section>
             </div>
         </AdminLayout>
     );

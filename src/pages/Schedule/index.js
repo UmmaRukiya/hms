@@ -8,22 +8,22 @@ function Schedule() {
     const [schedules, setSchedules] = useState([]);
     const [day, setDays] = useState([]);
     const [shift, setShifts] = useState([]);
-    const [doctor, setDoctor] = useState([]);
+    const [employe, setEmploye] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [schedulesResponse, daysResponse, shiftsResponse, doctorResponse] = await Promise.all([
+                const [schedulesResponse, daysResponse, shiftsResponse, employeResponse] = await Promise.all([
                     axios.get(`${process.env.REACT_APP_API_URL}/schedule/index`),
                     axios.get(`${process.env.REACT_APP_API_URL}/day/index`),
                     axios.get(`${process.env.REACT_APP_API_URL}/shift/index`),
-                    axios.get(`${process.env.REACT_APP_API_URL}/doctor/index`)
+                    axios.get(`${process.env.REACT_APP_API_URL}/employe/index`)
                 ]);
                 
                 setSchedules(schedulesResponse.data.data);
                 setDays(daysResponse.data.data);
                 setShifts(shiftsResponse.data.data);
-                setDoctor(doctorResponse.data.data);
+                setEmploye(employeResponse.data.data);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -31,14 +31,14 @@ function Schedule() {
         fetchData();
     }, []);
 
-    const deleteData = async (id) => {
-                try {
-                    await axios.delete(`${process.env.REACT_APP_API_URL}/schedule/${id}`);
-                    setSchedules(prev => prev.filter(s => s.id !== id)); // Remove from state after deletion
-                } catch (error) {
-                    console.error("Error deleting schedule:", error);
-                }
-            };
+    // const deleteData = async (id) => {
+    //             try {
+    //                 await axios.delete(`${process.env.REACT_APP_API_URL}/schedule/${id}`);
+    //                 setSchedules(prev => prev.filter(s => s.id !== id)); // Remove from state after deletion
+    //             } catch (error) {
+    //                 console.error("Error deleting schedule:", error);
+    //             }
+    //         };
 
     return (
         <AdminLayout>
@@ -46,7 +46,7 @@ function Schedule() {
                 <div className="page-title">
                     <div className="row">
                         <div className="col-12 col-md-6 order-md-1 order-last">
-                            <h3>Hospital Schedule</h3>
+                            <h3>Employee Schedule</h3>
                         </div>
                         <div className="col-12 col-md-6 order-md-2 order-first">
                             <nav aria-label="breadcrumb" className='breadcrumb-header'>
@@ -63,37 +63,37 @@ function Schedule() {
                     <table className="table">
                         <thead>
                             <tr>
-                                <th>Doctors/Shift</th>
+                                <th>Days/Shifts</th>
                                 {shift.map(shift => (
                                     <th key={shift.id}>{shift.shift_name}</th>
                                 ))}
                             </tr>
                         </thead>
                         <tbody>
-                            {doctor.map(doctor => (
-                                <tr key={doctor.id}>
-                                    <td>{doctor.name}</td>
+                            {day.map(day => (
+                                <tr key={day.id}>
+                                    <td>{day.day_name}</td>
                                     {shift.map(shift => (
                                         <td key={shift.id}>
-                                            {day.map(day => {
-                                                const scheduled = schedules.find(s => s.day_id === day.id && s.shift_id === shift.id && s.doctor_id === doctor.id);
+                                            {employe.map(employe => {
+                                                const scheduled = schedules.find(s => s.day_id === day.id && s.shift_id === shift.id && s.employe_id === employe.id);
                                                 return (
-                                                    <div key={day.id}>
-                                                        {scheduled ? day.day_name : 'day'}
+                                                    <div key={employe.id}>
+                                                        {scheduled ? employe.name : ''}
                                                     </div>
                                                 );
                                             })}
                                         </td>
                                        
                                     ))}
-                                     <td>
+                                     {/* <td>
                                             <Link to={`/schedule/edit/${s=>s.id}`} className='btn btn-info'>
                                                 Edit
                                             </Link>
                                             <button type='button' onClick={() => deleteData(s=>s.id)} className='btn btn-outline-danger'>
                                                 Delete
                                             </button>
-                                        </td>
+                                        </td> */}
                                 </tr>
                             ))}
                         </tbody>
