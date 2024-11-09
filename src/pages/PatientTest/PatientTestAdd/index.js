@@ -5,15 +5,15 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 
 function PatientTestAdd() {
-    const [inputs, setInputs] = useState({ id: '', patient_id: '', admit_id: '', discount: 0, vat: 0, total_amount: '', paid: '' });
+    const { admit_id , patient_id } = useParams();
+    const { testid } = useParams();
+    const [inputs, setInputs] = useState({ id: '', patient_id: patient_id, admit_id: admit_id, discount: 0, vat: 0, total_amount: '', paid: '' });
     const [patients, setPatients] = useState([]);
     const [patientAdmit, setPatientAdmit] = useState([]);
     const [investList, setInvestList] = useState([]);
     const [cartItems, setCartItems] = useState([]);
-    const [scartItems, setsCartItems] = useState([]);
     const [totalData, setTotalData] = useState({ total: 0, discountAmount: 0, vatAmount: 0, finalTotal: 0 });
     const navigate = useNavigate();
-    const { id } = useParams();
 
     const formatResult = (item) => {
         return (<><span style={{ display: 'block', textAlign: 'left' }}>{item.name}</span></>)
@@ -24,10 +24,10 @@ function PatientTestAdd() {
         fetchPatientAdmitList();
         fetchInvestList();
         calculateTotals();
-        if (id) {
-            fetchTestData();
-        }
-    }, [id,cartItems]);
+         if (testid) {
+             fetchTestData();
+         }
+    }, [testid,cartItems]);
 
     const fetchPatientList = async () => {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/patient/index`);
@@ -44,7 +44,7 @@ function PatientTestAdd() {
         let resDatas=[];
         if(response.data){
             response.data.data?.map((d) => (
-                resDatas.push({id:d.id,name:d.invest_name,unit:1,price:d.price})
+                resDatas.push({id:d.id,name:d.invest_name,price:d.price})
             ))
         }
         setInvestList(resDatas);
@@ -52,10 +52,10 @@ function PatientTestAdd() {
     };
 
     const fetchTestData = async () => {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patienttest/${id}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patienttest/${testid}`);
         setInputs(response.data.data);
-        setCartItems(response.data.cartItems || []);
-        calculateTotals(response.data.cartItems || [], response.data.data.discount, response.data.data.vat);
+         //setCartItems([]);
+        // calculateTotals(response.data.cartItems || [], response.data.data.discount, response.data.data.vat);
     };
 
     const handleChange = (event) => {
@@ -71,7 +71,7 @@ function PatientTestAdd() {
         let selectedInvestigation = cartItems.find(invest => invest.id === event.id);
         
         if(!selectedInvestigation){
-            event={ ...event, sub_total: (event.price * event.unit) }
+            event={ ...event, sub_total: parseFloat(event.price)  }
             setCartItems([ ...cartItems, event ])
         }
 
@@ -97,8 +97,7 @@ function PatientTestAdd() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const allInvestigationsSelected = cartItems.every(item => item.investigations);
-        if (!allInvestigationsSelected) {
+        if (cartItems.length<=0) {
             alert("Please select investigations for all cart items.");
             return;
         }
@@ -146,23 +145,32 @@ function PatientTestAdd() {
                                                         <label>Patient:</label>
                                                     </div>
                                                     <div className="col-md-3 form-group">
-                                                        <select className="form-control" name='patient_id' value={inputs.patient_id} onChange={handleChange}>
-                                                            <option value="">Select Patient</option>
-                                                            {patients.map((patient) => (
-                                                                <option key={patient.id} value={patient.id}>{patient.name}</option>
-                                                            ))}
-                                                        </select>
+                                                        { patient_id ?
+                                                            <>{patients.find(data => data.id == patient_id)?.name}</>
+                                                            :
+                                                            <select className="form-control" name='patient_id' value={inputs.patient_id} onChange={handleChange}>
+                                                                <option value="">Select Patient</option>
+                                                                {patients.map((patient) => (
+                                                                    <option key={patient.id} value={patient.id}>{patient.name}</option>
+                                                                ))}
+                                                            </select>
+                                                            
+                                                        }
                                                     </div>
                                                     <div className="col-md-1">
                                                         <label>Admit No:</label>
                                                     </div>
                                                     <div className="col-md-3 form-group">
-                                                        <select className="form-control" name='admit_id' value={inputs.admit_id} onChange={handleChange}>
-                                                            <option value="">Select Admit No</option>
-                                                            {patientAdmit.map((admit) => (
-                                                                <option key={admit.id} value={admit.id}>{admit.id}</option>
-                                                            ))}
-                                                        </select>
+
+                                                        { admit_id ? <></> :
+                                                                <select className="form-control" name='admit_id' value={inputs.admit_id} onChange={handleChange}>
+                                                                    <option value="">Select Admit No</option>
+                                                                    {patientAdmit.map((admit) => (
+                                                                        <option key={admit.id} value={admit.id}>{admit.id}</option>
+                                                                    ))}
+                                                                </select>
+                                                        }
+
                                                     </div>
                                                 </div>
                                                 <div className='row'>
@@ -183,34 +191,14 @@ function PatientTestAdd() {
                                                         <thead>
                                                             <tr style={{ backgroundColor: '#e9ecef', fontWeight: 'bold' }}>
                                                                 <th>Investigations</th>
-                                                                <th>Unit</th>
                                                                 <th>Price</th>
-                                                                <th>Total</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             {cartItems.map((item) => (
                                                                 <tr key={item.id}>
                                                                     <td>{item.name}</td>
-                                                                    <td>
-                                                                        <input 
-                                                                            className='form-control' 
-                                                                            type="number" 
-                                                                            name="unit" 
-                                                                            value={item.unit} 
-                                                                            onChange={(e) => handleCartChange(e, { ...item, unit: parseFloat(e.target.value) })} 
-                                                                        />
-                                                                    </td>
-                                                                    <td>
-                                                                        <input 
-                                                                            className='form-control' 
-                                                                            type="number" 
-                                                                            name="price" 
-                                                                            value={item.price} 
-                                                                            readOnly // Make price read-only, calculated from selected investigation
-                                                                        />
-                                                                    </td>
-                                                                    <td>{item.sub_total?.toFixed(2)}</td>
+                                                                    <td>{item.price} </td>
                                                                 </tr>
                                                             ))}
                                                         </tbody>

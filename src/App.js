@@ -358,7 +358,7 @@ function App() {
             <PatientBill />
           </Protected>
         } />
-        <Route path={"/patientbill/add"} element={
+        <Route path={"/patientbill/add/:admit_id?/:patient_id?"} element={
           <Protected isSignedIn={isSignedIn} >
             <PatientBillAdd />
           </Protected>
@@ -373,12 +373,13 @@ function App() {
             <PatientTest />
           </Protected>
         } />
-        <Route path={"/patienttest/add"} element={
+        <Route path={"/patienttest/add/:admit_id?/:patient_id?"} element={
           <Protected isSignedIn={isSignedIn} >
             <PatientTestAdd />
           </Protected>
         } />
-        <Route path={"/patienttest/edit/:id"} element={
+        
+        <Route path={"/patienttest/edit/:testid"} element={
           <Protected isSignedIn={isSignedIn} >
             <PatientTestAdd />
           </Protected>

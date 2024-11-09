@@ -4,7 +4,8 @@ import AdminLayout from '../../../layouts/AdminLayout';
 import { useNavigate, useParams } from 'react-router-dom';
 
 function PatientBillAdd() {
-    const [inputs, setInputs] = useState({ id: '', patient_id: '', sub_amount:'0', discount: 0, tax: 0, bill_date: '' });
+    const { admit_id , patient_id } = useParams();
+    const [inputs, setInputs] = useState({ id: '', patient_id: patient_id, sub_amount:'0', discount: 0, tax: 0, bill_date: '' });
     // const [patients, setPatients] = useState([]);
     const [bill, setPatientadmit] = useState([]);
     const [madiCarts, setMadiCarts] = useState([]);
@@ -17,10 +18,17 @@ function PatientBillAdd() {
         if (id) {
             BillData();
         }
+        if (admit_id) {
+            admitDetails();
+        }
     }, [id]);
 
     const PatientList = async () => {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/patientadmit/index`);
+        setPatientadmit(response.data.data);
+    };
+    const admitDetails = async () => {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patientadmit/billdetails/${admit_id}`);
         setPatientadmit(response.data.data);
     };
 
