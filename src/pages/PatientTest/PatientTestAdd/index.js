@@ -2,25 +2,32 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import AdminLayout from '../../../layouts/AdminLayout';
 import { useNavigate, useParams } from 'react-router-dom';
+import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 
 function PatientTestAdd() {
     const [inputs, setInputs] = useState({ id: '', patient_id: '', admit_id: '', discount: 0, vat: 0, total_amount: '', paid: '' });
     const [patients, setPatients] = useState([]);
     const [patientAdmit, setPatientAdmit] = useState([]);
     const [investList, setInvestList] = useState([]);
-    const [cartItems, setCartItems] = useState([{ id: Date.now(), investigations: '', unit: 1, price: 0, sub_total: 0 }]);
+    const [cartItems, setCartItems] = useState([]);
+    const [scartItems, setsCartItems] = useState([]);
     const [totalData, setTotalData] = useState({ total: 0, discountAmount: 0, vatAmount: 0, finalTotal: 0 });
     const navigate = useNavigate();
     const { id } = useParams();
+
+    const formatResult = (item) => {
+        return (<><span style={{ display: 'block', textAlign: 'left' }}>{item.name}</span></>)
+    }
 
     useEffect(() => {
         fetchPatientList();
         fetchPatientAdmitList();
         fetchInvestList();
+        calculateTotals();
         if (id) {
             fetchTestData();
         }
-    }, [id]);
+    }, [id,cartItems]);
 
     const fetchPatientList = async () => {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/patient/index`);
@@ -34,7 +41,14 @@ function PatientTestAdd() {
 
     const fetchInvestList = async () => {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/investlist/index`);
-        setInvestList(response.data.data);
+        let resDatas=[];
+        if(response.data){
+            response.data.data?.map((d) => (
+                resDatas.push({id:d.id,name:d.invest_name,unit:1,price:d.price})
+            ))
+        }
+        setInvestList(resDatas);
+        console.log(resDatas)
     };
 
     const fetchTestData = async () => {
@@ -47,31 +61,25 @@ function PatientTestAdd() {
     const handleChange = (event) => {
         const { name, value } = event.target;
         setInputs((prev) => ({ ...prev, [name]: value }));
-        calculateTotals(cartItems, name === 'discount' ? value : inputs.discount, name === 'vat' ? value : inputs.vat);
+
+
+        calculateTotals(name === 'discount' ? value : inputs.discount, name === 'vat' ? value : inputs.vat);
     };
+    
+    const handleCartChange = (event) => {
 
-    const handleCartChange = (event, item) => {
-        const { name, value } = event.target;
-        const updatedItem = { ...item };
-
-        if (name === 'investigations') {
-            updatedItem.investigations = value;
-            const selectedInvestigation = investList.find(invest => invest.id === value);
-            updatedItem.price = selectedInvestigation ? selectedInvestigation.price : 0;
-        } else {
-            updatedItem[name] = parseFloat(value) || 0;
+        let selectedInvestigation = cartItems.find(invest => invest.id === event.id);
+        
+        if(!selectedInvestigation){
+            event={ ...event, sub_total: (event.price * event.unit) }
+            setCartItems([ ...cartItems, event ])
         }
 
-        updatedItem.sub_total = updatedItem.unit * updatedItem.price;
-        setCartItems((prev) => prev.map((i) => (i.id === updatedItem.id ? updatedItem : i)));
-        calculateTotals(cartItems, inputs.discount, inputs.vat);
+        calculateTotals(inputs.discount, inputs.vat);
     };
 
-    const addCartItem = () => {
-        setCartItems((prev) => [...prev, { id: Date.now(), investigations: '', unit: 1, price: 0, sub_total: 0 }]);
-    };
-
-    const calculateTotals = (items, discount = 0, vat = 0) => {
+    const calculateTotals = (discount = 0, vat = 0) => {
+        const items=cartItems;
         const total = items.reduce((acc, item) => acc + (item.sub_total || 0), 0);
         const discountAmount = (parseFloat(discount) / 100) * total; 
         const vatableAmount = total - discountAmount; 
@@ -157,6 +165,18 @@ function PatientTestAdd() {
                                                         </select>
                                                     </div>
                                                 </div>
+                                                <div className='row'>
+                                                    <div className='col-12'>
+                                                        {investList && 
+                                                            <ReactSearchAutocomplete
+                                                                items={investList}
+                                                                onSelect={handleCartChange}
+                                                                autoFocus
+                                                                formatResult={formatResult}
+                                                            />
+                                                        }
+                                                    </div>
+                                                </div>
 
                                                 <div className='row'>
                                                     <table className='mt-3 table table-bordered'>
@@ -171,19 +191,7 @@ function PatientTestAdd() {
                                                         <tbody>
                                                             {cartItems.map((item) => (
                                                                 <tr key={item.id}>
-                                                                    <td>
-                                                                        <select 
-                                                                            className='form-control' 
-                                                                            name="investigations"
-                                                                            value={item.investigations} 
-                                                                            onChange={(e) => handleCartChange(e, item)} 
-                                                                        >
-                                                                            <option value="">Select Investigations</option>
-                                                                            {investList.map((invest) => (
-                                                                                <option key={invest.id} value={invest.id}>{invest.inv_cat_id}</option>
-                                                                            ))}
-                                                                        </select>
-                                                                    </td>
+                                                                    <td>{item.name}</td>
                                                                     <td>
                                                                         <input 
                                                                             className='form-control' 
@@ -202,12 +210,11 @@ function PatientTestAdd() {
                                                                             readOnly // Make price read-only, calculated from selected investigation
                                                                         />
                                                                     </td>
-                                                                    <td>{item.sub_total.toFixed(2)}</td>
+                                                                    <td>{item.sub_total?.toFixed(2)}</td>
                                                                 </tr>
                                                             ))}
                                                         </tbody>
                                                     </table>
-                                                    <button type="button" className="btn btn-secondary" onClick={addCartItem}>Add Item</button>
                                                 </div>
 
                                                 <div className="col-12 d-flex justify-content-end">
