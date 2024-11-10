@@ -2,133 +2,112 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import AdminLayout from '../../../layouts/AdminLayout';
 import { useNavigate, useParams } from 'react-router-dom';
+import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 
-function PatientBillAdd() {
+function PatientTestAdd() {
     const { admit_id , patient_id } = useParams();
-    // const { admit_id } = useParams();
-    const { billid } = useParams();
-    const [inputs, setInputs] = useState({ id: '', patient_id: patient_id, sub_amount:'0', discount: 0, tax: 0, bill_date: '' });
-    const [patients, setPatient] = useState([]);
-    const [roomlist, setRoomList] = useState([]);
+    const { testid } = useParams();
+    const [inputs, setInputs] = useState({ id: '', patient_id: patient_id, admit_id: admit_id, discount: 0, vat: 0, total_amount: '', paid: '' });
+    const [patients, setPatients] = useState([]);
     const [patientAdmit, setPatientAdmit] = useState([]);
-    const [testdata, setTestData] = useState([]);
-    const [madiCarts, setMadiCarts] = useState([]);
-    const [totalData, setTotalData] = useState({ total: 0, discountAmount: 0, taxAmount: 0, finalTotal: 0 });
+    const [investList, setInvestList] = useState([]);
+    const [cartItems, setCartItems] = useState([]);
+    const [totalData, setTotalData] = useState({ total: 0, discountAmount: 0, vatAmount: 0, finalTotal: 0 });
     const navigate = useNavigate();
-    const { id } = useParams();
 
-    // useEffect(() => {
-    //     PatientList();
-    //     PatientAdmit();
-    //     RoomList();
-    //     TestData();
-    //     calculateTotals();
-    //      if (id) {
-    //          BillData();
-    //      }
-    // }, [id]);
+    const formatResult = (item) => {
+        return (<><span style={{ display: 'block', textAlign: 'left' }}>{item.name}</span></>)
+    }
+
     useEffect(() => {
-        PatientList();
-        TestData();
-        RoomList();
-        if (id) {
-            BillData();
-        }
-        if (admit_id) {
-            admitDetails();
-        }
-    }, [id]);
+        fetchPatientList();
+        fetchPatientAdmitList();
+        fetchInvestList();
+        calculateTotals();
+         if (testid) {
+             fetchTestData();
+         }
+    }, [testid,cartItems]);
 
-    const PatientList = async () => {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patient/index`);         //Fetches the list of patients.
-        setPatient(response.data.data);
+    const fetchPatientList = async () => {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patient/index`);
+        setPatients(response.data.data);
     };
-    const admitDetails = async () => {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patientadmit/billdetails/${admit_id}`);          //Fetches the list of patient admissions.
+
+    const fetchPatientAdmitList = async () => {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patientadmit/index`);
         setPatientAdmit(response.data.data);
     };
-    const TestData = async () => {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patienttest/index`);                 //Fetches a list of investigations/tests.
+
+    const fetchInvestList = async () => {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/investlist/index`);
         let resDatas=[];
         if(response.data){
             response.data.data?.map((d) => (
-                resDatas.push({id:d.id,name:d.invest_list.invest_cat.name,price:d.amount})
+                resDatas.push({id:d.id,name:d.invest_name,price:d.price})
             ))
         }
-        setRoomList(resDatas);
+        setInvestList(resDatas);
         console.log(resDatas)
     };
 
-    const RoomList = async () => {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/roomlist/index`);          
-        let resDatas=[];
-        if(response.data){
-            response.data.data?.map((d) => (
-                resDatas.push({id:d.id,name:d.room_list?.room_cat.name,price:d.roomlist?.room_cat.price})
-            ))
-        }
-        setRoomList(resDatas);
-        console.log(resDatas)
-    };
-    const BillData = async () => {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patientbill/${billid}`);
+    const fetchTestData = async () => {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patienttest/${testid}`);
         setInputs(response.data.data);
-        // setMadiCarts(response.data.madiCarts || []);
-        // calculateTotals(response.data.madiCarts || [], response.data.data.discount, response.data.data.tax);
+         //setCartItems([]);
+        // calculateTotals(response.data.cartItems || [], response.data.data.discount, response.data.data.vat);
     };
 
     const handleChange = (event) => {
         const { name, value } = event.target;
         setInputs((prev) => ({ ...prev, [name]: value }));
-        calculateTotals(madiCarts, name === 'discount' ? value : inputs.discount, name === 'tax' ? value : inputs.tax); // Calculate based on changed field
+
+
+        calculateTotals(name === 'discount' ? value : inputs.discount, name === 'vat' ? value : inputs.vat);
     };
+    
+    const handleCartChange = (event) => {
 
-    // const handleCartChange = (event, item) => {
-    //     const { name, value } = event.target;
-    //     const updatedItem = { ...item, [name]: parseFloat(value) || 0 };
-    //     updatedItem.sub_total = updatedItem.unit * updatedItem.price; // Update subtotal based on unit and price
-    //     setMadiCarts((prev) => prev.map((i) => (i.id === updatedItem.id ? updatedItem : i)));
-    //     calculateTotals(madiCarts, inputs.discount, inputs.tax); // Recalculate totals
-    // };
-    const handleCartChange = (event) => {                                   
-
-        let Room = madiCarts.find(room => room.id === event.id);
+        let selectedInvestigation = cartItems.find(invest => invest.id === event.id);
         
-        if(!Room){
+        if(!selectedInvestigation){
             event={ ...event, sub_total: parseFloat(event.price)  }
-            setMadiCarts([ ...madiCarts, event ])
+            setCartItems([ ...cartItems, event ])
         }
 
-        calculateTotals(inputs.discount, inputs.tax);
+        calculateTotals(inputs.discount, inputs.vat);
     };
-    // const addMadiCart= () => {
-    //     setMadiCarts((prev) => [...prev, { id: Date.now(), particulars: '', price: '', sub_total: 0 }]);
-    // };
 
-    const calculateTotals = ( discount = 0, tax = 0) => {
-        const items=madiCarts;
+    const calculateTotals = (discount = 0, vat = 0) => {
+        const items=cartItems;
         const total = items.reduce((acc, item) => acc + (item.sub_total || 0), 0);
-        const discountAmount = (parseFloat(discount) / 100) * total; // Calculate discount as percentage
-        const taxableAmount = total - discountAmount; // Calculate amount after discount
-        const taxAmount = (parseFloat(tax) / 100) * taxableAmount; // Calculate tax on the discounted amount
-        const finalTotal = total - discountAmount + taxAmount; // Calculate final total
+        const discountAmount = (parseFloat(discount) / 100) * total; 
+        const vatableAmount = total - discountAmount; 
+        const vatAmount = (parseFloat(vat) / 100) * vatableAmount; 
+        const finalTotal = total - discountAmount + vatAmount; 
 
         setTotalData({
             total,
             discountAmount,
-            taxAmount,
+            vatAmount,
             finalTotal,
         });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (cartItems.length<=0) {
+            alert("Please select investigations for all cart items.");
+            return;
+        }
+
         try {
-            await axios.post(`${process.env.REACT_APP_API_URL}/patientbill/create`, {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/patienttest/create`, {
                 input: { ...inputs, total_amount: totalData.finalTotal },
-                madiCarts,
+                cartItems,
             });
-            navigate('/patientbill'); 
+            navigate('/patienttest'); 
         } catch (error) {
             console.error("Error submitting bill:", error);
         }
@@ -140,7 +119,7 @@ function PatientBillAdd() {
                 <div className="page-title">
                     <div className="row">
                         <div className="col-12 col-md-6">
-                            <h3>Add New Bill</h3>
+                            <h3>Add Patient Test</h3>
                         </div>
                         <div className="col-12 col-md-6">
                             <nav aria-label="breadcrumb">
@@ -165,8 +144,8 @@ function PatientBillAdd() {
                                                     <div className="col-md-1">
                                                         <label>Patient:</label>
                                                     </div>
-                                                    <div className="col-md-3 form-group">                   
-                                                        { patient_id ?                                          
+                                                    <div className="col-md-3 form-group">
+                                                        { patient_id ?
                                                             <>{patients.find(data => data.id == patient_id)?.name}</>
                                                             :
                                                             <select className="form-control" name='patient_id' value={inputs.patient_id} onChange={handleChange}>
@@ -179,57 +158,51 @@ function PatientBillAdd() {
                                                         }
                                                     </div>
                                                     <div className="col-md-1">
-                                                        <label>Bill Date:</label>
+                                                        <label>Admit No:</label>
                                                     </div>
-                                                    {/* <div className="col-md-3 form-group">
+                                                    <div className="col-md-3 form-group">
 
-                                                        {  patientAdmit?
-                                                        <>{patientAdmit.find(data => data.id == release_date?.release_date)}</>
-                                                          :
-                                                            <input type="date" id="bill_date" className="form-control" name="bill_date" defaultValue={inputs.bill_date}  onChange={handleChange} />
-                                                               
+                                                        { admit_id ? <></> :
+                                                                <select className="form-control" name='admit_id' value={inputs.admit_id} onChange={handleChange}>
+                                                                    <option value="">Select Admit No</option>
+                                                                    {patientAdmit.map((admit) => (
+                                                                        <option key={admit.id} value={admit.id}>{admit.id}</option>
+                                                                    ))}
+                                                                </select>
                                                         }
 
-                                                    </div> */}
+                                                    </div>
+                                                </div>
+                                                <div className='row'>
+                                                    <div className='col-12'>
+                                                        {investList && 
+                                                            <ReactSearchAutocomplete
+                                                                items={investList}
+                                                                onSelect={handleCartChange}
+                                                                autoFocus
+                                                                formatResult={formatResult}
+                                                            />
+                                                        }
+                                                    </div>
                                                 </div>
 
                                                 <div className='row'>
                                                     <table className='mt-3 table table-bordered'>
                                                         <thead>
                                                             <tr style={{ backgroundColor: '#e9ecef', fontWeight: 'bold' }}>
-                                                                <th>Particulars</th>
+                                                                <th>Investigations</th>
                                                                 <th>Price</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            
-                                                            {madiCarts.map((item) => (
+                                                            {cartItems.map((item) => (
                                                                 <tr key={item.id}>
-                                                                    <td>
-                                                                        {roomlist.id?. room_cat_name}
-                                                                        {/* <input 
-                                                                            className='form-control' 
-                                                                            type="text" 
-                                                                            value={item.particulars} 
-                                                                            onChange={(e) => handleCartChange(e, { ...item, particulars: e.target.value })} 
-                                                                        /> */}
-                                                                    </td>
-                                                                    
-                                                                    <td>
-                                                                        <input 
-                                                                            className='form-control' 
-                                                                            type="number" 
-                                                                            name="price" 
-                                                                            value={item.price} 
-                                                                            onChange={(e) => handleCartChange(e, { ...item, price: parseFloat(e.target.value) })} 
-                                                                        />
-                                                                    </td>
-                                                                    <td>{item.sub_total.toFixed(2)}</td>
+                                                                    <td>{item.name}</td>
+                                                                    <td>{item.price} </td>
                                                                 </tr>
                                                             ))}
                                                         </tbody>
                                                     </table>
-                                                    {/* <button type="button" className="btn btn-secondary" onClick={addMadiCart}>Add Item</button> */}
                                                 </div>
 
                                                 <div className="col-12 d-flex justify-content-end">
@@ -250,8 +223,6 @@ function PatientBillAdd() {
                                                                         onChange={handleChange} 
                                                                     />
                                                                 </td>
-                                                                 <td style={{ fontWeight: 'bold' }}>Discount Amount:</td>
-                                                                <td>{totalData.discountAmount.toFixed(2)}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td style={{ fontWeight: 'bold' }}>Tax (%):</td>
@@ -259,25 +230,27 @@ function PatientBillAdd() {
                                                                     <input 
                                                                         className='form-control' 
                                                                         type="number" 
-                                                                        name="tax" 
-                                                                        value={inputs.tax} 
+                                                                        name="vat" 
+                                                                        value={inputs.vat} 
                                                                         onChange={handleChange} 
                                                                     />
                                                                 </td>
-                                                                <td style={{ fontWeight: 'bold' }}>Tax Amount:</td>
-                                                                <td>{totalData.taxAmount.toFixed(2)}</td>
                                                             </tr>
-                                                            {/* <tr>
+                                                            <tr>
                                                                 <td style={{ fontWeight: 'bold' }}>Discount Amount:</td>
                                                                 <td>{totalData.discountAmount.toFixed(2)}</td>
-                                                            </tr> */}
-                                                            {/* <tr>
+                                                            </tr>
+                                                            <tr>
                                                                 <td style={{ fontWeight: 'bold' }}>Tax Amount:</td>
-                                                                <td>{totalData.taxAmount.toFixed(2)}</td>
-                                                            </tr> */}
+                                                                <td>{totalData.vatAmount.toFixed(2)}</td>
+                                                            </tr>
                                                             <tr>
                                                                 <td style={{ fontWeight: 'bold' }}>Grand Total:</td>
                                                                 <td>{totalData.finalTotal.toFixed(2)}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style={{ fontWeight: 'bold' }}>Paid:</td>
+                                                                <td> <input type="number" className="form-control" defaultValue={inputs.paid} name="paid" onChange={handleChange}/></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -300,4 +273,4 @@ function PatientBillAdd() {
     );
 }
 
-export default PatientBillAdd;
+export default PatientTestAdd;

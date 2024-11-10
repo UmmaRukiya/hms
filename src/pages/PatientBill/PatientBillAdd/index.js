@@ -1,74 +1,109 @@
-import React, { useEffect, useState } from 'react'; 
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import AdminLayout from '../../../layouts/AdminLayout';
 import { useNavigate, useParams } from 'react-router-dom';
 
 function PatientBillAdd() {
-    const { admit_id , patient_id } = useParams();
-    const [inputs, setInputs] = useState({ id: '', patient_id: patient_id, sub_amount:'0', discount: 0, tax: 0, bill_date: '' });
-    // const [patients, setPatients] = useState([]);
-    const [bill, setPatientadmit] = useState([]);
-    const [madiCarts, setMadiCarts] = useState([]);
+    const { admit_id, patient_id, billid, testid } = useParams();
+    const [inputs, setInputs] = useState({ id: '', patient_id: patient_id, sub_amount: '0', discount: 0, tax: 0, bill_date: '' });
+    const [patients, setPatients] = useState([]);
+    // const [roomlist, setRoomList] = useState([]);
+    const [patientadmit, setPatientAdmit] = useState(null);
+    const [testdata, setTestData] = useState([]);
+    const [cartItems, setCartItems] = useState([]);
     const [totalData, setTotalData] = useState({ total: 0, discountAmount: 0, taxAmount: 0, finalTotal: 0 });
     const navigate = useNavigate();
-    const { id } = useParams();
 
     useEffect(() => {
         PatientList();
-        if (id) {
+        TestData();
+        // RoomList();
+        if (billid) {
             BillData();
         }
         if (admit_id) {
-            admitDetails();
+            AdmitDetails();
         }
-    }, [id]);
+        if (testid) {
+            TestData();
+        }
+    }, [testid, billid, admit_id]);
 
     const PatientList = async () => {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patientadmit/index`);
-        setPatientadmit(response.data.data);
-    };
-    const admitDetails = async () => {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patientadmit/billdetails/${admit_id}`);
-        setPatientadmit(response.data.data);
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patient/index`);
+        setPatients(response.data.data);
     };
 
+    const AdmitDetails = async () => {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patientadmit/billdetails/${admit_id}`);
+        setPatientAdmit(response.data.data);
+    };
+
+    const TestData = async () => {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patienttest/index`);
+        const resDatas = response.data.data.map(d => ({ id: d.id, name: d.investlist, price: d.amount }));
+        setTestData(resDatas);
+        console.log(resDatas)
+    };
+
+    // const RoomList = async () => {
+    //     const response = await axios.get(`${process.env.REACT_APP_API_URL}/roomlist/index`);
+    //     const resDatas = response.data.data.map(d => ({ id: d.id, name: d.roomlist?.room_cat.room_cat_name, price: d.roomlist?.room_cat.price }));
+    //     setRoomList(resDatas);
+    // };
+
     const BillData = async () => {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patientbill/${id}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patientbill/${billid}`);
         setInputs(response.data.data);
-        setMadiCarts(response.data.madiCarts || []);
-        calculateTotals(response.data.madiCarts || [], response.data.data.discount, response.data.data.tax);
+        setCartItems(response.data.cartItems || []);
     };
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-        setInputs((prev) => ({ ...prev, [name]: value }));
-        calculateTotals(madiCarts, name === 'discount' ? value : inputs.discount, name === 'tax' ? value : inputs.tax); // Calculate based on changed field
+        setInputs(prev => ({ ...prev, [name]: value }));
+        calculateTotals(cartItems, name === 'discount' ? value : inputs.discount, name === 'tax' ? value : inputs.tax);
     };
 
-    const handleCartChange = (event, item) => {
-        const { name, value } = event.target;
-        const updatedItem = { ...item, [name]: parseFloat(value) || 0 };
-        updatedItem.sub_total = updatedItem.unit * updatedItem.price; // Update subtotal based on unit and price
-        setMadiCarts((prev) => prev.map((i) => (i.id === updatedItem.id ? updatedItem : i)));
-        calculateTotals(madiCarts, inputs.discount, inputs.tax); // Recalculate totals
+    // const handleCartChange = (event, item) => {
+    //     const { name, value } = event.target;
+    //     const updatedItem = { ...item, [name]: parseFloat(value) || 0 };
+    //     updatedItem.sub_total = updatedItem.unit * updatedItem.price;
+    //     setCartItems(prev => prev.map(i => i.id === updatedItem.id ? updatedItem : i));
+    //     calculateTotals(cartItems, inputs.discount, inputs.tax);
+    // };
+
+    // const addMadiCart = (event) => {
+    //     event.preventDefault();
+    //     const newItem = { id: Date.now(), particulars: '', price: '', sub_total: 0 };
+    //     setCartItems(prev => [...prev, newItem]);
+    // };
+
+    const calculateRoomCost = (admitDate, releaseDate, roomPrice) => {
+        const admit = new Date(admitDate);
+        const release = new Date(releaseDate);
+        const diffTime = Math.abs(release - admit);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // calculate days
+        return roomPrice * diffDays;
     };
 
-    const addMadiCart= () => {
-        setMadiCarts((prev) => [...prev, { id: Date.now(), particulars: '', unit: 1, price: '', sub_total: 0 }]);
-    };
 
-    const calculateTotals = (items, discount = 0, tax = 0) => {
-        const total = items.reduce((acc, item) => acc + (item.sub_total || 0), 0);
-        const discountAmount = (parseFloat(discount) / 100) * total; // Calculate discount as percentage
-        const taxableAmount = total - discountAmount; // Calculate amount after discount
-        const taxAmount = (parseFloat(tax) / 100) * taxableAmount; // Calculate tax on the discounted amount
-        const finalTotal = total - discountAmount + taxAmount; // Calculate final total
+    const calculateInvestigation= ( investPrice) =>{
+        return investPrice;
+    }
+    const calculateTotals = (discount = 0, tax = 0) => {
+        const roomCost = patientadmit ? calculateRoomCost(patientadmit.admit_date, patientadmit.release_date, patientadmit.room_price) : 0;
+        const items=roomCost;
+        const total = items.reduce((acc, item) => acc + (item.sub_total || 0), 0) + roomCost;
+        const discountAmount = (parseFloat(discount) / 100) * total;
+        const taxableAmount = total - discountAmount;
+        const taxAmount = (parseFloat(tax) / 100) * taxableAmount;
+        const finalTotal = total - discountAmount + taxAmount;
 
         setTotalData({
             total,
             discountAmount,
             taxAmount,
-            finalTotal,
+            finalTotal
         });
     };
 
@@ -77,9 +112,9 @@ function PatientBillAdd() {
         try {
             await axios.post(`${process.env.REACT_APP_API_URL}/patientbill/create`, {
                 input: { ...inputs, total_amount: totalData.finalTotal },
-                madiCarts,
+                cartItems
             });
-            navigate('/patientbill'); 
+            navigate('/patientbill');
         } catch (error) {
             console.error("Error submitting bill:", error);
         }
@@ -113,21 +148,32 @@ function PatientBillAdd() {
                                         <form className="form form-vertical" onSubmit={handleSubmit}>
                                             <div className="form-body">
                                                 <div className="row form-group">
-                                                    <div className="col-md-4">
-                                                        {bill && 
-                                                            <>
-                                                                <h3><label>Patient Name:</label> {bill?.name}</h3>
-                                                                <h3><label>Bill Date:</label> {bill?.bill_date}</h3>
-                                                               
-                                                            </>
+                                                    <div className="col-md-1">
+                                                        <label>Patient:</label>
+                                                    </div>
+                                                    <div className="col-md-3">
+                                                        { patient_id ? 
+                                                            <>{patients.find(data => data.id == patient_id)?.name}</> 
+                                                            : 
+                                                            <select className="form-control" name='patient_id' value={inputs.patient_id} onChange={handleChange}>
+                                                                <option value="">Select Patient</option>
+                                                                {patients.map((patient) => (
+                                                                    <option key={patient.id} value={patient.id}>{patient.name}</option>
+                                                                ))}
+                                                            </select>
                                                         }
                                                     </div>
-                                                    {/* <div className="col-md-1">
+
+                                                    <div className="col-md-1">
                                                         <label>Bill Date:</label>
                                                     </div>
                                                     <div className="col-md-3 form-group">
-                                                        <input type="date" className="form-control" name="bill_date" value={inputs.bill_date} onChange={handleChange} />
-                                                    </div> */}
+                                                        { patientadmit ?
+                                                            <>{patientadmit.release_date}</>
+                                                            :
+                                                            <input type="date" id="bill_date" className="form-control" name="bill_date" value={inputs.bill_date} onChange={handleChange} />
+                                                        }
+                                                    </div>
                                                 </div>
 
                                                 <div className='row'>
@@ -135,46 +181,30 @@ function PatientBillAdd() {
                                                         <thead>
                                                             <tr style={{ backgroundColor: '#e9ecef', fontWeight: 'bold' }}>
                                                                 <th>Particulars</th>
-                                                                <th>Unit</th>
                                                                 <th>Price</th>
-                                                                <th>Total</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            {madiCarts.map((item) => (
+                                                            {cartItems.map((item) => (
                                                                 <tr key={item.id}>
-                                                                    <td>
-                                                                        <input 
-                                                                            className='form-control' 
-                                                                            type="text" 
-                                                                            value={item.particulars} 
-                                                                            onChange={(e) => handleCartChange(e, { ...item, particulars: e.target.value })} 
-                                                                        />
-                                                                    </td>
-                                                                    <td>
-                                                                        <input 
-                                                                            className='form-control' 
-                                                                            type="number" 
-                                                                            name="unit" 
-                                                                            value={item.unit} 
-                                                                            onChange={(e) => handleCartChange(e, { ...item, unit: parseFloat(e.target.value) })} 
-                                                                        />
-                                                                    </td>
-                                                                    <td>
-                                                                        <input 
-                                                                            className='form-control' 
-                                                                            type="number" 
-                                                                            name="price" 
-                                                                            value={item.price} 
-                                                                            onChange={(e) => handleCartChange(e, { ...item, price: parseFloat(e.target.value) })} 
-                                                                        />
-                                                                    </td>
-                                                                    <td>{item.sub_total.toFixed(2)}</td>
+                                                                    <td>{item.particulars}</td>
+                                                                    <td>{item.price}</td>
                                                                 </tr>
                                                             ))}
+                                                            {patientadmit && (
+                                                                <tr key="room-charge">
+                                                                    <td>Room Charge ({patientadmit.admit_date} - {patientadmit.release_date})</td>
+                                                                    <td>{calculateRoomCost(patientadmit.admit_date, patientadmit.release_date, patientadmit.roomlist.room_cat.price).toFixed(2)}</td>
+                                                                </tr>
+                                                            )}
+                                                            {testdata && (
+                                                                <tr key="test">
+                                                                    <td>Investigations Charge </td>
+                                                                    <td>{calculateInvestigation(testdata.total_amount)}</td>
+                                                                </tr>
+                                                            )}
                                                         </tbody>
                                                     </table>
-                                                    <button type="button" className="btn btn-secondary" onClick={addMadiCart}>Add Item</button>
                                                 </div>
 
                                                 <div className="col-12 d-flex justify-content-end">
@@ -187,32 +217,16 @@ function PatientBillAdd() {
                                                             <tr>
                                                                 <td style={{ fontWeight: 'bold' }}>Discount (%):</td>
                                                                 <td>
-                                                                    <input 
-                                                                        className='form-control' 
-                                                                        type="number" 
-                                                                        name="discount" 
-                                                                        value={inputs.discount} 
-                                                                        onChange={handleChange} 
-                                                                    />
+                                                                    <input className='form-control' type="number" name="discount" value={inputs.discount} onChange={handleChange} />
                                                                 </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td style={{ fontWeight: 'bold' }}>Tax (%):</td>
-                                                                <td>
-                                                                    <input 
-                                                                        className='form-control' 
-                                                                        type="number" 
-                                                                        name="tax" 
-                                                                        value={inputs.tax} 
-                                                                        onChange={handleChange} 
-                                                                    />
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
                                                                 <td style={{ fontWeight: 'bold' }}>Discount Amount:</td>
                                                                 <td>{totalData.discountAmount.toFixed(2)}</td>
                                                             </tr>
                                                             <tr>
+                                                                <td style={{ fontWeight: 'bold' }}>Tax (%):</td>
+                                                                <td>
+                                                                    <input className='form-control' type="number" name="tax" value={inputs.tax} onChange={handleChange} />
+                                                                </td>
                                                                 <td style={{ fontWeight: 'bold' }}>Tax Amount:</td>
                                                                 <td>{totalData.taxAmount.toFixed(2)}</td>
                                                             </tr>
@@ -237,7 +251,7 @@ function PatientBillAdd() {
                     </div>
                 </section>
             </div>
-        </AdminLayout>    
+        </AdminLayout>
     );
 }
 
