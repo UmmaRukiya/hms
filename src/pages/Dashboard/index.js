@@ -141,20 +141,20 @@ function Dashboard() {
                                         </div>
                                     </div>
                                     <div className="chart-wrapper">
-                                        <canvas id="canvas4" style={{height:'100px' ,important:true }}></canvas>
+                                        <canvas id="canvas4" style={{height:'70px' ,important:true }}></canvas>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="col-12 col-md-3">
+                    {/* <div className="col-12 col-md-3">
                         <div className="card card-statistic">
                             <div className="card-body p-0">
                                 <div className="d-flex flex-column">
                                     <div className='px-3 py-3 d-flex justify-content-between'>
                                         <h3 className='card-title'>Blood</h3>
                                         <div className="card-right d-flex align-items-center">
-                                            {/* <p>423 </p> */}
+                                            
                                         </div>
                                     </div>
                                     <div className="chart-wrapper">
@@ -171,7 +171,7 @@ function Dashboard() {
                                     <div className='px-3 py-3 d-flex justify-content-between'>
                                         <h3 className='card-title'>Medicine</h3>
                                         <div className="card-right d-flex align-items-center">
-                                            {/* <p>423 </p> */}
+                                           
                                         </div>
                                     </div>
                                     <div className="chart-wrapper">
@@ -188,7 +188,7 @@ function Dashboard() {
                                     <div className='px-3 py-3 d-flex justify-content-between'>
                                         <h3 className='card-title'>Room</h3>
                                         <div className="card-right d-flex align-items-center">
-                                            {/* <p>423 </p> */}
+                                            
                                         </div>
                                     </div>
                                     <div className="chart-wrapper">
@@ -205,7 +205,7 @@ function Dashboard() {
                                     <div className='px-3 py-3 d-flex justify-content-between'>
                                         <h3 className='card-title'>Ambulance</h3>
                                         <div className="card-right d-flex align-items-center">
-                                            {/* <p>423 </p> */}
+                                           
                                         </div>
                                     </div>
                                     <div className="chart-wrapper">
@@ -214,7 +214,7 @@ function Dashboard() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
 
 

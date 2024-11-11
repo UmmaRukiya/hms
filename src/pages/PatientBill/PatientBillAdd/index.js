@@ -7,51 +7,49 @@ function PatientBillAdd() {
     const { admit_id, patient_id, billid, testid } = useParams();
     const [inputs, setInputs] = useState({ id: '', patient_id: patient_id, sub_amount: '0', discount: 0, tax: 0, bill_date: '' });
     const [patients, setPatients] = useState([]);
-    // const [roomlist, setRoomList] = useState([]);
     const [patientadmit, setPatientAdmit] = useState(null);
     const [testdata, setTestData] = useState([]);
-    const [cartItems, setCartItems] = useState([]);
+    const [cartItems, setCartItems] = useState([]);             //added additional data(item)
     const [totalData, setTotalData] = useState({ total: 0, discountAmount: 0, taxAmount: 0, finalTotal: 0 });
     const navigate = useNavigate();
 
     useEffect(() => {
         PatientList();
         TestData();
-        // RoomList();
         if (billid) {
             BillData();
         }
         if (admit_id) {
             AdmitDetails();
         }
-        if (testid) {
-            TestData();
-        }
-    }, [testid, billid, admit_id]);
+    }, [admit_id, billid, testid]);
 
     const PatientList = async () => {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patient/index`);
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patient/index`);         //fetch patient data
         setPatients(response.data.data);
     };
 
     const AdmitDetails = async () => {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patientadmit/billdetails/${admit_id}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patientadmit/billdetails/${admit_id}`);      //fetch admit data
         setPatientAdmit(response.data.data);
     };
 
+
     const TestData = async () => {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patienttest/index`);
-        const resDatas = response.data.data.map(d => ({ id: d.id, name: d.investlist, price: d.amount }));
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patienttest/index`);         //fetch test data 
+        console.log('Test Data Response:', response.data.data); // Log the response for debugging
+    
+        const resDatas = response.data.data.map(d => {
+            if (d.investlist) {
+                return { id: d.id, name: d.investlist.invest_name, price: parseFloat(d.amount) };
+            } else {
+                return null;
+            }
+        }).filter(item => item !== null); // Remove null values
+    
         setTestData(resDatas);
-        console.log(resDatas)
     };
-
-    // const RoomList = async () => {
-    //     const response = await axios.get(`${process.env.REACT_APP_API_URL}/roomlist/index`);
-    //     const resDatas = response.data.data.map(d => ({ id: d.id, name: d.roomlist?.room_cat.room_cat_name, price: d.roomlist?.room_cat.price }));
-    //     setRoomList(resDatas);
-    // };
-
+    
     const BillData = async () => {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/patientbill/${billid}`);
         setInputs(response.data.data);
@@ -64,20 +62,6 @@ function PatientBillAdd() {
         calculateTotals(cartItems, name === 'discount' ? value : inputs.discount, name === 'tax' ? value : inputs.tax);
     };
 
-    // const handleCartChange = (event, item) => {
-    //     const { name, value } = event.target;
-    //     const updatedItem = { ...item, [name]: parseFloat(value) || 0 };
-    //     updatedItem.sub_total = updatedItem.unit * updatedItem.price;
-    //     setCartItems(prev => prev.map(i => i.id === updatedItem.id ? updatedItem : i));
-    //     calculateTotals(cartItems, inputs.discount, inputs.tax);
-    // };
-
-    // const addMadiCart = (event) => {
-    //     event.preventDefault();
-    //     const newItem = { id: Date.now(), particulars: '', price: '', sub_total: 0 };
-    //     setCartItems(prev => [...prev, newItem]);
-    // };
-
     const calculateRoomCost = (admitDate, releaseDate, roomPrice) => {
         const admit = new Date(admitDate);
         const release = new Date(releaseDate);
@@ -86,14 +70,16 @@ function PatientBillAdd() {
         return roomPrice * diffDays;
     };
 
+    const calculateInvestigation = () => {
+        return testdata.reduce((total, item) => total + item.price, 0);
+    };
 
-    const calculateInvestigation= ( investPrice) =>{
-        return investPrice;
-    }
-    const calculateTotals = (discount = 0, tax = 0) => {
-        const roomCost = patientadmit ? calculateRoomCost(patientadmit.admit_date, patientadmit.release_date, patientadmit.room_price) : 0;
-        const items=roomCost;
-        const total = items.reduce((acc, item) => acc + (item.sub_total || 0), 0) + roomCost;
+    const calculateTotals = (cartItems, discount = 0, tax = 0) => {
+        const roomCost = patientadmit ? calculateRoomCost(patientadmit.admit_date, patientadmit.release_date, patientadmit.roomlist.room_cat.price) : 0;
+        const testCost = calculateInvestigation();
+        const itemsTotal = cartItems.reduce((acc, item) => acc + (item.sub_total || 0), 0); // Assuming cartItems have `sub_total`
+
+        const total = roomCost + testCost + itemsTotal;
         const discountAmount = (parseFloat(discount) / 100) * total;
         const taxableAmount = total - discountAmount;
         const taxAmount = (parseFloat(tax) / 100) * taxableAmount;
@@ -152,7 +138,7 @@ function PatientBillAdd() {
                                                         <label>Patient:</label>
                                                     </div>
                                                     <div className="col-md-3">
-                                                        { patient_id ? 
+                                                        {patient_id ? 
                                                             <>{patients.find(data => data.id == patient_id)?.name}</> 
                                                             : 
                                                             <select className="form-control" name='patient_id' value={inputs.patient_id} onChange={handleChange}>
@@ -168,7 +154,7 @@ function PatientBillAdd() {
                                                         <label>Bill Date:</label>
                                                     </div>
                                                     <div className="col-md-3 form-group">
-                                                        { patientadmit ?
+                                                        {patientadmit ? 
                                                             <>{patientadmit.release_date}</>
                                                             :
                                                             <input type="date" id="bill_date" className="form-control" name="bill_date" value={inputs.bill_date} onChange={handleChange} />
@@ -197,11 +183,13 @@ function PatientBillAdd() {
                                                                     <td>{calculateRoomCost(patientadmit.admit_date, patientadmit.release_date, patientadmit.roomlist.room_cat.price).toFixed(2)}</td>
                                                                 </tr>
                                                             )}
-                                                            {testdata && (
-                                                                <tr key="test">
-                                                                    <td>Investigations Charge </td>
-                                                                    <td>{calculateInvestigation(testdata.total_amount)}</td>
-                                                                </tr>
+                                                            {testdata.length > 0 && (
+                                                                testdata.map((test, index) => (
+                                                                    <tr key={index}>
+                                                                        <td>{test.name}</td>
+                                                                        <td>{test.price.toFixed(2)}</td>
+                                                                    </tr>
+                                                                ))
                                                             )}
                                                         </tbody>
                                                     </table>
