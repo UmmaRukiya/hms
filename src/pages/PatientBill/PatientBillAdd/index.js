@@ -44,6 +44,12 @@ function PatientBillAdd() {
                 bill_date: data.release_date // Assuming release_date is the desired date
             }));
         }
+        if (data) {
+            setInputs(prevState => ({
+                ...prevState,
+                admit_id: data.id // Assuming release_date is the desired date
+            }));
+        }
         TestData(response.data.data);
     };
 
@@ -168,6 +174,16 @@ function PatientBillAdd() {
                                                     </div>
                                                    
 
+                                                    <div className="col-md-1">
+                                                        <label>Admit ID:</label>
+                                                    </div>
+                                                    <div className="col-md-3 form-group">
+                                                        {patientadmit ?
+                                                            <>{patientadmit.id}</>
+                                                            :
+                                                            <input type="date" id="admit_id" className="form-control" name="admit_id" value={inputs.admit_id} onChange={handleChange} />
+                                                        }
+                                                    </div>
                                                     <div className="col-md-1">
                                                         <label>Bill Date:</label>
                                                     </div>
