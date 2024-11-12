@@ -64,7 +64,7 @@ function PatientBillAdd() {
     const handleChange = (event) => {
         const { name, value } = event.target;
         setInputs(prev => ({ ...prev, [name]: value }));
-        
+        calculateTotals(cartItems, name === 'discount' ? value : inputs.discount, name === 'tax' ? value : inputs.tax);
     };
 
     const calculateRoomCost = (admitDate, releaseDate, roomPrice) => {
@@ -101,8 +101,8 @@ function PatientBillAdd() {
         e.preventDefault();
         try {
             await axios.post(`${process.env.REACT_APP_API_URL}/patientbill/create`, {
-                input: { ...inputs, total_amount: totalData.finalTotal },
-                cartItems
+                input: { ...inputs,sub_amount:totalData.total, total_amount: totalData.finalTotal},
+                testdata
             });
             navigate('/patientbill');
         } catch (error) {
