@@ -64,7 +64,7 @@ function PatientBillAdd() {
     const handleChange = (event) => {
         const { name, value } = event.target;
         setInputs(prev => ({ ...prev, [name]: value }));
-        calculateTotals(cartItems, name === 'discount' ? value : inputs.discount, name === 'tax' ? value : inputs.tax);
+        
     };
 
     const calculateRoomCost = (admitDate, releaseDate, roomPrice) => {
