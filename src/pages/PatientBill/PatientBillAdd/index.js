@@ -9,13 +9,13 @@ function PatientBillAdd() {
     const [patients, setPatients] = useState([]);
     const [patientadmit, setPatientAdmit] = useState(null);
     const [testdata, setTestData] = useState([]);
+    const [paid, setPaid] = useState([]);             //added additional data(item)
     const [cartItems, setCartItems] = useState([]);             //added additional data(item)
     const [totalData, setTotalData] = useState({ total: 0, discountAmount: 0, taxAmount: 0, finalTotal: 0 });
     const navigate = useNavigate();
 
     useEffect(() => {
         PatientList();
-        TestData();
         if (billid) {
             BillData();
         }
@@ -31,23 +31,28 @@ function PatientBillAdd() {
 
     const AdmitDetails = async () => {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/patientadmit/billdetails/${admit_id}`);      //fetch admit data
-        setPatientAdmit(response.data.data);
+        TestData(response.data.data)
     };
 
-
-    const TestData = async () => {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patienttest/index`);         //fetch test data 
-        console.log('Test Data Response:', response.data.data); // Log the response for debugging
     
-        const resDatas = response.data.data.map(d => {
-            if (d.investlist) {
-                return { id: d.id, name: d.investlist.invest_name, price: parseFloat(d.amount) };
-            } else {
-                return null;
+    const TestData = async (data) => {
+        let testdatas=[];
+        let testpay=0;
+        testdatas.push({ id: 1, name: `Room Charge (${data.admit_date} - ${data.release_date})`, price: calculateRoomCost(data.admit_date, data.release_date, data.roomlist.room_cat.price) });
+        const resDatas = data.test?.map(d => {
+            testpay+= d.paid ? parseFloat(d.paid) : 0;
+            for (const k in d.details) {
+                if (d.details[k]) {
+                    testdatas.push({ id: d.details[k].id, name: d.details[k].investlist.invest_name, price: parseFloat(d.details[k].amount) });
+                } else {
+                    return null;
+                }
             }
+            
         }).filter(item => item !== null); // Remove null values
-    
-        setTestData(resDatas);
+        setPaid(testpay);
+        setTestData(testdatas);
+        calculateTotals(testdatas);
     };
     
     const BillData = async () => {
@@ -75,11 +80,10 @@ function PatientBillAdd() {
     };
 
     const calculateTotals = (cartItems, discount = 0, tax = 0) => {
-        const roomCost = patientadmit ? calculateRoomCost(patientadmit.admit_date, patientadmit.release_date, patientadmit.roomlist.room_cat.price) : 0;
-        const testCost = calculateInvestigation();
-        const itemsTotal = cartItems.reduce((acc, item) => acc + (item.sub_total || 0), 0); // Assuming cartItems have `sub_total`
+        //const testCost = calculateInvestigation();
+        const itemsTotal = cartItems.reduce((acc, item) => acc + (item.price || 0), 0); // Assuming cartItems have `sub_total`
 
-        const total = roomCost + testCost + itemsTotal;
+        const total = itemsTotal;
         const discountAmount = (parseFloat(discount) / 100) * total;
         const taxableAmount = total - discountAmount;
         const taxAmount = (parseFloat(tax) / 100) * taxableAmount;
@@ -177,12 +181,7 @@ function PatientBillAdd() {
                                                                     <td>{item.price}</td>
                                                                 </tr>
                                                             ))}
-                                                            {patientadmit && (
-                                                                <tr key="room-charge">
-                                                                    <td>Room Charge ({patientadmit.admit_date} - {patientadmit.release_date})</td>
-                                                                    <td>{calculateRoomCost(patientadmit.admit_date, patientadmit.release_date, patientadmit.roomlist.room_cat.price).toFixed(2)}</td>
-                                                                </tr>
-                                                            )}
+                                                            
                                                             {testdata.length > 0 && (
                                                                 testdata.map((test, index) => (
                                                                     <tr key={index}>
@@ -201,6 +200,7 @@ function PatientBillAdd() {
                                                             <tr>
                                                                 <td style={{ fontWeight: 'bold' }}>Total:</td>
                                                                 <td>{totalData.total.toFixed(2)}</td>
+                                                                <td colSpan={2}></td>
                                                             </tr>
                                                             <tr>
                                                                 <td style={{ fontWeight: 'bold' }}>Discount (%):</td>
@@ -221,6 +221,17 @@ function PatientBillAdd() {
                                                             <tr>
                                                                 <td style={{ fontWeight: 'bold' }}>Grand Total:</td>
                                                                 <td>{totalData.finalTotal.toFixed(2)}</td>
+                                                                <td colSpan={2}></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style={{ fontWeight: 'bold' }}>Due:</td>
+                                                                <td>{totalData.finalTotal - paid}</td>
+                                                                <td colSpan={2}></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style={{ fontWeight: 'bold' }}>Pay:</td>
+                                                                <td><input type="number" className="form-control" defaultValue={inputs.paid} name="paid" onChange={handleChange}/></td>
+                                                                <td colSpan={2}></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
