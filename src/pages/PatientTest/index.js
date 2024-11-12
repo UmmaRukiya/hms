@@ -52,7 +52,6 @@ function PatientTest() {
                                         <tr>
                                             <th>Patient Name</th>
                                             <th>Admit ID</th>
-                                            <th>Sub Price</th>
                                             <th>Discount</th>
                                             <th>Vat</th>
                                             <th>Total Amount</th>
@@ -65,7 +64,6 @@ function PatientTest() {
                                         <tr key={d.id}>
                                             <td className="text-bold-500">{d.patient?.name}</td>
                                             <td>{d.admit_id}</td>
-                                            <td>{d.sub_price}</td>
                                             <td>{d.discount}</td>
                                             <td>{d.vat}</td>
                                             <td>{d.total_amount}</td>

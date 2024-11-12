@@ -51,6 +51,7 @@ function PatientBill() {
                                     <thead>
                                         <tr>
                                             <th>Patient Name</th>
+                                            <th>Admit ID</th>
                                             <th>Sub Amount</th>
                                             <th>Discount</th>
                                             <th>Tax</th>
@@ -63,6 +64,7 @@ function PatientBill() {
                                     {data && data.map((d, key) =>
                                         <tr key={d.id}>
                                             <td className="text-bold-500">{d.patient?.name}</td>
+                                            <td>{d.admit_id}</td>
                                             <td>{d.sub_amount}</td>
                                             <td>{d.discount}</td>
                                             <td>{d.tax}</td>

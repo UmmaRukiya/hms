@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 12, 2024 at 06:03 AM
+-- Generation Time: Nov 12, 2024 at 02:54 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -420,7 +420,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (31, '2024_10_24_083738_create_prescriptions_table', 1),
 (32, '2024_10_24_083838_create_prescription_details_table', 1),
 (33, '2024_10_26_061134_create_medicines_table', 1),
-(34, '2024_10_13_112331_create_patient_bills_table', 2);
+(35, '2024_10_13_112331_create_patient_bills_table', 2);
 
 -- --------------------------------------------------------
 
@@ -534,14 +534,13 @@ INSERT INTO `patient_admits` (`id`, `patient_id`, `doctor_id`, `problem`, `admit
 CREATE TABLE `patient_bills` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `patient_id` bigint(20) UNSIGNED NOT NULL,
+  `admit_id` int(11) DEFAULT NULL,
   `sub_amount` decimal(10,2) DEFAULT NULL,
   `discount` decimal(10,2) DEFAULT NULL,
   `tax` decimal(10,2) NOT NULL COMMENT 'in %',
   `total_amount` decimal(10,2) DEFAULT NULL,
-  `grand_total` decimal(10,2) NOT NULL,
-  `due` decimal(10,2) DEFAULT NULL,
   `pay` decimal(10,2) DEFAULT NULL,
-  `bill_date` date DEFAULT NULL,
+  `bill_date` date NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1202,7 +1201,7 @@ ALTER TABLE `medicine_cats`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `nurses`
