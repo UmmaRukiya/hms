@@ -32,11 +32,7 @@ function PatientBillAdd() {
     };
 
     // Fetch patient admit details
-    // const AdmitDetails = async () => {
-    //     const response = await axios.get(`${process.env.REACT_APP_API_URL}/patientadmit/billdetails/${admit_id}`);
-    //     TestData(response.data.data);
-    // };
-
+    
     const AdmitDetails = async () => {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/patientadmit/billdetails/${admit_id}`);
         const data = response.data.data;
@@ -45,7 +41,7 @@ function PatientBillAdd() {
         if (data) {
             setInputs(prevState => ({
                 ...prevState,
-                bill_date: data.release_date // Assuming admit_date is the desired date
+                bill_date: data.release_date // Assuming release_date is the desired date
             }));
         }
         TestData(response.data.data);
