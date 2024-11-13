@@ -41,7 +41,7 @@ function PatientBillAdd() {
         if (data) {
             setInputs(prevState => ({
                 ...prevState,
-                bill_date: data.release_date // Assuming release_date is the desired date
+                bill_date: data.release_date // Assuming release_date is the bill_date
             }));
         }
         if (data) {
@@ -164,10 +164,10 @@ function PatientBillAdd() {
                                                         {patient_id ?
                                                             <>{patients.find(data => data.id == patient_id)?.name}</>
                                                             :
-                                                            <select className="form-control" name='patient_id' value={inputs.patient_id} onChange={handleChange}>
+                                                            <select className="form-control" name='patient_id' defaultValue={inputs.patient_id} onChange={handleChange}>
                                                                 <option value="">Select Patient</option>
                                                                 {patients.map((patient) => (
-                                                                    <option key={patient.id} value={patient.id}>{patient.name}</option>
+                                                                    <option key={patient.id} defaultValue={patient.id}>{patient.name}</option>
                                                                 ))}
                                                             </select>
                                                         }
@@ -181,7 +181,7 @@ function PatientBillAdd() {
                                                         {patientadmit ?
                                                             <>{patientadmit.id}</>
                                                             :
-                                                            <input type="date" id="admit_id" className="form-control" name="admit_id" value={inputs.admit_id} onChange={handleChange} />
+                                                            <input type="number" id="admit_id" className="form-control" name="admit_id" defaultValue={inputs.admit_id} onChange={handleChange} />
                                                         }
                                                     </div>
                                                     <div className="col-md-1">
@@ -191,7 +191,7 @@ function PatientBillAdd() {
                                                         {patientadmit ?
                                                             <>{patientadmit.release_date}</>
                                                             :
-                                                            <input type="date" id="bill_date" className="form-control" name="bill_date" value={inputs.bill_date} onChange={handleChange} />
+                                                            <input type="date" id="bill_date" className="form-control" name="bill_date" defaultValue={inputs.bill_date} onChange={handleChange} />
                                                         }
                                                     </div>
                                                 </div>
@@ -235,7 +235,7 @@ function PatientBillAdd() {
                                                             <tr>
                                                                 <td style={{ fontWeight: 'bold' }}>Discount (%):</td>
                                                                 <td>
-                                                                    <input className='form-control' type="number" name="discount" value={inputs.discount} onChange={handleChange} />
+                                                                    <input className='form-control' type="number" name="discount" defaultValue={inputs.discount} onChange={handleChange} />
                                                                 </td>
                                                                 <td style={{ fontWeight: 'bold' }}>Discount Amount:</td>
                                                                 <td>{totalData.discountAmount.toFixed(2)}</td>
@@ -243,7 +243,7 @@ function PatientBillAdd() {
                                                             <tr>
                                                                 <td style={{ fontWeight: 'bold' }}>Tax (%):</td>
                                                                 <td>
-                                                                    <input className='form-control' type="number" name="tax" value={inputs.tax} onChange={handleChange} />
+                                                                    <input className='form-control' type="number" name="tax" defaultValue={inputs.tax} onChange={handleChange} />
                                                                 </td>
                                                                 <td style={{ fontWeight: 'bold' }}>Tax Amount:</td>
                                                                 <td>{totalData.taxAmount.toFixed(2)}</td>

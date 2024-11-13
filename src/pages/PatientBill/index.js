@@ -43,7 +43,7 @@ function PatientBill() {
                     <div className="card">
                         <div className="card-header">
                             <h4 className="card-title">All Bill</h4>
-                            <Link to={'/patientbill/add'} className='btn btn-primary float-right' >Add New</Link>
+                            {/* <Link to={'/patientbill/add'} className='btn btn-primary float-right' >Add New</Link> */}
                         </div>
                         <div className="card-content">
                             <div className="table-responsive">

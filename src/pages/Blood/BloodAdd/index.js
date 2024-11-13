@@ -83,15 +83,23 @@ function BloodAdd() {
                                     <label > Blood Group</label>
                                 </div>
                                 <div className="col-md-10 form-group">
-                                    <input type="text" id="blood_group" className="form-control" name="blood_group" defaultValue={inputs.blood_group}  onChange={handleChange}  placeholder="Blood Group type.."/>
+                                    <input type="text"  id="blood_group" className="form-control" name="blood_group" defaultValue={inputs.blood_group}  onChange={handleChange}  placeholder="Blood Group type.."/>
                                 </div>
                                
                                 <div className="col-md-2">
                                     <label>Status</label>
                                 </div>
-                                <div className="col-md-4 form-group">
-                                    <input type="text" id="status" className="form-control" name="status" defaultValue={inputs.status}  onChange={handleChange} placeholder="Status"/>
+                                <div className="col-md-6 form-group">
+                                    <select id="status" className="form-control" defaultValue={inputs.status} name='status' onChange={handleChange}>
+                                        <option value="">--Select Status--</option>
+                                        <option value="0">Unavailable</option>
+                                        <option value="1">Available</option>
+                                        
+                                    </select>
                                 </div>
+                                {/* <div className="col-md-4 form-group">
+                                    <input type="text" id="status" className="form-control" name="status" defaultValue={inputs.status}  onChange={handleChange} placeholder="Status"/>
+                                </div> */}
                                 <div className="col-12 d-flex justify-content-end">
                                                     <button type="submit" className="btn btn-primary mr-1 mb-1">Submit</button>
                                                     <button type="reset" className="btn btn-light-secondary mr-1 mb-1">Reset</button>

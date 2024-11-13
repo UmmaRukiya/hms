@@ -148,10 +148,10 @@ function PatientTestAdd() {
                                                         { patient_id ?                                          
                                                             <>{patients.find(data => data.id == patient_id)?.name}</>
                                                             :
-                                                            <select className="form-control" name='patient_id' value={inputs.patient_id} onChange={handleChange}>
+                                                            <select className="form-control" name='patient_id' defaultValue={inputs.patient_id} onChange={handleChange}>
                                                                 <option value="">Select Patient</option>
                                                                 {patients.map((patient) => (
-                                                                    <option key={patient.id} value={patient.id}>{patient.name}</option>
+                                                                    <option key={patient.id} defaultValue={patient.id}>{patient.name}</option>
                                                                 ))}
                                                             </select>
                                                             
@@ -163,10 +163,10 @@ function PatientTestAdd() {
                                                     <div className="col-md-3 form-group">
 
                                                         { admit_id ? <></> :
-                                                                <select className="form-control" name='admit_id' value={inputs.admit_id} onChange={handleChange}>
+                                                                <select className="form-control" name='admit_id' defaultValue={inputs.admit_id} onChange={handleChange}>
                                                                     <option value="">Select Admit No</option>
                                                                     {patientAdmit.map((admit) => (
-                                                                        <option key={admit.id} value={admit.id}>{admit.id}</option>
+                                                                        <option key={admit.id} defaultValue={admit.id}>{admit.id}</option>
                                                                     ))}
                                                                 </select>
                                                         }
@@ -219,7 +219,7 @@ function PatientTestAdd() {
                                                                         className='form-control' 
                                                                         type="number" 
                                                                         name="discount" 
-                                                                        value={inputs.discount} 
+                                                                        defaultValue={inputs.discount} 
                                                                         onChange={handleChange} 
                                                                     />
                                                                 </td>
@@ -233,7 +233,7 @@ function PatientTestAdd() {
                                                                         className='form-control' 
                                                                         type="number" 
                                                                         name="vat" 
-                                                                        value={inputs.vat} 
+                                                                        defaultValue={inputs.vat} 
                                                                         onChange={handleChange} 
                                                                     />
                                                                 </td>
