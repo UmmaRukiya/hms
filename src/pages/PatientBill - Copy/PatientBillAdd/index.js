@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import AdminLayout from '../../../layouts/AdminLayout';
@@ -5,12 +6,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 function PatientBillAdd() {
     const { admit_id, patient_id, billid, testid } = useParams();
-    const [inputs, setInputs] = useState({ id: '', patient_id: patient_id, sub_amount: '0', discount: 0, tax: 0, bill_date: '' });
+    const [inputs, setInputs] = useState({ id: '', patient_id: patient_id, admit_id: '', sub_amount: '0', discount: 0, tax: 0, bill_date: '' });
     const [patients, setPatients] = useState([]);
     const [patientadmit, setPatientAdmit] = useState(null);
     const [testdata, setTestData] = useState([]);
-    const [paid, setPaid] = useState([]);             //added additional data(item)
-    const [cartItems, setCartItems] = useState([]);             //added additional data(item)
+    const [paid, setPaid] = useState(0); // Changed to a single number, not an array
+    const [cartItems, setCartItems] = useState([]);
     const [totalData, setTotalData] = useState({ total: 0, discountAmount: 0, taxAmount: 0, finalTotal: 0 });
     const navigate = useNavigate();
 
@@ -24,23 +25,40 @@ function PatientBillAdd() {
         }
     }, [admit_id, billid, testid]);
 
+     // Fetch patient list
     const PatientList = async () => {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patient/index`);         //fetch patient data
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patient/index`);
         setPatients(response.data.data);
     };
 
+    // Fetch patient admit details
+    
     const AdmitDetails = async () => {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patientadmit/billdetails/${admit_id}`);      //fetch admit data
-        TestData(response.data.data)
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patientadmit/billdetails/${admit_id}`);
+        const data = response.data.data;
+        setPatientAdmit(data);
+        // Set the bill date automatically based on admit date or any other logic
+        if (data) {
+            setInputs(prevState => ({
+                ...prevState,
+                bill_date: data.release_date // Assuming release_date is the bill_date
+            }));
+        }
+        if (data) {
+            setInputs(prevState => ({
+                ...prevState,
+                admit_id: data.id // Assuming release_date is the desired date
+            }));
+        }
+        TestData(response.data.data);
     };
 
-    
     const TestData = async (data) => {
-        let testdatas=[];
-        let testpay=0;
+        let testdatas = [];
+        let testpay = 0;
         testdatas.push({ id: 1, name: `Room Charge (${data.admit_date} - ${data.release_date})`, price: calculateRoomCost(data.admit_date, data.release_date, data.roomlist.room_cat.price) });
         const resDatas = data.test?.map(d => {
-            testpay+= d.paid ? parseFloat(d.paid) : 0;
+            testpay += d.paid ? parseFloat(d.paid) : 0;
             for (const k in d.details) {
                 if (d.details[k]) {
                     testdatas.push({ id: d.details[k].id, name: d.details[k].investlist.invest_name, price: parseFloat(d.details[k].amount) });
@@ -48,13 +66,12 @@ function PatientBillAdd() {
                     return null;
                 }
             }
-            
-        }).filter(item => item !== null); // Remove null values
-        setPaid(testpay);
+        }).filter(item => item !== null);
+        setPaid(testpay);  // Correct the paid amount
         setTestData(testdatas);
         calculateTotals(testdatas);
     };
-    
+
     const BillData = async () => {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/patientbill/${billid}`);
         setInputs(response.data.data);
@@ -63,8 +80,11 @@ function PatientBillAdd() {
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-        setInputs(prev => ({ ...prev, [name]: value }));
-        calculateTotals(cartItems, name === 'discount' ? value : inputs.discount, name === 'tax' ? value : inputs.tax);
+        setInputs(prev => {
+            const updatedInputs = { ...prev, [name]: value };
+            calculateTotals(cartItems, updatedInputs.discount, updatedInputs.tax);
+            return updatedInputs;
+        });
     };
 
     const calculateRoomCost = (admitDate, releaseDate, roomPrice) => {
@@ -80,10 +100,9 @@ function PatientBillAdd() {
     };
 
     const calculateTotals = (cartItems, discount = 0, tax = 0) => {
-        //const testCost = calculateInvestigation();
-        const itemsTotal = cartItems.reduce((acc, item) => acc + (item.price || 0), 0); // Assuming cartItems have `sub_total`
+        const itemsTotal = cartItems.reduce((acc, item) => acc + (item.price || 0), 0); // Assuming cartItems have `price`
 
-        const total = itemsTotal;
+        const total = itemsTotal + calculateInvestigation();
         const discountAmount = (parseFloat(discount) / 100) * total;
         const taxableAmount = total - discountAmount;
         const taxAmount = (parseFloat(tax) / 100) * taxableAmount;
@@ -101,7 +120,7 @@ function PatientBillAdd() {
         e.preventDefault();
         try {
             await axios.post(`${process.env.REACT_APP_API_URL}/patientbill/create`, {
-                input: { ...inputs,sub_amount:totalData.total, total_amount: totalData.finalTotal},
+                input: { ...inputs, sub_amount: totalData.total, total_amount: totalData.finalTotal, paid: inputs.paid },
                 testdata
             });
             navigate('/patientbill');
@@ -142,26 +161,37 @@ function PatientBillAdd() {
                                                         <label>Patient:</label>
                                                     </div>
                                                     <div className="col-md-3">
-                                                        {patient_id ? 
-                                                            <>{patients.find(data => data.id == patient_id)?.name}</> 
-                                                            : 
-                                                            <select className="form-control" name='patient_id' value={inputs.patient_id} onChange={handleChange}>
+                                                        {patient_id ?
+                                                            <>{patients.find(data => data.id == patient_id)?.name}</>
+                                                            :
+                                                            <select className="form-control" name='patient_id' defaultValue={inputs.patient_id} onChange={handleChange}>
                                                                 <option value="">Select Patient</option>
                                                                 {patients.map((patient) => (
-                                                                    <option key={patient.id} value={patient.id}>{patient.name}</option>
+                                                                    <option key={patient.id} defaultValue={patient.id}>{patient.name}</option>
                                                                 ))}
                                                             </select>
                                                         }
                                                     </div>
+                                                   
 
+                                                    <div className="col-md-1">
+                                                        <label>Admit ID:</label>
+                                                    </div>
+                                                    <div className="col-md-3 form-group">
+                                                        {patientadmit ?
+                                                            <>{patientadmit.id}</>
+                                                            :
+                                                            <input type="number" id="admit_id" className="form-control" name="admit_id" defaultValue={inputs.admit_id} onChange={handleChange} />
+                                                        }
+                                                    </div>
                                                     <div className="col-md-1">
                                                         <label>Bill Date:</label>
                                                     </div>
                                                     <div className="col-md-3 form-group">
-                                                        {patientadmit ? 
+                                                        {patientadmit ?
                                                             <>{patientadmit.release_date}</>
                                                             :
-                                                            <input type="date" id="bill_date" className="form-control" name="bill_date" value={inputs.bill_date} onChange={handleChange} />
+                                                            <input type="date" id="bill_date" className="form-control" name="bill_date" defaultValue={inputs.bill_date} onChange={handleChange} />
                                                         }
                                                     </div>
                                                 </div>
@@ -181,7 +211,7 @@ function PatientBillAdd() {
                                                                     <td>{item.price}</td>
                                                                 </tr>
                                                             ))}
-                                                            
+
                                                             {testdata.length > 0 && (
                                                                 testdata.map((test, index) => (
                                                                     <tr key={index}>
@@ -205,7 +235,7 @@ function PatientBillAdd() {
                                                             <tr>
                                                                 <td style={{ fontWeight: 'bold' }}>Discount (%):</td>
                                                                 <td>
-                                                                    <input className='form-control' type="number" name="discount" value={inputs.discount} onChange={handleChange} />
+                                                                    <input className='form-control' type="number" name="discount" defaultValue={inputs.discount} onChange={handleChange} />
                                                                 </td>
                                                                 <td style={{ fontWeight: 'bold' }}>Discount Amount:</td>
                                                                 <td>{totalData.discountAmount.toFixed(2)}</td>
@@ -213,7 +243,7 @@ function PatientBillAdd() {
                                                             <tr>
                                                                 <td style={{ fontWeight: 'bold' }}>Tax (%):</td>
                                                                 <td>
-                                                                    <input className='form-control' type="number" name="tax" value={inputs.tax} onChange={handleChange} />
+                                                                    <input className='form-control' type="number" name="tax" defaultValue={inputs.tax} onChange={handleChange} />
                                                                 </td>
                                                                 <td style={{ fontWeight: 'bold' }}>Tax Amount:</td>
                                                                 <td>{totalData.taxAmount.toFixed(2)}</td>
@@ -225,12 +255,12 @@ function PatientBillAdd() {
                                                             </tr>
                                                             <tr>
                                                                 <td style={{ fontWeight: 'bold' }}>Due:</td>
-                                                                <td>{totalData.finalTotal - paid}</td>
+                                                                <td>{(totalData.finalTotal - paid).toFixed(2)}</td>
                                                                 <td colSpan={2}></td>
                                                             </tr>
                                                             <tr>
                                                                 <td style={{ fontWeight: 'bold' }}>Pay:</td>
-                                                                <td><input type="number" className="form-control" defaultValue={inputs.paid} name="paid" onChange={handleChange}/></td>
+                                                                <td><input type="number" className="form-control" defaultValue={inputs.paid} name="paid" onChange={handleChange} /></td>
                                                                 <td colSpan={2}></td>
                                                             </tr>
                                                         </tbody>
@@ -255,3 +285,4 @@ function PatientBillAdd() {
 }
 
 export default PatientBillAdd;
+

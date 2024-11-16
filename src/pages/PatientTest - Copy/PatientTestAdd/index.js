@@ -19,7 +19,7 @@ function PatientTestAdd() {
         return (<><span style={{ display: 'block', textAlign: 'left' }}>{item.name}</span></>)
     }
 
-    useEffect(() => {
+    useEffect(() => {                       //Fetches data and calculates totals
         fetchPatientList();
         fetchPatientAdmitList();
         fetchInvestList();
@@ -30,17 +30,17 @@ function PatientTestAdd() {
     }, [testid,cartItems]);
 
     const fetchPatientList = async () => {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patient/index`);
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patient/index`);         //Fetches the list of patients.
         setPatients(response.data.data);
-    };
+    };                  
 
     const fetchPatientAdmitList = async () => {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patientadmit/index`);
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/patientadmit/index`);        //Fetches the list of patient admissions.
         setPatientAdmit(response.data.data);
-    };
+    };                      
 
     const fetchInvestList = async () => {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/investlist/index`);
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/investlist/index`);          //Fetches a list of investigations/tests.
         let resDatas=[];
         if(response.data){
             response.data.data?.map((d) => (
@@ -58,7 +58,7 @@ function PatientTestAdd() {
         // calculateTotals(response.data.cartItems || [], response.data.data.discount, response.data.data.vat);
     };
 
-    const handleChange = (event) => {
+    const handleChange = (event) => {                   //Updates inputs state and recalculates totals when form values change.
         const { name, value } = event.target;
         setInputs((prev) => ({ ...prev, [name]: value }));
 
@@ -66,7 +66,7 @@ function PatientTestAdd() {
         calculateTotals(name === 'discount' ? value : inputs.discount, name === 'vat' ? value : inputs.vat);
     };
     
-    const handleCartChange = (event) => {
+    const handleCartChange = (event) => {                                   //Adds new investigations to cartItems and recalculates totals.
 
         let selectedInvestigation = cartItems.find(invest => invest.id === event.id);
         
@@ -144,14 +144,14 @@ function PatientTestAdd() {
                                                     <div className="col-md-1">
                                                         <label>Patient:</label>
                                                     </div>
-                                                    <div className="col-md-3 form-group">
-                                                        { patient_id ?
+                                                    <div className="col-md-3 form-group">                   
+                                                        { patient_id ?                                          
                                                             <>{patients.find(data => data.id == patient_id)?.name}</>
                                                             :
-                                                            <select className="form-control" name='patient_id' value={inputs.patient_id} onChange={handleChange}>
+                                                            <select className="form-control" name='patient_id' defaultValue={inputs.patient_id} onChange={handleChange}>
                                                                 <option value="">Select Patient</option>
                                                                 {patients.map((patient) => (
-                                                                    <option key={patient.id} value={patient.id}>{patient.name}</option>
+                                                                    <option key={patient.id} defaultValue={patient.id}>{patient.name}</option>
                                                                 ))}
                                                             </select>
                                                             
@@ -163,10 +163,10 @@ function PatientTestAdd() {
                                                     <div className="col-md-3 form-group">
 
                                                         { admit_id ? <></> :
-                                                                <select className="form-control" name='admit_id' value={inputs.admit_id} onChange={handleChange}>
+                                                                <select className="form-control" name='admit_id' defaultValue={inputs.admit_id} onChange={handleChange}>
                                                                     <option value="">Select Admit No</option>
                                                                     {patientAdmit.map((admit) => (
-                                                                        <option key={admit.id} value={admit.id}>{admit.id}</option>
+                                                                        <option key={admit.id} defaultValue={admit.id}>{admit.id}</option>
                                                                     ))}
                                                                 </select>
                                                         }
@@ -204,7 +204,7 @@ function PatientTestAdd() {
                                                         </tbody>
                                                     </table>
                                                 </div>
-
+                                {/* calculation part start */}
                                                 <div className="col-12 d-flex justify-content-end">
                                                     <table className='my-3 table table-bordered'>
                                                         <tbody>
@@ -219,10 +219,12 @@ function PatientTestAdd() {
                                                                         className='form-control' 
                                                                         type="number" 
                                                                         name="discount" 
-                                                                        value={inputs.discount} 
+                                                                        defaultValue={inputs.discount} 
                                                                         onChange={handleChange} 
                                                                     />
                                                                 </td>
+                                                                <td style={{ fontWeight: 'bold' }}>Discount Amount:</td>
+                                                                <td>{totalData.discountAmount.toFixed(2)}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td style={{ fontWeight: 'bold' }}>Tax (%):</td>
@@ -231,19 +233,21 @@ function PatientTestAdd() {
                                                                         className='form-control' 
                                                                         type="number" 
                                                                         name="vat" 
-                                                                        value={inputs.vat} 
+                                                                        defaultValue={inputs.vat} 
                                                                         onChange={handleChange} 
                                                                     />
                                                                 </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td style={{ fontWeight: 'bold' }}>Discount Amount:</td>
-                                                                <td>{totalData.discountAmount.toFixed(2)}</td>
-                                                            </tr>
-                                                            <tr>
                                                                 <td style={{ fontWeight: 'bold' }}>Tax Amount:</td>
                                                                 <td>{totalData.vatAmount.toFixed(2)}</td>
                                                             </tr>
+                                                            {/* <tr>
+                                                                <td style={{ fontWeight: 'bold' }}>Discount Amount:</td>
+                                                                <td>{totalData.discountAmount.toFixed(2)}</td>
+                                                            </tr> */}
+                                                            {/* <tr>
+                                                                <td style={{ fontWeight: 'bold' }}>Tax Amount:</td>
+                                                                <td>{totalData.vatAmount.toFixed(2)}</td>
+                                                            </tr> */}
                                                             <tr>
                                                                 <td style={{ fontWeight: 'bold' }}>Grand Total:</td>
                                                                 <td>{totalData.finalTotal.toFixed(2)}</td>
@@ -255,7 +259,7 @@ function PatientTestAdd() {
                                                         </tbody>
                                                     </table>
                                                 </div>
-
+                            {/* calculation part add */}
                                                 <div className="col-12 d-flex justify-content-end">
                                                     <button type="submit" className="btn btn-primary mr-1 mb-1">Submit</button>
                                                     <button type="reset" className="btn btn-light-secondary mr-1 mb-1">Reset</button>

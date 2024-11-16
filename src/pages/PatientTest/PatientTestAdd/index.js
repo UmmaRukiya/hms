@@ -172,6 +172,12 @@ function PatientTestAdd() {
                                                         }
 
                                                     </div>
+                                                    <div className="col-md-1">
+                                                        <label>Date:</label>
+                                                    </div>
+                                                    <div className="col-md-3 form-group">
+                                                    <input type="date" id="test_date" className="form-control" name="test_date" defaultValue={inputs.test_date}  onChange={handleChange} />
+                                                    </div>
                                                 </div>
                                                 <div className='row'>
                                                     <div className='col-12'>
@@ -227,7 +233,7 @@ function PatientTestAdd() {
                                                                 <td>{totalData.discountAmount.toFixed(2)}</td>
                                                             </tr>
                                                             <tr>
-                                                                <td style={{ fontWeight: 'bold' }}>Tax (%):</td>
+                                                                <td style={{ fontWeight: 'bold' }}>Vat (%):</td>
                                                                 <td>
                                                                     <input 
                                                                         className='form-control' 
@@ -237,7 +243,7 @@ function PatientTestAdd() {
                                                                         onChange={handleChange} 
                                                                     />
                                                                 </td>
-                                                                <td style={{ fontWeight: 'bold' }}>Tax Amount:</td>
+                                                                <td style={{ fontWeight: 'bold' }}>Vat Amount:</td>
                                                                 <td>{totalData.vatAmount.toFixed(2)}</td>
                                                             </tr>
                                                             {/* <tr>
