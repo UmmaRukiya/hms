@@ -267,9 +267,10 @@ function Sidebar() {
 							<span>Hospital Activities</span>
 						</a>
 						
-						<ul className={`submenu ${isLinkActive("/ramjan")}`}>
-							<li><Link to={"/fahim"}>Alert</Link></li>
-							<li><Link to={"/ramjan"}>Ramjan</Link></li>
+						<ul className={`submenu ${isLinkActive("/birth")}  ${isLinkActive("/death")}  ${isLinkActive("/discharge")}`}>
+							<li><Link to={"/birth"}>Birth Certificate</Link></li>
+							<li><Link to={"/ramjan"}>Death Certificate</Link></li>
+							<li><Link to={"/ramjan"}>Discharge Certificate</Link></li>
 							
 							
 						</ul>

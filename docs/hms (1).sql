@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 12, 2024 at 02:54 PM
+-- Generation Time: Nov 16, 2024 at 02:48 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -413,14 +413,14 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (24, '2024_10_13_112434_create_patient_bill_details_table', 1),
 (25, '2024_10_13_112541_create_patient_payments_table', 1),
 (26, '2024_10_13_112802_create_medicine_cats_table', 1),
-(27, '2024_10_13_113318_create_patient_tests_table', 1),
 (28, '2024_10_13_113404_create_patient_test_details_table', 1),
 (29, '2024_10_13_142734_create_invest_cats_table', 1),
 (30, '2024_10_13_142752_create_invest_lists_table', 1),
 (31, '2024_10_24_083738_create_prescriptions_table', 1),
 (32, '2024_10_24_083838_create_prescription_details_table', 1),
 (33, '2024_10_26_061134_create_medicines_table', 1),
-(35, '2024_10_13_112331_create_patient_bills_table', 2);
+(35, '2024_10_13_112331_create_patient_bills_table', 2),
+(36, '2024_10_13_113318_create_patient_tests_table', 3);
 
 -- --------------------------------------------------------
 
@@ -592,8 +592,9 @@ CREATE TABLE `patient_payments` (
 
 CREATE TABLE `patient_tests` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `patient_id` bigint(20) UNSIGNED NOT NULL,
+  `patient_id` int(11) NOT NULL,
   `admit_id` int(11) DEFAULT NULL,
+  `test_date` date DEFAULT NULL,
   `sub_price` decimal(6,2) DEFAULT NULL,
   `vat` decimal(6,2) NOT NULL COMMENT 'in %',
   `discount` decimal(6,2) DEFAULT NULL,
@@ -607,9 +608,8 @@ CREATE TABLE `patient_tests` (
 -- Dumping data for table `patient_tests`
 --
 
-INSERT INTO `patient_tests` (`id`, `patient_id`, `admit_id`, `sub_price`, `vat`, `discount`, `total_amount`, `paid`, `created_at`, `updated_at`) VALUES
-(1, 2, 1, NULL, 0.00, 0.00, 900.00, NULL, '2024-11-09 01:36:44', '2024-11-09 01:36:44'),
-(2, 2, 1, NULL, 0.00, 0.00, 800.00, 800.00, '2024-11-11 22:46:10', '2024-11-11 22:46:10');
+INSERT INTO `patient_tests` (`id`, `patient_id`, `admit_id`, `test_date`, `sub_price`, `vat`, `discount`, `total_amount`, `paid`, `created_at`, `updated_at`) VALUES
+(1, 1, 2, '2024-11-14', NULL, 2.00, 4.00, 489.60, 490.00, '2024-11-14 09:19:30', '2024-11-14 09:19:30');
 
 -- --------------------------------------------------------
 
@@ -633,7 +633,8 @@ CREATE TABLE `patient_test_details` (
 INSERT INTO `patient_test_details` (`id`, `patient_test_id`, `inv_list_id`, `amount`, `created_at`, `updated_at`) VALUES
 (1, 1, 1, 200.00, '2024-11-09 01:36:44', '2024-11-09 01:36:44'),
 (2, 1, 3, 700.00, '2024-11-09 01:36:44', '2024-11-09 01:36:44'),
-(3, 2, 4, 800.00, '2024-11-11 22:46:10', '2024-11-11 22:46:10');
+(3, 2, 4, 800.00, '2024-11-11 22:46:10', '2024-11-11 22:46:10'),
+(4, 1, 2, 500.00, '2024-11-14 09:19:30', '2024-11-14 09:19:30');
 
 -- --------------------------------------------------------
 
@@ -1034,8 +1035,7 @@ ALTER TABLE `patient_payments`
 -- Indexes for table `patient_tests`
 --
 ALTER TABLE `patient_tests`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `patient_tests_patient_id_foreign` (`patient_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `patient_test_details`
@@ -1201,7 +1201,7 @@ ALTER TABLE `medicine_cats`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `nurses`
@@ -1243,13 +1243,13 @@ ALTER TABLE `patient_payments`
 -- AUTO_INCREMENT for table `patient_tests`
 --
 ALTER TABLE `patient_tests`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `patient_test_details`
 --
 ALTER TABLE `patient_test_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -1348,12 +1348,6 @@ ALTER TABLE `patient_admits`
 --
 ALTER TABLE `patient_bills`
   ADD CONSTRAINT `patient_bills_patient_id_foreign` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`id`);
-
---
--- Constraints for table `patient_tests`
---
-ALTER TABLE `patient_tests`
-  ADD CONSTRAINT `patient_tests_patient_id_foreign` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`id`);
 
 --
 -- Constraints for table `prescriptions`
