@@ -45,7 +45,9 @@ import PatientAdmitAdd from './pages/PatientAdmit/PatientAdmitAdd';
 import PatientBill from './pages/PatientBill';
 import PatientBillAdd from './pages/PatientBill/PatientBillAdd';
 import PatientTest from './pages/PatientTest';
-import PatientTestAdd from './pages/PatientTest/PatientTestAdd'; 
+import PatientTestAdd from './pages/PatientTest/PatientTestAdd';
+import AppointmentRequest from './pages/Appointment/AppointmentRequest'; 
+import AppointmentRequestEdit from './pages/Appointment/AppointmentRequestEdit';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Protected from './components/protected';
 
@@ -239,6 +241,16 @@ function App() {
         <Route path={"/appointment/edit/:id"} element={
           <Protected isSignedIn={isSignedIn} >
             <AppointmentAdd />
+          </Protected>
+        } />
+        <Route path={"/appointmentrequest"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <AppointmentRequest />
+          </Protected>
+        } />
+        <Route path={"/appointmentrequest/edit/:id"} element={
+          <Protected isSignedIn={isSignedIn} >
+            <AppointmentRequestEdit />
           </Protected>
         } />
            <Route path={"/prescription"} element={

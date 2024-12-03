@@ -93,8 +93,9 @@ function Sidebar() {
 							<span>Appointment</span>
 						</a>
 						
-						<ul className={`submenu ${isLinkActive("/appointment")} ${isLinkActive("/appointment/add")}`}>
+						<ul className={`submenu ${isLinkActive("/appointment")} ${isLinkActive("/appointment/add")} ${isLinkActive("/appointmentrequest/add")}`}>
 						<li><Link to={"/appointment"}>Appointment List</Link></li>
+						<li><Link to={"/appointmentrequest"}>Appointment Request List</Link></li>
 						<li><Link to={"/appointment/add"}>Appointment Add</Link></li>
 						</ul>
 					</li>
