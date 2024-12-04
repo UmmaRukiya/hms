@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import {useParams} from "react-router-dom";
 
 function AppointmentRequestEdit() {
-    const [inputs, setInputs] = useState({id:'',department_id:'', doctor_id:'', patient_name:'', email:'', contact_no:'', gender:'', age:'', blood_id:'', app_date:''});
+    const [inputs, setInputs] = useState({ref_id:'',department_id:'', doctor_id:'', patient_name:'', email:'', contact_no:'', gender:'', age:'', blood_id:'', app_date:''});
     const [doctor, setDoctor] = useState([]);
     const [department, setDepartment] = useState([]);
     const [schedule, setSchedule] = useState([]);

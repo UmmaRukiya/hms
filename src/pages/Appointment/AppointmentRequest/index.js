@@ -42,7 +42,7 @@ function AppointmentRequest() {
                 <div className="col-12">
                     <div className="card">
                         <div className="card-header">
-                            <h4 className="card-title">All Appointment</h4>
+                            <h4 className="card-title">All Appointment Request</h4>
                             {/* <Link to={'/appointment/add'} className='btn btn-primary float-right' >Add New</Link> */}
                         </div>
                         <div className="card-content">
@@ -55,8 +55,8 @@ function AppointmentRequest() {
                                             <th>Doctor</th>
                                             <th>Department</th>
                                             <th>Date</th>
-                                            <th>Time</th>
-                                            <th>Problem</th>
+                                            {/* <th>Time</th>
+                                            <th>Problem</th> */}
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -69,8 +69,8 @@ function AppointmentRequest() {
                                             <td>{d.doctor?.name}</td>
                                             <td>{d.department?.dep_name}</td>
                                             <td>{d.app_date}</td>
-                                            <td>{d.app_time}</td>
-                                            <td>{d.problem}</td>
+                                            {/* <td>{d.app_time}</td>
+                                            <td>{d.problem}</td> */}
                                             <td>{d.status}</td>
                                             <td>
                                                

@@ -56,7 +56,7 @@ function Appointment() {
                                             <th>Department</th>
                                             <th>Date</th>
                                             <th>Time</th>
-                                            <th>Problem</th>
+                                            {/* <th>Problem</th> */}
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -70,7 +70,7 @@ function Appointment() {
                                             <td>{d.department?.dep_name}</td>
                                             <td>{d.app_date}</td>
                                             <td>{d.app_time}</td>
-                                            <td>{d.problem}</td>
+                                            {/* <td>{d.problem}</td> */}
                                             <td>{d.status}</td>
                                             <td>
                                                 <Link to={`/prescription/add/${d.id}`} className='btn btn-primary' ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-file-earmark-arrow-down-fill" viewBox="0 0 16 16">
