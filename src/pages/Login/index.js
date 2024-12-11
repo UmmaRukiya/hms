@@ -48,7 +48,7 @@ function Login(){
                 </a>
             </div>
             <div className="position-relative">
-                <input type="text" className="form-control" id="password" name="password" onChange={handleChange}/>
+                <input type="password" className="form-control" id="password" name="password" onChange={handleChange}/>
                 <div className="form-control-icon">
                     <i data-feather="lock"></i>
                 </div>
