@@ -1,6 +1,10 @@
 import React from 'react'
-
+import { logout } from '../../Api/AllApi'
 function Header() {
+    const handleLogout = async () => {
+        await logout();
+        window.location.href = "/"; // Optionally, redirect to homepage after logout
+    };
   return (
         <nav className="navbar navbar-header navbar-expand navbar-light">
             <a className="sidebar-toggler" href="#"><span className="navbar-toggler-icon"></span></a>
@@ -34,7 +38,7 @@ function Header() {
                         </div> */}
 
 
-                        <button type='button' className='btn btn-info' ><i className="fa fa-sign-out" width="20"></i> Logout</button>
+                        <button type='button' onClick={handleLogout}  className='btn btn-info' ><i className="fa fa-sign-out" width="20"></i> Logout</button>
                     
                     </li>
                     {/* <li className="dropdown nav-icon mr-2">
